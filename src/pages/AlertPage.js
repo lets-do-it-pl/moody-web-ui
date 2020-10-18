@@ -28,13 +28,7 @@ const AlertPage = () => {
                 </a>{' '}
                 if you like.
               </Alert>
-              <Alert color="secondary">
-                Give it a{' '}
-                <a href="#link" className="alert-link">
-                  click
-                </a>{' '}
-                if you like.
-              </Alert>
+             
               <Alert color="success">
                 Give it a{' '}
                 <a href="#link" className="alert-link">
