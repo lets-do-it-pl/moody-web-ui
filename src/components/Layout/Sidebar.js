@@ -5,14 +5,11 @@ import React from 'react';
 import { FaGithub } from 'react-icons/fa';
 import {
   MdDashboard,
-  MdInsertChart,
-  MdWeb,
-  MdWidgets,
+  MdAccountCircle
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
   // UncontrolledTooltip,
-  Collapse,
   Nav,
   Navbar,
   NavItem,
@@ -28,8 +25,9 @@ const sidebarBackground = {
 
 const navItems = [
   { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
-];
+  { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle }
 
+];
 
 const bem = bn.create('sidebar');
 

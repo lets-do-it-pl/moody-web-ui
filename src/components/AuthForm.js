@@ -20,6 +20,13 @@ class AuthForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+
+    if(this.isLogin)
+    {
+      console.log(this.emailInput.value)
+      console.log(this.passwordInput.value)
+    }
+
   };
 
   renderButtonText() {
@@ -64,11 +71,11 @@ class AuthForm extends React.Component {
         )}
         <FormGroup>
           <Label for={usernameLabel}>{usernameLabel}</Label>
-          <Input {...usernameInputProps} />
+          <Input innerRef={(node) => this.emailInput = node} {...usernameInputProps}/>
         </FormGroup>
         <FormGroup>
           <Label for={passwordLabel}>{passwordLabel}</Label>
-          <Input {...passwordInputProps} />
+          <Input innerRef={(node) => this.passwordInput = node} {...passwordInputProps} />
         </FormGroup>
         {this.isSignup && (
           <FormGroup>
@@ -115,6 +122,7 @@ class AuthForm extends React.Component {
 export const STATE_LOGIN = 'LOGIN';
 export const STATE_SIGNUP = 'SIGNUP';
 
+
 AuthForm.propTypes = {
   authState: PropTypes.oneOf([STATE_LOGIN, STATE_SIGNUP]).isRequired,
   showLogo: PropTypes.bool,
@@ -133,17 +141,17 @@ AuthForm.defaultProps = {
   usernameLabel: 'Email',
   usernameInputProps: {
     type: 'email',
-    placeholder: 'your@email.com',
+    placeholder: 'Your@email.com',
   },
   passwordLabel: 'Password',
   passwordInputProps: {
     type: 'password',
-    placeholder: 'your password',
+    placeholder: 'Your Password',
   },
   confirmPasswordLabel: 'Confirm Password',
   confirmPasswordInputProps: {
     type: 'password',
-    placeholder: 'confirm your password',
+    placeholder: 'Confirm Your Password',
   },
   onLogoClick: () => {},
 };
