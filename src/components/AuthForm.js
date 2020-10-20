@@ -2,8 +2,23 @@ import logo200Image from 'assets/img/logo/logo_200.png';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import  Recaptcha from 'react-recaptcha';
 
 class AuthForm extends React.Component {
+  constructor(props)
+  {
+    super(props);
+    this.handleSubmit=this.handleSubmit.bind(this);
+    this.recaptchaLoaded=this.recaptchaLoaded.bind(this);
+    this.state={
+      isVerified:false
+    }
+  }
+
+  recaptchaLoaded(){
+    console.log("Captcha has loaded.")
+  }
+
   get isLogin() {
     return this.props.authState === STATE_LOGIN;
   }
@@ -20,21 +35,31 @@ class AuthForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-
-    if(this.isLogin)
+    if(this.state.isVerified)
     {
+      alert("Success!!")
+
+      if(this.isLogin)
+      {
         console.log(this.emailInput.value)
         console.log(this.passwordInput.value)
+      }
+
+      if(this.isSignup)
+      {
+        console.log(this.nameInput.value)
+        console.log(this.surnameInput.value)
+        console.log(this.emailInput.value)
+        console.log(this.passwordInput.value)
+        console.log(this.confirmPasswordInput.value)
+      }
+    }
+    else{
+      alert("Please verify!")
     }
 
-    if(this.isSignup)
-    {
-      console.log(this.nameInput.value)
-      console.log(this.surnameInput.value)
-      console.log(this.emailInput.value)
-      console.log(this.passwordInput.value)
-      console.log(this.confirmPasswordInput.value)
-    }
+
+
 
   };
 
@@ -109,11 +134,21 @@ class AuthForm extends React.Component {
           </FormGroup>
         )}
 
-        <FormGroup check>
-          <Label check>
-            <Input type="checkbox" />{' '}
-            {this.isSignup ? 'Agree the terms and policy' : 'Remember me'}
-          </Label>
+        {this.isLogin && (
+            <FormGroup check>
+              <Label check>
+                <Input type="checkbox" />{' '}
+                {this.isSignup ? 'Agree the terms and policy' : 'Remember me'}
+              </Label>
+            </FormGroup>
+        )}
+        <FormGroup className="Upper-Center">
+          <Recaptcha
+           sitekey="6LcJctkZAAAAADetAN2dDcvk3eE7vrKE-9-1j5RB"
+           render="explicit"
+           onLoadCallback={this.recaptchaLoaded}
+           size="normal"
+         />
         </FormGroup>
         <hr />
         <Button
