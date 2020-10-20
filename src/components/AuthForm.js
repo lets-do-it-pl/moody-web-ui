@@ -23,8 +23,17 @@ class AuthForm extends React.Component {
 
     if(this.isLogin)
     {
+        console.log(this.emailInput.value)
+        console.log(this.passwordInput.value)
+    }
+
+    if(this.isSignup)
+    {
+      console.log(this.nameInput.value)
+      console.log(this.surnameInput.value)
       console.log(this.emailInput.value)
       console.log(this.passwordInput.value)
+      console.log(this.confirmPasswordInput.value)
     }
 
   };
@@ -54,6 +63,10 @@ class AuthForm extends React.Component {
       confirmPasswordInputProps,
       children,
       onLogoClick,
+      nameLabel,
+      nameInputProps,
+      surnameInputProps,
+      surnameLabel
     } = this.props;
 
     return (
@@ -69,6 +82,18 @@ class AuthForm extends React.Component {
             />
           </div>
         )}
+        {this.isSignup && (
+          <FormGroup>
+            <Label for={nameLabel}>{nameLabel}</Label>
+            <Input innerRef={(node) => this.nameInput = node} {...nameInputProps} />
+          </FormGroup>
+        )}
+        {this.isSignup && (
+          <FormGroup>
+            <Label for={surnameLabel}>{surnameLabel}</Label>
+            <Input innerRef={(node) => this.surnameInput = node} {...surnameInputProps} />
+          </FormGroup>
+        )}
         <FormGroup>
           <Label for={usernameLabel}>{usernameLabel}</Label>
           <Input innerRef={(node) => this.emailInput = node} {...usernameInputProps}/>
@@ -80,9 +105,10 @@ class AuthForm extends React.Component {
         {this.isSignup && (
           <FormGroup>
             <Label for={confirmPasswordLabel}>{confirmPasswordLabel}</Label>
-            <Input {...confirmPasswordInputProps} />
+            <Input innerRef={(node) => this.confirmPasswordInput = node} {...confirmPasswordInputProps} />
           </FormGroup>
         )}
+
         <FormGroup check>
           <Label check>
             <Input type="checkbox" />{' '}
@@ -132,6 +158,10 @@ AuthForm.propTypes = {
   passwordInputProps: PropTypes.object,
   confirmPasswordLabel: PropTypes.string,
   confirmPasswordInputProps: PropTypes.object,
+  nameLabel: PropTypes.string,
+  nameInputProps: PropTypes.object,
+  surnameLabel: PropTypes.string,
+  surnameInputProps: PropTypes.object,
   onLogoClick: PropTypes.func,
 };
 
@@ -152,6 +182,16 @@ AuthForm.defaultProps = {
   confirmPasswordInputProps: {
     type: 'password',
     placeholder: 'Confirm Your Password',
+  },
+  nameLabel: 'First Name',
+  nameInputProps: {
+    type: 'text',
+    placeholder: 'Your Name',
+  },
+  surnameLabel: 'Last Name',
+  surnameInputProps: {
+    type: 'text',
+    placeholder: 'Your Lastname',
   },
   onLogoClick: () => {},
 };
