@@ -1,22 +1,15 @@
 import Avatar from 'components/Avatar';
 import { UserCard } from 'components/Card';
-import Notifications from 'components/Notifications';
-import { notificationsData } from 'demos/header';
 import React from 'react';
 import {
   MdClearAll,
   MdExitToApp,
-  MdHelp,
-  MdInsertChart,
-  MdMessage,
   MdPersonPin,
-  MdSettingsApplications,
 } from 'react-icons/md';
 import {
   Button,
   ListGroup,
   ListGroupItem,
-  // NavbarToggler,
   Nav,
   Navbar,
   NavItem,
@@ -35,16 +28,6 @@ class Header extends React.Component {
     isOpenNotificationPopover: false,
     isNotificationConfirmed: false,
     isOpenUserCardPopover: false,
-  };
-
-  toggleNotificationPopover = () => {
-    this.setState({
-      isOpenNotificationPopover: !this.state.isOpenNotificationPopover,
-    });
-
-    if (!this.state.isNotificationConfirmed) {
-      this.setState({ isNotificationConfirmed: true });
-    }
   };
 
   toggleUserCardPopover = () => {
@@ -84,7 +67,6 @@ class Header extends React.Component {
               target="Popover1"
             >
               <PopoverBody>
-                <Notifications notificationsData={notificationsData} />
               </PopoverBody>
             </Popover>
           </NavItem>
@@ -106,26 +88,13 @@ class Header extends React.Component {
             >
               <PopoverBody className="p-0 border-light">
                 <UserCard
-                  title="Jane"
-                  subtitle="jane@jane.com"
-                  text="Last updated 3 mins ago"
+                  title="Moody"
+                  subtitle="moody@letsdoit.com"
                   className="border-light"
                 >
                   <ListGroup flush>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdPersonPin /> Profile
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdInsertChart /> Stats
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdMessage /> Messages
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdSettingsApplications /> Settings
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdHelp /> Help
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdExitToApp /> Signout
