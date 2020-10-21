@@ -8,6 +8,8 @@ import './styles/reduction.scss';
 
 
 const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
+const UserPage = React.lazy(() => import('pages/UserPage'));
+
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -23,7 +25,9 @@ class App extends React.Component {
 
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
-                <Route exact path="/" component={DashboardPage} />              
+                <Route exact path="/" component={DashboardPage} />   
+                <Route exact path="/user" component={UserPage} />              
+           
               </React.Suspense>
 
             </MainLayout>
