@@ -2,17 +2,14 @@ import logo200Image from 'assets/img/logo/logo_200.png';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import SourceLink from 'components/SourceLink';
 import React from 'react';
+import { BsFillPersonLinesFill } from "react-icons/bs";
 import { FaGithub } from 'react-icons/fa';
 import {
   MdDashboard,
-  MdInsertChart,
-  MdWeb,
-  MdWidgets,
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
   // UncontrolledTooltip,
-  Collapse,
   Nav,
   Navbar,
   NavItem,
@@ -28,6 +25,8 @@ const sidebarBackground = {
 
 const navItems = [
   { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
+  { to: '/user', name: 'user', exact: true, Icon: BsFillPersonLinesFill },
+
 ];
 
 
