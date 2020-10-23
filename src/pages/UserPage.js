@@ -1,5 +1,6 @@
 import Page from 'components/Page';
 import React from 'react';
+import { Button, Row, Col } from 'reactstrap';
 
 class UserPage extends React.Component {
     componentDidMount() {
@@ -15,8 +16,20 @@ class UserPage extends React.Component {
           title="User"
           breadcrumbs={[{ name: 'User', active: true }]}
         >
-          
-  
+         
+          <Row>
+            <Col> <Button className="float-right" color="success">New User</Button> </Col>
+            <Col> <Button className="float-right" color="primary">Send Confirmation</Button></Col>
+          </Row>
+
+          <Row>
+            <Col> User List </Col>
+            <Col> 
+              <Row>Detailed User List </Row>
+              <Button className="float-right" color="primary">Save</Button>               
+            </Col>
+          </Row>
+
         </Page>
       );
     }
