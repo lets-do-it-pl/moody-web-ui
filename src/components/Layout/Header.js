@@ -4,11 +4,7 @@ import React from 'react';
 import {
   MdClearAll,
   MdExitToApp,
-  MdHelp,
-  MdInsertChart,
-  MdMessage,
   MdPersonPin,
-  MdSettingsApplications,
 } from 'react-icons/md';
 import {
   Button,
@@ -58,6 +54,16 @@ class Header extends React.Component {
     document.querySelector('.cr-sidebar').classList.toggle('cr-sidebar--open');
   };
 
+  handleClick = name => () => {
+    this.setState(prevState => {
+      const isOpen = prevState[`isOpen${name}`];
+
+      return {
+        [`isOpen${name}`]: !isOpen,
+      };
+    });
+  };
+
   render() {
     
     return (
@@ -102,26 +108,16 @@ class Header extends React.Component {
             >
               <PopoverBody className="p-0 border-light">
                 <UserCard
-                  title="Jane"
-                  subtitle="jane@jane.com"
-                  text="Last updated 3 mins ago"
+                  title="Başkan"
+                  subtitle="pala.dayı@adminmoody.com" //burası back-endden bilgileri çekecek
                   className="border-light"
                 >
                   <ListGroup flush>
-                    <ListGroupItem tag="button" action className="border-light">
+                    {/* <a href="pages/ProfilePage.js"><ListGroupItem tag="button" action className="border-light">
                       <MdPersonPin /> Profile
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdInsertChart /> Stats
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdMessage /> Messages
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdSettingsApplications /> Settings
-                    </ListGroupItem>
-                    <ListGroupItem tag="button" action className="border-light">
-                      <MdHelp /> Help
+                    </ListGroupItem> </a> */}
+                    <ListGroupItem tag="button" action={this.handleClick} className="border-light">
+                      <MdPersonPin /> Profile
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdExitToApp /> Signout

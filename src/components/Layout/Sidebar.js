@@ -4,15 +4,11 @@ import SourceLink from 'components/SourceLink';
 import React from 'react';
 import { FaGithub } from 'react-icons/fa';
 import {
-  MdDashboard,
-  MdInsertChart,
-  MdWeb,
-  MdWidgets,
+  MdDashboard
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
   // UncontrolledTooltip,
-  Collapse,
   Nav,
   Navbar,
   NavItem,
