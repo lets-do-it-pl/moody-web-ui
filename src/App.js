@@ -24,7 +24,7 @@ class App extends React.Component {
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" component={DashboardPage} />
-                <Route exact path="pages/ProfilePage" component={ProfilePage} />              
+                <Route exact path="/ProfilePage" component={ProfilePage} />              
               </React.Suspense>
 
             </MainLayout>

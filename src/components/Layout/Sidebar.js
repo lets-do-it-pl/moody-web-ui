@@ -24,6 +24,9 @@ const sidebarBackground = {
 
 const navItems = [
   { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
+  { to: '/ProfilePage', name: 'ProfilePage', exact: true, Icon: MdDashboard },
+
+
 ];
 
 

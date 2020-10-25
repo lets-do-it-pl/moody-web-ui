@@ -1,6 +1,8 @@
 import Avatar from 'components/Avatar';
 import { UserCard } from 'components/Card';
 import React from 'react';
+import { Redirect } from 'react-router-dom'
+
 import {
   MdClearAll,
   MdExitToApp,
@@ -29,8 +31,19 @@ class Header extends React.Component {
     isOpenNotificationPopover: false,
     isNotificationConfirmed: false,
     isOpenUserCardPopover: false,
+    redirect: false,
   };
 
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to='/ProfilePage' />
+    }
+  }
   toggleNotificationPopover = () => {
     this.setState({
       isOpenNotificationPopover: !this.state.isOpenNotificationPopover,
@@ -118,6 +131,10 @@ class Header extends React.Component {
                     </ListGroupItem> </a> */}
                     <ListGroupItem tag="button" action={this.handleClick} className="border-light">
                       <MdPersonPin /> Profile
+                      <div>
+                      {this.renderRedirect()}
+                      <button onClick={this.setRedirect}>Profile</button>
+                     </div>
                     </ListGroupItem>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdExitToApp /> Signout
