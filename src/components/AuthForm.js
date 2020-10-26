@@ -57,10 +57,6 @@ class AuthForm extends React.Component {
     else{
       alert("Please verify!")
     }
-
-
-
-
   };
 
   renderButtonText() {
