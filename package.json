@@ -11,6 +11,7 @@
     "faker": "^4.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
+    "react-beautiful-dnd": "^13.0.0",
     "react-chartjs-2": "^2.7.4",
     "react-component-queries": "^2.3.0",
     "react-d3-map": "^0.8.3",
@@ -24,6 +25,7 @@
     "react-simple-maps": "^0.12.1",
     "react-sizeme": "^2.5.2",
     "reactstrap": "^7.1.0",
+    "semantic-ui-react": "^2.0.1",
     "victory": "^32.0.0"
   },
   "devDependencies": {

@@ -3,12 +3,7 @@ import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import {MdCollections} from "react-icons/md";
 import React from 'react';
 import {
-  MdDashboard,
-  MdInsertChart,
-  MdWidgets,
-  MdExtension,
-  MdKeyboardArrowDown,
-  MdWeb
+  MdDashboard
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
