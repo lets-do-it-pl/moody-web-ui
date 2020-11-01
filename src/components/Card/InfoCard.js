@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'utils/propTypes';
 
 import classNames from 'classnames';
@@ -14,17 +14,24 @@ import {
   Label
 } from 'reactstrap';
 
+
+
 function InfoCard({
   color,
   header,
   fullname,
   email,
   className,
+  userType,
+  password,
   buttonProps,
   ...restProps
 }) {
   const bgColor = `bg-${color}`;
   const classes = classNames(bgColor, className);
+
+  const [pass1, setPass1] = useState('');
+  const [pass2, setPass2] = useState('');
 
   return (
     <Card inverse className={classes} {...restProps}>
@@ -36,13 +43,13 @@ function InfoCard({
       <CardBody className="d-flex flex-wrap flex-column align-items-center justify-content-center">
         <Form>
           <FormGroup>
-            <Label className="text-dark" for="exampleEmail">Fullname</Label>
+            <Label className="text-dark" for="name">Fullname</Label>
             <Input
               value={fullname}
             />
           </FormGroup>
           <FormGroup>
-            <Label className="text-dark" for="exampleEmail">Email</Label>
+            <Label className="text-dark" for="email">Email</Label>
             <Input
               type="email"
               name="email"
@@ -50,8 +57,37 @@ function InfoCard({
               readOnly
             />
           </FormGroup>
+          <FormGroup>
+            <Label className="text-dark" for="password">Password</Label>
+            <Input
+              type="password"
+              name="password"
+              value={pass1}
+              onChange={event => setPass1(event.target.value)}
+              placeholder="Enter your new password"
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label className="text-dark" for="confirmPassword">Confirm Your New Password</Label>
+            <Input
+              type="password"
+              name="confirmPassword"
+              value={pass2}
+              onChange={event => setPass2(event.target.value)}
+              placeholder="Re-enter your password"
+            />
+          </FormGroup>
+          <FormGroup>
+            <Label className="text-dark" for="userType">User Type</Label>
+            <Input
+              type="email"
+              name="userType"
+              placeholder={userType}            
+              readOnly
+            />
+          </FormGroup>
         </Form>
-        <Button className="btn-lg mt-3" color="secondary" {...buttonProps} />
+        <Button  disabled={pass1.length>1 && pass1 !== pass2} className="btn-lg mt-3" color="secondary" {...buttonProps} />
       </CardBody>
     </Card>
   );
@@ -61,13 +97,16 @@ InfoCard.propTypes = {
   color: PropTypes.string,
   header: PropTypes.node,
   name: PropTypes.string, 
-  email: PropTypes.string,
+  email: PropTypes.string, 
+  userType: PropTypes.string,
+  password: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.element,
 };
 
 InfoCard.defaultProps = {
-  color: 'gradient-secondary'
+  color: 'gradient-secondary',
+  password: ""
 };
 
 export default InfoCard;

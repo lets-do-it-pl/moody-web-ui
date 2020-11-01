@@ -16,6 +16,11 @@ class ProfilePage extends React.Component {
     window.scrollTo(0, 0);
   }
 
+  state = {
+    pass1:"",
+    pass2:""
+  };
+
   render() {
     
     return (
@@ -25,7 +30,7 @@ class ProfilePage extends React.Component {
         breadcrumbs={[{ name: 'User', active: true }]}
       >
 
-<Row>
+        <Row>
           <Col lg="6" md="12" sm="12" xs="12">
             <ProfileCard
               color="gradient-white"
@@ -40,6 +45,7 @@ class ProfilePage extends React.Component {
               header="Information"
               fullname="Başkan Dayı"
               email="blabla@deneme.com"
+              userType="Admin"
               buttonProps={{
                 children: 'Save',
               }}
