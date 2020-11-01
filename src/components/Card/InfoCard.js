@@ -58,12 +58,12 @@ function InfoCard({
             />
           </FormGroup>
           <FormGroup>
-            <Label className="text-dark" for="password">Password</Label>
+            <Label className="text-dark" for="password">New Password</Label>
             <Input
               type="password"
               name="password"
               value={pass1}
-              onChange={event => setPass1(event.target.value)}
+              onChange={event => setPass1(event.target.value)}    //if value changes, pass1 also changes
               placeholder="Enter your new password"
             />
           </FormGroup>
@@ -73,7 +73,7 @@ function InfoCard({
               type="password"
               name="confirmPassword"
               value={pass2}
-              onChange={event => setPass2(event.target.value)}
+              onChange={event => setPass2(event.target.value)}    //if value changes, pass2 also changes
               placeholder="Re-enter your password"
             />
           </FormGroup>
@@ -87,7 +87,10 @@ function InfoCard({
             />
           </FormGroup>
         </Form>
-        <Button  disabled={pass1.length>1 && pass1 !== pass2} className="btn-lg mt-3" color="secondary" {...buttonProps} />
+        <Button
+          disabled={pass1.length>1 && pass1 !== pass2}    //checks pass1 and pass2 is equal or not. if they are not, disables the button
+          className="btn-lg mt-3" 
+          color="secondary" {...buttonProps} />   
       </CardBody>
     </Card>
   );

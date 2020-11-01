@@ -34,6 +34,11 @@ class Header extends React.Component {
     redirect: false,
   };
 
+  state = {
+      fullname: "Default User",       //Dropdown menu user name         //THESE SHOULD CHANGE WHEN SESSION STARTED!!
+      email: "default@deneme.com"     //Dropdown menu user email
+  }
+
   setRedirect = () => {
     this.setState({
       redirect: true
@@ -121,8 +126,8 @@ class Header extends React.Component {
             >
               <PopoverBody className="p-0 border-light">
                 <UserCard
-                  title="Başkan"
-                  subtitle="pala.dayı@adminmoody.com" //burası back-endden bilgileri çekecek
+                  title={this.state.fullname}
+                  subtitle={this.state.email}
                   className="border-light"
                 >
                   <ListGroup flush>

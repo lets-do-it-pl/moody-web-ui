@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'utils/propTypes';
 
-import { Card, CardHeader, CardBody, CardText } from 'reactstrap';
+import { Card, CardHeader, CardBody } from 'reactstrap';
 
 import Avatar from 'components/Avatar';
 
@@ -12,9 +12,6 @@ const ProfileCard = ({
   header,
   avatar,
   avatarSize,
-  name,
-  date,
-  text,
   className,
   buttonProps,
   ...restProps
@@ -30,13 +27,7 @@ const ProfileCard = ({
         header
       )}
       <CardBody className="d-flex flex-wrap flex-column align-items-center justify-content-center">
-        <Avatar size={avatarSize} src={avatar} />
-        <CardText className="text-center">
-          <strong className="d-block">{name}</strong>
-          <small className="text-muted">{date}</small>
-        </CardText>
-        <CardText className="text-center">{text}</CardText>
-
+        <Avatar size={avatarSize} src={avatar} />   {/*  */}
         {/* <Button color="primary" {...buttonProps} /> */}
       </CardBody>
     </Card>
@@ -48,8 +39,6 @@ ProfileCard.propTypes = {
   header: PropTypes.node,
   avatar: PropTypes.string,
   avatarSize: PropTypes.number,
-  name: PropTypes.string,
-  date: PropTypes.date,
   className: PropTypes.string,
   children: PropTypes.element,
 };

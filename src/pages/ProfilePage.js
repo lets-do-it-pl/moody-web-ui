@@ -4,16 +4,29 @@ import React from 'react';
 import ProfileCard from 'components/Card/ProfileCard';
 import InfoCard from 'components/Card/InfoCard';
 
+//import userImage from 'assets/img/users/default_user2.png';
+
 import {
   Col,
   Row,
 } from 'reactstrap';
 
 
+
 class ProfilePage extends React.Component {
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      fullname: "Default User",           //user name
+      email: "default@deneme.com",        //user email
+      userType: "Admin",                  //user type
+      //avatar: userImage                   //user icon(default icon is set to same icon)
+    };
   }
 
   render() {
@@ -31,6 +44,7 @@ class ProfilePage extends React.Component {
               color="gradient-white"
               avatarSize={400}
               style={{ height: 500 }}
+              avatar={this.state.avatar}       
             />
           </Col>
 
@@ -38,9 +52,9 @@ class ProfilePage extends React.Component {
             <InfoCard
               color="gradient-white"
               header="Information"
-              fullname="Başkan Dayı"
-              email="blabla@deneme.com"
-              userType="Admin"
+              fullname={this.state.fullname}    
+              email={this.state.email}          
+              userType={this.state.userType}    
               buttonProps={{
                 children: 'Save',
               }}
