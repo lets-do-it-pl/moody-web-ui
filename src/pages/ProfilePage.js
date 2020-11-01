@@ -16,11 +16,6 @@ class ProfilePage extends React.Component {
     window.scrollTo(0, 0);
   }
 
-  state = {
-    pass1:"",
-    pass2:""
-  };
-
   render() {
     
     return (
