@@ -32,12 +32,9 @@ class Header extends React.Component {
     isNotificationConfirmed: false,
     isOpenUserCardPopover: false,
     redirect: false,
+    fullname: "Default User",       //Dropdown menu user name         //THESE SHOULD CHANGE WHEN SESSION STARTED!!
+    email: "default@deneme.com"     //Dropdown menu user email
   };
-
-  state = {
-      fullname: "Default User",       //Dropdown menu user name         //THESE SHOULD CHANGE WHEN SESSION STARTED!!
-      email: "default@deneme.com"     //Dropdown menu user email
-  }
 
   setRedirect = () => {
     this.setState({
@@ -131,16 +128,11 @@ class Header extends React.Component {
                   className="border-light"
                 >
                   <ListGroup flush>
-                    {/* <a href="pages/ProfilePage.js"><ListGroupItem tag="button" action className="border-light">
-                      <MdPersonPin /> Profile
-                    </ListGroupItem> </a> */}
-                    <ListGroupItem tag="button" action={this.handleClick} className="border-light">
-                      <MdPersonPin /> Profile
-                      <div>
-                      {this.renderRedirect()}
-                      <button onClick={this.setRedirect}>Profile</button>
-                     </div>
-                    </ListGroupItem>
+                    <a href="/ProfilePage">
+                      <ListGroupItem tag="button" action={this.handleClick} className="border-light">
+                        <MdPersonPin /> Profile
+                      </ListGroupItem> 
+                    </a>
                     <ListGroupItem tag="button" action className="border-light">
                       <MdExitToApp /> Signout
                     </ListGroupItem>
