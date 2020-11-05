@@ -8,7 +8,7 @@ import './styles/reduction.scss';
 
 
 const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
-const UserPage = React.lazy(() => import('pages/UserPage'));
+const UserPage = React.lazy(() => import('pages/UserPage/UserPage'));
 
 
 const getBasename = () => {

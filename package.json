@@ -4,6 +4,7 @@
   "private": false,
   "homepage": "https://reduction-admin.github.io/react-reduction",
   "dependencies": {
+    "axios": "^0.21.0",
     "bootstrap": "4.3.1",
     "chart.js": "2.7.2",
     "classnames": "^2.2.6",
@@ -23,6 +24,7 @@
     "react-router-dom": "^4.3.1",
     "react-simple-maps": "^0.12.1",
     "react-sizeme": "^2.5.2",
+    "react-table": "^7.6.1",
     "reactstrap": "^7.1.0",
     "victory": "^32.0.0"
   },
