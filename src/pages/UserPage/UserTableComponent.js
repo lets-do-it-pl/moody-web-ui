@@ -1,5 +1,7 @@
 import React, { Component, useState, useEffect } from 'react';
 import axios from 'axios';
+import { Card, CardBody, Table } from 'reactstrap';
+
 
 const URL = 'http://localhost:1234/api/users'
 
@@ -17,15 +19,15 @@ const UserTableComponent = () => {
     setUsers(response.data)
 }
 
-const removeData = (name) => {
+const removeData = (id) => {
 
-  axios.delete(`${URL}/${name}`).then(res => {
-      const del = users.filter(user => name !== user.name)
+  axios.delete(`${URL}/${id}`).then(res => {
+      const del = users.filter(user => id !== user.id)
       setUsers(del)
   })
 }
 const renderHeader = () => {
-  let headerElement = ['name', 'surname', 'email', 'isActive', 'userType']
+  let headerElement = ['id','name', 'surname', 'isActive', 'userType', 'operation']
 
   return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>
@@ -33,17 +35,18 @@ const renderHeader = () => {
 }
 
 const renderBody = () => {
-  return users && users.map(({ name, surname, email, isActive, userType }) => {
+  return users && users.map(({ id, name, surname, isActive, userType }) => {
       return (
-          <tr key={name}>
+          <tr key={id}>
+              <td>{id}</td>
               <td>{name}</td>
               <td>{surname}</td>
-              <td>{email}</td>
               <td>{isActive}</td>
               <td>{userType}</td>
-              <td className='opration'>
-                        <button className='button' onClick={() => removeData(name)}>Delete</button>
+              <td className='operation'>
+                        <button className='button' onClick={() => removeData(id)}>Delete</button>
                     </td>
+                    
           </tr>
       )
   })
@@ -52,14 +55,18 @@ const renderBody = () => {
 return (
   <>
       <h1 id='title'>User Table</h1>
-      <table id='user'>
+      <Card className="mb-3">
+      <CardBody>
+      <Table dark id='user'>
           <thead>
-              <tr>{renderHeader()}</tr>
+              <tr className="table-dark">{renderHeader()}</tr>              
           </thead>
-          <tbody>
+          <tbody className="table-primary">
               {renderBody()}
           </tbody>
-      </table>
+      </Table>
+      </CardBody>
+          </Card>
   </>
 )
 }
