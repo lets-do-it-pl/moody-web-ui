@@ -9,7 +9,32 @@ class MainLayout extends React.Component {
       .querySelector('.cr-sidebar')
       .classList.contains('cr-sidebar--open');
   }
+// close sidebar when
+  handleContentClick = event => {
+    // close sidebar if sidebar is open and screen size is less than `md`
+    if (
+      MainLayout.isSidebarOpen() &&
+      (this.props.breakpoint === 'xs' ||
+        this.props.breakpoint === 'sm' ||
+        this.props.breakpoint === 'md')
+    ) {
+      this.openSidebar('close');
+    }
+  };
 
+  checkBreakpoint(breakpoint) {
+    switch (breakpoint) {
+      case 'xs':
+      case 'sm':
+      case 'md':
+        return this.openSidebar('close');
+
+      case 'lg':
+      case 'xl':
+      default:
+        return this.openSidebar('open');
+    }
+  }
   componentWillReceiveProps({ breakpoint }) {
     if (breakpoint !== this.props.breakpoint) {
       this.checkBreakpoint(breakpoint);

@@ -2,6 +2,7 @@ import logo200Image from 'assets/img/logo/logo_200.png';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 class AuthForm extends React.Component {
   get isLogin() {
@@ -82,6 +83,9 @@ class AuthForm extends React.Component {
             {this.isSignup ? 'Agree the terms and policy' : 'Remember me'}
           </Label>
         </FormGroup>
+        <p className = "forgot-password text-right">
+          <Link to={'/forgot'}>Forgot Password?</Link>
+        </p>
         <hr />
         <Button
           size="lg"
