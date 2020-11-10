@@ -17,22 +17,22 @@ const getBasename = () => {
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter basename={getBasename()}>
-        <GAListener>
-          <Switch>
-            
+        <BrowserRouter basename={getBasename()}>
+          <GAListener>
+            <Switch>
+              
 
-            <MainLayout breakpoint={this.props.breakpoint}>
-              <React.Suspense fallback={<PageSpinner />}>
-                <Route exact path="/" component={DashboardPage} />  
-                <Route exact path="/category" component={CategoryPage} />                          
-              </React.Suspense>
+              <MainLayout breakpoint={this.props.breakpoint}>
+                <React.Suspense fallback={<PageSpinner />}>
+                  <Route exact path="/" component={DashboardPage} />  
+                  <Route exact path="/category" component={CategoryPage} />                          
+                </React.Suspense>
 
-            </MainLayout>
-            <Redirect to="/" />
-          </Switch>
-        </GAListener>
-      </BrowserRouter>
+              </MainLayout>
+              <Redirect to="/" />
+            </Switch>
+          </GAListener>
+        </BrowserRouter>
     );
   }
 }

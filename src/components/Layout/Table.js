@@ -5,17 +5,22 @@ import {
   Droppable,
   Draggable,
 } from "react-beautiful-dnd";
+import axios from 'axios';
 
-let filledArr = [
-  {id : 1, name : "Meryem"},
-  {id : 2, name : "Zeynep"}
-];
-class SemanticUIDnDTable extends Component {
+class CategoryTable extends Component {
   state = {
-    entities: filledArr,
+    entities: [],
     selectedRowIds: [],
     draggingRowId: null,
   };
+
+  componentDidMount = async () => {
+    const response = await axios.get("https://letsdoit-moody-web.azurewebsites.net/categories");
+    console.log(response);
+    this.setState({
+      entities : response.data.categories
+    })
+}
 
   getItemStyle = (isDragging, draggableStyle) => ({
     background: isDragging && ("lightblue"),
@@ -54,14 +59,16 @@ class SemanticUIDnDTable extends Component {
     return (
       <div style={{ padding: "30px" }}>
         <DragDropContext
-          //onDragStart={this.onDragStart}
           onDragEnd={this.onDragEnd}
         >
           <Table>
             <Table.Header>
               <Table.Row>
+                <Table.HeaderCell>Order</Table.HeaderCell>
+                <Table.HeaderCell>Image</Table.HeaderCell>
                 <Table.HeaderCell>Id</Table.HeaderCell>
-                <Table.HeaderCell>Content</Table.HeaderCell>
+                <Table.HeaderCell>Name</Table.HeaderCell>
+                <Table.HeaderCell>Actions</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
             <Droppable droppableId="tableBody">
@@ -70,7 +77,7 @@ class SemanticUIDnDTable extends Component {
                   <Table.Body {...provided.droppableProps}>
                     {this.state.entities.map((entity, index) => (
                       <Draggable
-                        draggableId={entity.id}
+                        draggableId={"draggableID"}
                         index={index}
                         key={entity.id}
                       >
@@ -84,8 +91,16 @@ class SemanticUIDnDTable extends Component {
                                 provided.draggableProps.style
                               )}
                             >
+                              <Table.Cell>{entity.order}</Table.Cell>
+                              <Table.Cell><img alt = "" style = {{width: "60px", borderRadius: "50%"}}src={"data:image/png;base64," + entity.image} /></Table.Cell>
                               <Table.Cell>{entity.id}</Table.Cell>
                               <Table.Cell>{entity.name}</Table.Cell>
+                              <Table.Cell>
+                                <p> 
+                                    Edit <i className="far fa-edit" ></i> 
+                                    Delete <i className="fas fa-trash"></i> 
+                                </p>
+                              </Table.Cell>
                             </Table.Row>
                           </Ref>
                         )}
@@ -103,4 +118,4 @@ class SemanticUIDnDTable extends Component {
   }
 }
 
-export default SemanticUIDnDTable;
+export default CategoryTable;

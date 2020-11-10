@@ -2,11 +2,9 @@ import Page from 'components/Page';
 import React from 'react';
 import { Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
 import Table from 'components/Layout/Table';
- 
 
 class CategoryPage extends React.Component {
   componentDidMount() {
-    // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
   }
 
@@ -21,21 +19,21 @@ class CategoryPage extends React.Component {
            
           <Col md="6" sm="12" xs="12">
             <Card className="mb-3">
-              <CardHeader>CATEGORIES</CardHeader>
+              <CardHeader>CATEGORIES <i className="fas fa-plus" ></i> </CardHeader>
               <CardBody>
-                 <Table/>
+                  <Table/>
               </CardBody>
             </Card>
           </Col>
           <Col md="6" sm="12" xs="12">
             <Card className="mb-3">
-              <CardHeader>CATEGORY DETAILS</CardHeader>
+              <CardHeader>CATEGORY DETAILS <i className="fas fa-plus" ></i> </CardHeader>
               <CardBody>
-
               </CardBody>
             </Card>
           </Col>
         </Row>
+        
       </Page>
     );
   }
