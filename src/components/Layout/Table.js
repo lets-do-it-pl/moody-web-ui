@@ -15,7 +15,7 @@ class CategoryTable extends Component {
   };
 
   componentDidMount = async () => {
-    const response = await axios.get("https://letsdoit-moody-web.azurewebsites.net/categories");
+    const response = await axios.get("https://letsdoit-moody-web.azurewebsites.net/list");
     console.log(response);
     this.setState({
       entities : response.data.categories
@@ -77,7 +77,7 @@ class CategoryTable extends Component {
                   <Table.Body {...provided.droppableProps}>
                     {this.state.entities.map((entity, index) => (
                       <Draggable
-                        draggableId={"draggableID"}
+                        draggableId={"" + entity.order}
                         index={index}
                         key={entity.id}
                       >
