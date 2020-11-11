@@ -1,5 +1,7 @@
 import React from 'react';
 import UserTableComponent from './UserTableComponent'
+import UserDetailsTableComponent from './UserDetailsTableComponent'
+
 import { Button, Row, Col } from 'reactstrap';
 
 class UserPage extends React.Component {    
@@ -13,7 +15,7 @@ class UserPage extends React.Component {
           </Row>
 
           <Row>
-            <Col> User List <UserTableComponent/> </Col>
+            <Col> <UserTableComponent/> </Col>
             <Col> 
               <Row>Detailed User List </Row>
               <Button className="float-right" color="primary">Save</Button>               

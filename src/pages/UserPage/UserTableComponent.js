@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, {useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardBody, Table } from 'reactstrap';
 
@@ -27,7 +27,7 @@ const removeData = (id) => {
   })
 }
 const renderHeader = () => {
-  let headerElement = ['id','name', 'surname', 'isActive', 'userType', 'operation']
+  let headerElement = ['id','name', 'surname', 'isActive', 'userType', 'email', 'operation']
 
   return headerElement.map((key, index) => {
       return <th key={index}>{key.toUpperCase()}</th>
@@ -35,7 +35,7 @@ const renderHeader = () => {
 }
 
 const renderBody = () => {
-  return users && users.map(({ id, name, surname, isActive, userType }) => {
+  return users && users.map(({ id, name, surname, isActive, userType, email }) => {
       return (
           <tr key={id}>
               <td>{id}</td>
@@ -43,6 +43,7 @@ const renderBody = () => {
               <td>{surname}</td>
               <td>{isActive}</td>
               <td>{userType}</td>
+              <td>{email}</td>
               <td className='operation'>
                         <button className='button' onClick={() => removeData(id)}>Delete</button>
                     </td>
@@ -51,7 +52,6 @@ const renderBody = () => {
       )
   })
 }
-
 return (
   <>
       <h1 id='title'>User Table</h1>
