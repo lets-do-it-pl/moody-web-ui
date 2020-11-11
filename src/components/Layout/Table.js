@@ -6,12 +6,16 @@ import {
   Draggable,
 } from "react-beautiful-dnd";
 import axios from 'axios';
+import Popup from 'components/Layout/Popup';
+import Warning from 'components/Layout/Warning';
 
 class CategoryTable extends Component {
   state = {
     entities: [],
     selectedRowIds: [],
     draggingRowId: null,
+    showModalPopup : false,
+    showModalWarning : false
   };
 
   componentDidMount = async () => {
@@ -20,7 +24,11 @@ class CategoryTable extends Component {
     this.setState({
       entities : response.data.categories
     })
-}
+  }
+
+  popupImage(event){
+
+  }
 
   getItemStyle = (isDragging, draggableStyle) => ({
     background: isDragging && ("lightblue"),
@@ -56,6 +64,8 @@ class CategoryTable extends Component {
   }
 
   render() {
+    let closeModalPopup = () => this.setState({showModalPopup : false});
+    let closeModalWarning = () => this.setState({showModalWarning : false});
     return (
       <div style={{ padding: "30px" }}>
         <DragDropContext
@@ -92,13 +102,20 @@ class CategoryTable extends Component {
                               )}
                             >
                               <Table.Cell>{entity.order}</Table.Cell>
-                              <Table.Cell><img alt = "" style = {{width: "60px", borderRadius: "50%"}}src={"data:image/png;base64," + entity.image} /></Table.Cell>
+                              <Table.Cell><img alt = "" onClick = {this.popupImage} style = {{width: "60px", borderRadius: "50%"}}src={"data:image/png;base64," + entity.image} /></Table.Cell>
                               <Table.Cell>{entity.id}</Table.Cell>
                               <Table.Cell>{entity.name}</Table.Cell>
                               <Table.Cell>
                                 <p> 
-                                    Edit <i className="far fa-edit" ></i> 
-                                    Delete <i className="fas fa-trash"></i> 
+                                    Edit <i className="far fa-edit" onClick = {() => this.setState({showModalPopup : true})}></i> 
+                                    <Popup 
+                                      title = "Edit Category"
+                                      show = {this.state.showModalPopup}
+                                      onHide = {closeModalPopup}/>
+                                    Delete <i className="fas fa-trash" onClick = {() => this.setState({showModalWarning : true})}></i>
+                                    <Warning 
+                                      show = {this.state.showModalWarning}
+                                      onHide = {closeModalWarning}/> 
                                 </p>
                               </Table.Cell>
                             </Table.Row>

@@ -30,8 +30,10 @@ class CategoryPage extends React.Component {
             <Card className="mb-3">
               <CardHeader>CATEGORIES <i className="fas fa-plus" onClick = {() => this.setState({showModal : true})}>
                 </i> 
-                <Popup show = {this.state.showModal}
-                     onHide = {closeModal}/>
+                <Popup 
+                    title = "Create new category"
+                    show = {this.state.showModal}
+                    onHide = {closeModal}/>
               </CardHeader>
               <CardBody>
                   <Table/>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {Modal, Button, Row, Col, Form} from 'react-bootstrap';
-import { FormFeedback } from 'reactstrap';
 
 class Popup extends Component {
 
@@ -21,7 +20,7 @@ class Popup extends Component {
                 >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                    Create new Category
+                    {this.props.title}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -29,7 +28,7 @@ class Popup extends Component {
                         <Row>
                             <Col sm = "6">
                                 <Form onSubmit = {this.handleSubmit}>
-                                    <Form.Group controlId = "Name">
+                                    <Form.Group controlId = "Category">
                                         <Form.Label> Name </Form.Label>
                                         <Form.Control
                                             type = "text"
