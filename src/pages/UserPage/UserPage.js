@@ -1,8 +1,8 @@
 import React from 'react';
 import UserTableComponent from './UserTableComponent'
-import UserDetailsTableComponent from './UserDetailsTableComponent'
-
+//yimport UserDetailsTableComponent from './UserDetailsTableComponent'
 import { Button, Row, Col } from 'reactstrap';
+import CreateUserComponent from './CreateUserComponent';
 
 class UserPage extends React.Component {    
 
@@ -10,7 +10,7 @@ class UserPage extends React.Component {
     return (
       <div>
          <Row>
-            <Col> <Button className="float-right" color="success">New User</Button> </Col>
+            <Col> <Button className="float-right" color="success">New User</Button></Col>
             <Col> <Button className="float-right" color="primary">Send Confirmation</Button></Col>
           </Row>
 

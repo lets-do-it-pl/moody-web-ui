@@ -5,6 +5,8 @@ import { Card, CardBody, Table } from 'reactstrap';
 
 const URL = 'http://localhost:1234/api/users'
 
+// common url http://localhost:1234/api
+
 const UserTableComponent = () => {
   const [users, setUsers] = useState([])
 
@@ -16,6 +18,7 @@ const UserTableComponent = () => {
 
     const response = await axios.get(URL)
     console.log('response', response)
+    // check response status 
     setUsers(response.data)
 }
 
