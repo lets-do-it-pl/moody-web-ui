@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
-import  categoryReducer  from "./category";
+import  categoryReducer  from "./categoryReducer";
 
-const reducers = combineReducers({
+export default combineReducers({
     category : categoryReducer
-})
-export default reducers;
+});
