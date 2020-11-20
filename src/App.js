@@ -7,7 +7,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
-import { NotificationManager } from 'react-notifications';
+
 
 const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
 
@@ -31,7 +31,7 @@ class App extends React.Component {
             </MainLayout>
             <Redirect to="/" />
             <NotificationContainer />
-            NotificationManager.success('You have added a new book!', 'Successful!', 2000);
+           
           </Switch>
         </GAListener>
       </BrowserRouter>

@@ -13,18 +13,6 @@ axios.interceptors.request.use(req => {
   return req;
 });
 
-/*
-axios.interceptors.response.use(
-  res => res,
-  err => {
-    if (err.response.status === 404) {
-      throw new Error(`${err.config.url} not found`);
-    }
-    throw err;
-  }
-);
-
-*/
 const getUsers = () => axios.get(`${apiUrl}/users`);
 const getUserId = () => 1;
 const getUserDetails = () => axios.get(`${apiUrl}/${getUserId()}/details`);
@@ -48,16 +36,10 @@ axios.all([getUserDetails, getUserId])
        console.log(error.response.headers);
        NotificationManager.error('Error while getting user details!', 'Error!');
 
-  } else if (error.request) {
-      // The request was made but no response was received `error.request` is an instance of XMLHttpRequest in the 
-      // browser and an instance of http.ClientRequest in node.js
-      console.log(error.request);
-      NotificationManager.error('Error while getting the request!', 'Error!');
-
   } else {
       // Something happened in setting up the request that triggered an Error
       console.log('Error', error.message);
-      NotificationManager.error('Error', 'Error!');
+      NotificationManager.error(error.response.data, error.response.status);
 
   }
   console.log(error.config);
