@@ -11,8 +11,6 @@ import {
   Row,
 } from 'reactstrap';
 
-
-
 class ProfilePage extends React.Component {
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
@@ -29,8 +27,7 @@ class ProfilePage extends React.Component {
     };
   }
 
-  render() {
-    
+  render() { 
     return (
       <Page
         className="ProfilePage"

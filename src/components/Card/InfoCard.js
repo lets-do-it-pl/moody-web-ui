@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'utils/propTypes';
 
 import classNames from 'classnames';
@@ -14,8 +15,6 @@ import {
   Label
 } from 'reactstrap';
 
-
-
 function InfoCard({
   color,
   header,
@@ -27,11 +26,42 @@ function InfoCard({
   buttonProps,
   ...restProps
 }) {
-  const bgColor = `bg-${color}`;
+
+  const URL = 'http://localhost:1234/api/users/1'
+
+  const [userDetails, setUserDetails] = useState([])
+  
+  const renderSwitch = (param) => {
+    switch(param) {
+      case 1:
+        return 'Standart';
+      case 2:
+        return 'Admin';
+      default:
+        return 'None';
+    }
+  }
+
+  useEffect(() => {
+      getData()
+  }, [])
+
+  const getData = async () => {
+
+    const response = await axios.get(URL)
+    console.log('response', response)
+    setUserDetails(response.data)
+  }
+
+  const bgColor = `bg-${color}`;  
   const classes = classNames(bgColor, className);
 
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
+
+  console.log(userDetails.id);
+
+  
 
   return (
     <Card inverse className={classes} {...restProps}>
@@ -45,7 +75,7 @@ function InfoCard({
           <FormGroup>
             <Label className="text-dark" for="name">Fullname</Label>
             <Input
-              value={fullname}
+              value={userDetails.name}
             />
           </FormGroup>
           <FormGroup>
@@ -53,7 +83,7 @@ function InfoCard({
             <Input
               type="email"
               name="email"
-              placeholder={email}            
+              placeholder={userDetails.email}            
               readOnly
             />
           </FormGroup>
@@ -82,7 +112,7 @@ function InfoCard({
             <Input
               type="email"
               name="userType"
-              placeholder={userType}            
+              placeholder={renderSwitch(userDetails.userType)}            
               readOnly
             />
           </FormGroup>
