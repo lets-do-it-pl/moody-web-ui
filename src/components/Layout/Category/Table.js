@@ -12,6 +12,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {connect} from 'react-redux';
 import * as actions from 'actions/categoryAction';
+import IconButton from '@material-ui/core/IconButton';
+import Warning from './Warning';
 
 class CategoryTable extends Component {
   state = {
@@ -97,10 +99,9 @@ class CategoryTable extends Component {
                               <TableCell>{entity.id}</TableCell>
                               <TableCell>{entity.name}</TableCell>
                               <TableCell>
-                                <p> 
-                                    Edit <i className="far fa-edit"></i> 
-                                    Delete <i className="fas fa-trash"></i>
-                                </p>
+                                <IconButton>
+                                  <Warning categoryId = {entity.id}/>
+                                </IconButton>
                               </TableCell>
                             </TableRow>
                           </Ref>

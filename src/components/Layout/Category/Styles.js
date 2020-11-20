@@ -9,8 +9,8 @@ export const Styles = styled.div`
     form {
         display : flex;
         flex-direction : column;
-        width : 50%;
-        margin 100px auto;
+        width : 70%;
+        margin : 30px;
 
         label {
             margin-top : 20px;
@@ -27,11 +27,7 @@ export const Styles = styled.div`
     }
 
     button{
-        background : #1997BF;
-        padding : 10px;
-        color : white;
         margin-top : 20px;
-        border-raduis : 5px;
-        font-size : 1.2em;
+        width : 40%;
     }
 `

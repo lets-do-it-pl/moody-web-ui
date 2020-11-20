@@ -6,20 +6,12 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Popup from 'components/Layout/Category/Popup';
-import {AddIcon} from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add';
 import IconButton from '@material-ui/core/IconButton';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 class CategoryPage extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
-  }
-
-  constructor (props){
-    super(props);
-    this.state = {
-      showModal : false
-    }
   }
 
   render() {
@@ -37,10 +29,9 @@ class CategoryPage extends React.Component {
                 title = "Categories" 
                 action={
                   <IconButton>
-                    <MoreVertIcon />
+                    <Popup/>
                   </IconButton>
-                }
-              />
+                }/>
               <CardContent>
                 <Table/>
               </CardContent>
@@ -48,13 +39,18 @@ class CategoryPage extends React.Component {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Card>
-              <CardHeader title = "Category Details"/>
+              <CardHeader 
+                title = "Category Details"
+                action={
+                  <IconButton>
+                    <AddIcon/>
+                  </IconButton>
+                }/>
               <CardContent>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
-        <Popup/>
       </Page>
     );
   }

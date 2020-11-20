@@ -37,8 +37,8 @@ export const updateCategory = (id, data) => dispatch => {
         })
 }
 
-export const deleteCategory = (id, onSuccess) => dispatch => {
-    api.dCandidate().delete(id)
+export const deleteCategory = (id) => dispatch => {
+    api.category().deleteCategory(id)
         .then(() => {
             dispatch({
                 type: ACTION_TYPES.DELETE_CATEGORY,
