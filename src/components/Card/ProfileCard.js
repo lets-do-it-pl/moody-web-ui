@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'utils/propTypes';
 
-import { Card, CardHeader, CardBody } from 'reactstrap';
+import { Card, 
+         CardContent } from '@material-ui/core';
 
 import Avatar from 'components/Avatar';
 
@@ -21,15 +22,10 @@ const ProfileCard = ({
 
   return (
     <Card inverse className={classes} {...restProps}>
-      {header && typeof header === 'string' ? (
-        <CardHeader className={bgColor}>{header}</CardHeader>
-      ) : (
-        header
-      )}
-      <CardBody className="d-flex flex-wrap flex-column align-items-center justify-content-center">
+      <CardContent className="d-flex flex-wrap flex-column align-items-center justify-content-center">
         <Avatar size={avatarSize} src={avatar} />   {/*  */}
         {/* <Button color="primary" {...buttonProps} /> */}
-      </CardBody>
+      </CardContent>
     </Card>
   );
 };
