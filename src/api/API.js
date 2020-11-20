@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 const apiUrl = "http://localhost:1234/api";
 
@@ -30,14 +31,16 @@ axios.all([getUserDetails, getUserId])
 .catch((error) => {
   // Error
   if (error.response) {
-      // status code - out of the range of 2xx 
+      
        console.log(error.response.data);
        console.log(error.response.status);
        console.log(error.response.headers);
-       NotificationManager.error('Error while getting user details!', 'Error!');
-
+       NotificationManager.error('Unauthorized user.', 'Error!');
+       // eslint-disable-next-line react/react-in-jsx-scope
+       return <Redirect to="/" />  // redirection route should be define -- root for sign in page
+       
   } else {
-      // Something happened in setting up the request that triggered an Error
+      
       console.log('Error', error.message);
       NotificationManager.error(error.response.data, error.response.status);
 
