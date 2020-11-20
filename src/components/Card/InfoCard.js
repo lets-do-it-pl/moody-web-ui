@@ -1,19 +1,16 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'utils/propTypes';
-
-import classNames from 'classnames';
-
 import {
   Button,
+  TextField,
   Card,
-  CardBody,
-  CardHeader,
-  Form,
-  FormGroup,
-  Input,
-  Label
-} from 'reactstrap';
+  CardActions,
+  CardContent
+} from '@material-ui/core';
+
+
+import classNames from 'classnames';
 
 function InfoCard({
   color,
@@ -30,6 +27,23 @@ function InfoCard({
   const URL = 'http://localhost:1234/api/users/1'
 
   const [userDetails, setUserDetails] = useState([])
+
+  /* const useStyles = makeStyles({
+    root: {
+      minWidth: 275,
+    },
+    bullet: {
+      display: 'inline-block',
+      margin: '0 2px',
+      transform: 'scale(0.8)',
+    },
+    title: {
+      fontSize: 14,
+    },
+    pos: {
+      marginBottom: 12,
+    },
+  }); */
   
   const renderSwitch = (param) => {
     switch(param) {
@@ -65,63 +79,64 @@ function InfoCard({
 
   return (
     <Card inverse className={classes} {...restProps}>
-      {header && typeof header === 'string' ? (
-        <CardHeader className="text-dark">{header}</CardHeader>
-      ) : (
-          header
-        )}
-      <CardBody className="d-flex flex-wrap flex-column align-items-center justify-content-center">
-        <Form>
-          <FormGroup>
-            <Label className="text-dark" for="name">Fullname</Label>
-            <Input
-              value={userDetails.name}
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label className="text-dark" for="email">Email</Label>
-            <Input
-              type="email"
-              name="email"
-              placeholder={userDetails.email}            
-              readOnly
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label className="text-dark" for="password">New Password</Label>
-            <Input
-              type="password"
-              name="password"
-              value={pass1}
-              onChange={event => setPass1(event.target.value)}    //if value changes, pass1 also changes
-              placeholder="Enter your new password"
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label className="text-dark" for="confirmPassword">Confirm Your New Password</Label>
-            <Input
-              type="password"
-              name="confirmPassword"
-              value={pass2}
-              onChange={event => setPass2(event.target.value)}    //if value changes, pass2 also changes
-              placeholder="Re-enter your password"
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label className="text-dark" for="userType">User Type</Label>
-            <Input
-              type="email"
-              name="userType"
-              placeholder={renderSwitch(userDetails.userType)}            
-              readOnly
-            />
-          </FormGroup>
-        </Form>
+      <CardContent className="d-flex flex-wrap flex-column align-items-center justify-content-center">
+          <TextField
+            id="outlined-Name"
+            label="Name"
+            defaultValue={userDetails.name} 
+            variant="outlined"
+            fullWidth
+            style={{ margin: 8 }}
+          />
+          <TextField
+          id="outlined-Email"
+          label="Email"
+          defaultValue={userDetails.email} 
+          InputProps={{
+            readOnly: true,
+          }}
+          fullWidth
+          style={{ margin: 8 }}
+          variant="outlined"
+          />
+          <TextField
+            id="outlined-pass1"
+            label="New Password"
+            defaultValue={pass1} 
+            variant="outlined"
+            fullWidth
+            style={{ margin: 8 }}
+            onChange={event => setPass1(event.target.value)}  //if value changes, pass1 also changes
+          />
+          <TextField
+            id="outlined-pass2"
+            label="Confirm Your New Password"
+            defaultValue={pass2} 
+            variant="outlined"
+            fullWidth
+            style={{ margin: 8 }}
+            onChange={event => setPass2(event.target.value)}  //if value changes, pass2 also changes
+          />
+          <TextField
+          id="outlined-UserType"
+          label="User Type"
+          defaultValue={renderSwitch(userDetails.userType)}
+          InputProps={{
+            readOnly: true,
+          }}
+          variant="outlined"
+          fullWidth
+          style={{ margin: 8 }}
+          />
+        </CardContent>
+        <CardActions style={{justifyContent: 'center'}}>
         <Button
-          disabled={pass1.length>1 && pass1 !== pass2}    //checks pass1 and pass2 is equal or not. if they are not, disables the button
-          className="btn-lg mt-3" 
-          color="secondary" {...buttonProps} />   
-      </CardBody>
+          variant="outlined"
+          disabled={pass1.length>1 || pass1 !== pass2}    //checks pass1 and pass2 is equal or not. if they are not, disables the button
+          size="large"
+          color="secondary" {...buttonProps} /> 
+          
+        </CardActions>
     </Card>
   );
 }
