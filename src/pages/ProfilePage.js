@@ -7,9 +7,8 @@ import InfoCard from 'components/Card/InfoCard';
 //import userImage from 'assets/img/users/default_user2.png';
 
 import {
-  Col,
-  Row,
-} from 'reactstrap';
+  Grid
+} from '@material-ui/core';
 
 class ProfilePage extends React.Component {
   componentDidMount() {
@@ -34,18 +33,25 @@ class ProfilePage extends React.Component {
         title="Page"
         breadcrumbs={[{ name: 'User', active: true }]}
       >
-
-        <Row>
-          <Col lg="6" md="12" sm="12" xs="12">
+        <Grid container spacing={3}>
+          <Grid 
+          item lg={6} 
+          md={12} 
+          sm={12}
+          xs={12}>
             <ProfileCard
               color="gradient-white"
               avatarSize={400}
               style={{ height: 500 }}
               avatar={this.state.avatar}       
             />
-          </Col>
+          </Grid>
 
-          <Col lg="6" md="12" sm="12" xs="12">
+          <Grid 
+          item lg={6} 
+          md={12} 
+          sm={12}
+          xs={12}>
             <InfoCard
               color="gradient-white"
               header="Information"
@@ -57,9 +63,9 @@ class ProfilePage extends React.Component {
               }}
               style={{ height: 500 }}
             />
-          </Col>
+          </Grid>
 
-        </Row>
+        </Grid>
 
       </Page>
     );
