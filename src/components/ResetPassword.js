@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 import axios from 'axios';
 
 class ResetPassword extends Component {
@@ -29,23 +31,27 @@ class ResetPassword extends Component {
   render() {
     const {reset,confirm} = this.state
     return (
-      <div>
+      
+      <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="sm">
         <form onSubmit={this.submitHandler}>
           <h3>Forgot Password</h3>
 
           <div className="form-group">
             <label>Password</label>
-            <input type = "text" name = "reset" value={reset}  className="form-control"  placeholder= "Password"
+            <input type = "text" name = "reset" value={reset}  className="form-control"  
                    onChange={this.changeHandler}/>
           </div>
           <div className="form-group">
             <label>ConfirmPassword</label>
-            <input type = "text" name = "confirm" value={confirm}  className="form-control"  placeholder= "Confirm Password"
+            <input type = "text" name = "confirm" value={confirm}  className="form-control" 
                    onChange={this.changeHandler}/>
           </div>
           <button className="btn btn-primary btn-block">Reset Password</button>
         </form>
-      </div>
+        </Container>
+     </React.Fragment>
     );
   }
 }

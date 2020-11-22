@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
 import axios from 'axios';
+
 
 
 class Forgot extends Component {
@@ -18,7 +21,7 @@ class Forgot extends Component {
   submitHandler = (e) => {
     e.preventDefault()
     console.log(this.state)
-    axios.post('https://my-json-server.typicode.com/typicode/demo/posts', this.state)
+    axios.post('http://localhost:1234/api/clients/email/forgot', this.state)
       .then(response => {
         console.log(response)
       })
@@ -28,21 +31,28 @@ class Forgot extends Component {
   }
   render() {
     const {mail} = this.state
-    return (
-      <div>
-        <form onSubmit={this.submitHandler}>
-        <h3>Forgot Password</h3>
 
+    return (
+      <React.Fragment>
+      <CssBaseline />
+      <Container maxWidth="sm">
+       <form onSubmit={this.submitHandler}>
+        <h3>Forgot Password</h3>
         <div className="form-group">
           <label>Email</label>
-          <input type = "text" name = "mail" value={mail}  className="form-control"  placeholder= "Please Enter Your Email"
+          <input type = "text" name = "mail" value={mail}  className="form-control"  
                   onChange={this.changeHandler}/>
         </div>
-        <button className="btn btn-primary btn-block">Send Mail</button>
+        <button className="btn btn-primary btn-block">Send Mail</button>       
       </form>
-     </div>
+      </Container>
+     </React.Fragment>
+    
+        
     );
   }
 }
 
 export default Forgot;
+
+
