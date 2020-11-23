@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable no-template-curly-in-string */
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 import {Redirect} from 'react-router-dom';
@@ -13,20 +16,34 @@ axios.interceptors.request.use(req => {
   return req;
 });
 
-const getUsers = () => axios.get(`${apiUrl}/users`);
-const getUserId = () => 1;
-const getUserDetails = () => axios.get(`${apiUrl}/${getUserId()}/details`);
+function parseJwt(token, claimName) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
 
+    return JSON.parse(jsonPayload)[claimName];
+};
 
-axios.all([getUserDetails, getUserId])
-.then(
-  axios.spread((...responses) => {
-    const responseGetUserDetails = responses[0];
-    const responseGetUserId = responses[1];
+var idUser = parseJwt(userToken,"id");
 
-    console.log(responseGetUserDetails, responseGetUserId );
+function GetUsers() {
+  var url = '${apiUrl}/users';
+  return CallGetApiByAxios(url);
+}
+
+function GetUserDetails() {
+  var url = '${apiUrl}/{id}/details';
+  return CallGetApiByAxios(url);
+}
+
+function CallPostApiByAxios(url, data){
+  axios.post(url, data)
+  .then(function (response) {
+    // handle success
+    console.log(response);
   })
-)
 .catch((error) => {
   if (error.response.status === 401) {
       
@@ -49,12 +66,44 @@ axios.all([getUserDetails, getUserId])
 
   }
   console.log(error.config);
-});
+  });
+  
+}
 
+function CallGetpiByAxios(url) {
+  axios.get(url)
+  .then(function (response) {
+    // handle success
+    console.log(response);
+  })
+  .catch((error) => {
+    if (error.response.status === 401) {
+        
+         console.log(error.response.data);
+         console.log(error.response.status);
+         console.log(error.response.headers);
+         NotificationManager.error('Error!', 'Unauthorized user');
+         // eslint-disable-next-line react/react-in-jsx-scope
+         return <Redirect to="/sign-in" />  
+         
+    } else if (error.response) {
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+      NotificationManager.error(error.response.headers, error.response.status);
+     }else {
+        
+        console.log('Error', error.message);
+        NotificationManager.error(error.response.headers, error.response.status);
+  
+    }
+    console.log(error.config);
+  });
+  
+}
 
 export default {
-  getUserId,
-  getUsers,
-  getUserDetails
+  GetUsers,
+  GetUserDetails 
 };
 
