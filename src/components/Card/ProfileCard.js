@@ -21,7 +21,7 @@ const ProfileCard = ({
   const classes = classNames(bgColor, className);
 
   return (
-    <Card inverse className={classes} {...restProps}>
+    <Card className={classes} {...restProps}>
       <CardContent className="d-flex flex-wrap flex-column align-items-center justify-content-center">
         <Avatar size={avatarSize} src={avatar} />   {/*  */}
         {/* <Button color="primary" {...buttonProps} /> */}

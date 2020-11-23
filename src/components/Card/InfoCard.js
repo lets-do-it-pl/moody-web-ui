@@ -24,15 +24,15 @@ function InfoCard({
   ...restProps
 }) {
 
-  const URL = 'http://localhost:1234/api/users/1'
+  const URL = 'http://localhost:1234/api/user/5'
 
   const [userDetails, setUserDetails] = useState([])
   
   const renderSwitch = (param) => {
     switch(param) {
-      case 1:
+      case 'S':
         return 'Standart';
-      case 2:
+      case 'A':
         return 'Admin';
       default:
         return 'None';
@@ -58,58 +58,65 @@ function InfoCard({
 
   console.log(userDetails.id);
 
-  
-
   return (
-    <Card inverse className={classes} {...restProps}>
-      <CardContent className="d-flex flex-wrap flex-column align-items-center justify-content-center">
+    <Card className={classes} {...restProps}>
+      <CardContent>
           <TextField
             id="outlined-Name"
             label="Name"
-            defaultValue={userDetails.name} 
+            defaultValue={userDetails.fullName}
             variant="outlined"
             fullWidth
             style={{ margin: 8 }}
+            color="secondary"
           />
           <TextField
-          id="outlined-Email"
-          label="Email"
-          defaultValue={userDetails.email} 
-          InputProps={{
-            readOnly: true,
-          }}
-          fullWidth
-          style={{ margin: 8 }}
-          variant="outlined"
+            id="outlined-Email"
+            label="Email"
+            value={userDetails.email} 
+            InputProps={{
+              readOnly: true,
+            }}
+            fullWidth
+            style={{ margin: 8 }}
+            variant="outlined"
+            color="secondary"
           />
           <TextField
             id="outlined-pass1"
             label="New Password"
             defaultValue={pass1} 
             variant="outlined"
+            type="password"
             fullWidth
             style={{ margin: 8 }}
             onChange={event => setPass1(event.target.value)}  //if value changes, pass1 also changes
+            color="secondary"
           />
           <TextField
             id="outlined-pass2"
             label="Confirm Your New Password"
             defaultValue={pass2} 
             variant="outlined"
+            type="password"
             fullWidth
             style={{ margin: 8 }}
             onChange={event => setPass2(event.target.value)}  //if value changes, pass2 also changes
+            helperText={(pass1 !== pass2) ? "Passwords are not match!" : null}
+            color="secondary"
+            error={pass1.length>1 || pass1 !== pass2}
           />
           <TextField
-          id="outlined-UserType"
-          label="User Type"
-          defaultValue={renderSwitch(userDetails.userType)}
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="outlined"
-          fullWidth
-          style={{ margin: 8 }}
+            id="outlined-UserType"
+            label="User Type"
+            value={renderSwitch(userDetails.userType)}
+            InputProps={{
+              readOnly: true,
+            }}
+            variant="outlined"
+            fullWidth
+            style={{ margin: 8 }}
+            color="secondary"
           />
         </CardContent>
         <CardActions style={{justifyContent: 'center'}}>

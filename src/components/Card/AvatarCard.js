@@ -17,7 +17,7 @@ const AvatarCard = ({
   const classes = classNames('bg-gradient-theme-left', className);
 
   return (
-    <Card inverse className={classes} {...restProps}>
+    <Card className={classes} {...restProps}>
       <CardBody className="d-flex justify-content-center align-items-center flex-column">
         <Avatar src={avatar} size={avatarSize} className="mb-3" />
         <CardTitle>{title}</CardTitle>

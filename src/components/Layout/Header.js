@@ -125,7 +125,8 @@ class Header extends React.Component {
                 <UserCard
                   title={this.state.fullname}
                   subtitle={this.state.email}
-                  className="border-light"
+                  className="border-light text-white"
+                  
                 >
                   <ListGroup flush>
                     <a href="/ProfilePage">
