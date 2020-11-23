@@ -14,7 +14,7 @@ axios.interceptors.request.use(req => {
 });
 
 const getUsers = () => axios.get(`${apiUrl}/users`);
-const getUserId = () => ;
+const getUserId = () => 1;
 const getUserDetails = () => axios.get(`${apiUrl}/${getUserId()}/details`);
 
 
