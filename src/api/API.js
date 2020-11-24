@@ -46,19 +46,14 @@ function CallPostApiByAxios(url, data){
   })
 .catch((error) => {
   if (error.response.status === 401) {
-      
-       console.log(error.response.data);
-       console.log(error.response.status);
-       console.log(error.response.headers);
+      console.log(error.response);
        NotificationManager.error('Error!', 'Unauthorized user');
        // eslint-disable-next-line react/react-in-jsx-scope
        return <Redirect to="/sign-in" />  
        
   } else if (error.response) {
-    console.log(error.response.data);
-    console.log(error.response.status);
-    console.log(error.response.headers);
-    NotificationManager.error(error.response.headers, error.response.status);
+    console.log(error.response);
+    NotificationManager.error("Error!", error.response.status);
    }else {
       
       console.log('Error', error.message);
