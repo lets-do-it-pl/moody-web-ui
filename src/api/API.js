@@ -47,7 +47,9 @@ function CallApiByAxios(Url, Data, httpMethodType){
   })
   .then(function (response) {
     // handle success
-    console.log(response);
+    console.log(response.data);
+    return response.data;
+    
   })
 .catch((error) => {
   if (error.response.status === 401) {
