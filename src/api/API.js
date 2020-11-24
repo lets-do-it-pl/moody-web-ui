@@ -26,7 +26,7 @@ function parseJwt(token, claimName) {
     return JSON.parse(jsonPayload)[claimName];
 };
 
-var idUser = parseJwt(userToken,"id");
+var idUser = parseJwt(userToken,"userId");
 
 function GetUsers() {
   var url = '${apiUrl}/users';
@@ -61,38 +61,6 @@ function CallPostApiByAxios(url, data){
 
   }
   console.log(error.config);
-  });
-  
-}
-
-function CallGetpiByAxios(url) {
-  axios.get(url)
-  .then(function (response) {
-    // handle success
-    console.log(response);
-  })
-  .catch((error) => {
-    if (error.response.status === 401) {
-        
-         console.log(error.response.data);
-         console.log(error.response.status);
-         console.log(error.response.headers);
-         NotificationManager.error('Error!', 'Unauthorized user');
-         // eslint-disable-next-line react/react-in-jsx-scope
-         return <Redirect to="/sign-in" />  
-         
-    } else if (error.response) {
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-      NotificationManager.error(error.response.headers, error.response.status);
-     }else {
-        
-        console.log('Error', error.message);
-        NotificationManager.error(error.response.headers, error.response.status);
-  
-    }
-    console.log(error.config);
   });
   
 }
