@@ -30,12 +30,12 @@ var idUser = parseJwt(userToken,"userId");
 
 function GetUsers() {
   var url = '${apiUrl}/users';
-  return CallGetApiByAxios(url);
+  return CallGetApiByAxios(url, 'get');
 }
 
 function GetUserDetails() {
   var url = '${apiUrl}/{id}/details';
-  return CallGetApiByAxios(url);
+  return CallGetApiByAxios(url, 'get');
 }
 
 function CallApiByAxios(Url, Data, httpMethodType){
