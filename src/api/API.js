@@ -38,8 +38,13 @@ function GetUserDetails() {
   return CallGetApiByAxios(url);
 }
 
-function CallPostApiByAxios(url, data){
-  axios.post(url, data)
+function CallApiByAxios(Url, Data, httpMethodType){
+
+  axios({
+    method: httpMethodType,
+    url: Url,
+    data: Data
+  })
   .then(function (response) {
     // handle success
     console.log(response);
