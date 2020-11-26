@@ -5,11 +5,15 @@ import React from 'react';
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
+import Axios from 'axios';
 
 
 //Components
 import SignUpPage from './pages/SignUpPage';
 import AuthPage from './pages/AuthPage';
+
+
+Axios.defaults.baseURL = 'http://localhost:1234'
 
 
 const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
@@ -32,7 +36,7 @@ class App extends React.Component
                   path="/login"
                   layout={EmptyLayout}
                   component={props => (
-                    <AuthPage  />
+                    <AuthPage />
                   )}
                 />
                 <LayoutRoute
