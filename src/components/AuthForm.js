@@ -4,6 +4,7 @@ import React from 'react';
 import { Button, Form, FormGroup, Input, Label } from 'reactstrap';
 import  Recaptcha from 'react-recaptcha';
 
+
 class AuthForm extends React.Component {
   constructor(props)
   {
@@ -179,52 +180,5 @@ class AuthForm extends React.Component {
 export const STATE_LOGIN = 'LOGIN';
 export const STATE_SIGNUP = 'SIGNUP';
 
-
-AuthForm.propTypes = {
-  authState: PropTypes.oneOf([STATE_LOGIN, STATE_SIGNUP]).isRequired,
-  showLogo: PropTypes.bool,
-  usernameLabel: PropTypes.string,
-  usernameInputProps: PropTypes.object,
-  passwordLabel: PropTypes.string,
-  passwordInputProps: PropTypes.object,
-  confirmPasswordLabel: PropTypes.string,
-  confirmPasswordInputProps: PropTypes.object,
-  nameLabel: PropTypes.string,
-  nameInputProps: PropTypes.object,
-  surnameLabel: PropTypes.string,
-  surnameInputProps: PropTypes.object,
-  onLogoClick: PropTypes.func,
-};
-
-AuthForm.defaultProps = {
-  authState: 'LOGIN',
-  showLogo: true,
-  usernameLabel: 'Email',
-  usernameInputProps: {
-    type: 'email',
-    placeholder: 'Your@email.com',
-  },
-  passwordLabel: 'Password',
-  passwordInputProps: {
-    type: 'password',
-    placeholder: 'Your Password',
-  },
-  confirmPasswordLabel: 'Confirm Password',
-  confirmPasswordInputProps: {
-    type: 'password',
-    placeholder: 'Confirm Your Password',
-  },
-  nameLabel: 'First Name',
-  nameInputProps: {
-    type: 'text',
-    placeholder: 'Your Name',
-  },
-  surnameLabel: 'Last Name',
-  surnameInputProps: {
-    type: 'text',
-    placeholder: 'Your Lastname',
-  },
-  onLogoClick: () => {},
-};
 
 export default AuthForm;

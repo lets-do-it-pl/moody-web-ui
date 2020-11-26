@@ -25,7 +25,7 @@ const sidebarBackground = {
 
 const navItems = [
   { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
-  { to: '/login', name: 'login / signup', exact: false, Icon: MdAccountCircle }
+  { to: '/signup', name: 'signup', exact: false, Icon: MdAccountCircle }
 
 ];
 
