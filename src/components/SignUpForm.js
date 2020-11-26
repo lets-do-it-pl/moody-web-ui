@@ -26,14 +26,14 @@ function SignUpForm(props)
       value: '',
       hasErrors: false,
       message: '',
-      isUnique: true,
+      isUnique: false,
       checkCount: 0,
     },
     email: {
       value: '',
       hasErrors: false,
       message: '',
-      isUnique: true,
+      isUnique: false,
       checkCount: 0,
     },
     password: {
@@ -194,58 +194,58 @@ function SignUpForm(props)
   const [state, dispatch] = useImmerReducer(ourReducer, initalState);
 
 
-  // useEffect(() =>
-  // {
-  //   if (state.username.checkCount)
-  //   {
-  //     const Request = Axios.CancelToken.source();
-  //
-  //     async function fetchResults()
-  //     {
-  //       try
-  //       {
-  //         const response = await Axios.post('/doesUsernameExist',
-  //           { username: state.username.value },
-  //           { cancelToken: Request.token });
-  //         dispatch({ type: 'usernameUniqueResults', value: response.data });
-  //       } catch (e)
-  //       {
-  //         console.log('There was a problem or the request cancelled.');
-  //       }
-  //     }
-  //
-  //     fetchResults();
-  //     return () => Request.cancel();
-  //   }
-  //
-  // }, [state.username.checkCount]);
+  useEffect(() =>
+  {
+    if (state.username.checkCount)
+    {
+      const Request = Axios.CancelToken.source();
+
+      async function fetchResults()
+      {
+        try
+        {
+          const response = await Axios.post('/doesUsernameExist',
+            { username: state.username.value },
+            { cancelToken: Request.token });
+          dispatch({ type: 'usernameUniqueResults', value: response.data });
+        } catch (e)
+        {
+          console.log('There was a problem or the request cancelled.');
+        }
+      }
+
+      fetchResults();
+      return () => Request.cancel();
+    }
+
+  }, [state.username.checkCount]);
 
 
-  // useEffect(() =>
-  // {
-  //   if (state.email.checkCount)
-  //   {
-  //     const Request = Axios.CancelToken.source();
-  //
-  //     async function fetchResults()
-  //     {
-  //       try
-  //       {
-  //         const response = await Axios.post('/doesEmailExist',
-  //           { email: state.email.value },
-  //           { cancelToken: Request.token });
-  //         dispatch({ type: 'emailUniqueResults', value: response.data });
-  //       } catch (e)
-  //       {
-  //         console.log('There was a problem or the request cancelled.');
-  //       }
-  //     }
-  //
-  //     fetchResults();
-  //     return () => Request.cancel();
-  //   }
-  //
-  // }, [state.email.checkCount]);
+  useEffect(() =>
+  {
+    if (state.email.checkCount)
+    {
+      const Request = Axios.CancelToken.source();
+
+      async function fetchResults()
+      {
+        try
+        {
+          const response = await Axios.post('/doesEmailExist',
+            { email: state.email.value },
+            { cancelToken: Request.token });
+          dispatch({ type: 'emailUniqueResults', value: response.data });
+        } catch (e)
+        {
+          console.log('There was a problem or the request cancelled.');
+        }
+      }
+
+      fetchResults();
+      return () => Request.cancel();
+    }
+
+  }, [state.email.checkCount]);
 
 
   useEffect(() =>
