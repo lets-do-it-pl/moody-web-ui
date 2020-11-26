@@ -7,6 +7,17 @@ function SignUpForm(props)
 {
 
   const initalState = {
+
+    firstName: {
+      value: '',
+      hasErrors: false,
+      message: '',
+    },
+    lastName: {
+      value: '',
+      hasErrors: false,
+      message: '',
+    },
     username: {
       value: '',
       hasErrors: false,
@@ -33,6 +44,18 @@ function SignUpForm(props)
   {
     switch (action.type)
     {
+      case 'firstNameImmediately':
+        draft.firstName.hasErrors = false;
+        draft.firstName.value = action.value;
+        return;
+      case 'firstNameAfterDelay':
+        return;
+      case 'lastNameImmediately':
+        draft.lastName.hasErrors = false;
+        draft.lastName.value = action.value;
+        return;
+      case 'lastNameAfterDelay':
+        return;
       case 'usernameImmediately':
         draft.username.hasErrors = false;
         draft.username.value = action.value;
@@ -193,6 +216,36 @@ function SignUpForm(props)
 
   }, [state.email.value]);
 
+  useEffect(() =>
+  {
+    if (state.password.value)
+    {
+      const delay = setTimeout(() => dispatch({ type: 'emailAfterDelay' }), 800);
+      return () => clearTimeout(delay);
+    }
+
+  }, [state.password.value]);
+
+  useEffect(() =>
+  {
+    if (state.firstName.value)
+    {
+      const delay = setTimeout(() => dispatch({type: "firstNameAfterDelay"}), 800)
+      return () => clearTimeout(delay)
+    }
+
+  }, [state.firstName.value]);
+
+  useEffect(() =>
+  {
+    if (state.lastName.value)
+    {
+      const delay = setTimeout(() => dispatch({type: "lastNameAfterDelay"}), 800)
+      return () => clearTimeout(delay)
+    }
+
+  }, [state.lastName.value]);
+
   function handleSubmit(e)
   {
     e.preventDefault();
@@ -205,6 +258,8 @@ function SignUpForm(props)
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={state.firstName.hasErrors}
+            helperText={state.firstName.hasErrors === true ? state.firstName.message : ''}
             autoComplete="fname"
             name="firstName"
             variant="outlined"
@@ -213,10 +268,13 @@ function SignUpForm(props)
             id="firstName"
             label="First Name"
             autoFocus
+            onChange={e => dispatch({ type: 'firstNameImmediately', value: e.target.value })}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            error={state.lastName.hasErrors}
+            helperText={state.lastName.hasErrors === true ? state.lastName.message : ''}
             variant="outlined"
             required
             fullWidth
@@ -224,6 +282,7 @@ function SignUpForm(props)
             label="Last Name"
             name="lastName"
             autoComplete="lname"
+            onChange={e => dispatch({ type: 'lastNameImmediately', value: e.target.value })}
           />
         </Grid>
         <Grid item xs={12}>
