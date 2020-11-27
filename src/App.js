@@ -11,6 +11,7 @@ import Axios from 'axios';
 //Components
 import SignUpPage from './pages/SignUpPage';
 import AuthPage from './pages/AuthPage';
+import Demo2Page from "./pages/SignUpPage.js";
 
 
 Axios.defaults.baseURL = 'http://localhost:1234'
