@@ -15,16 +15,21 @@ import * as actions from 'actions/categoryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteCategoryModal from './DeleteCategoryModal';
 import UpdateCategoryModal from './UpdateCategoryModal';
-import '../../../style.css';
+import ImageModal from './ImageModal';
 
 class CategoryTable extends Component {
 
   constructor(props){
     super(props);
     this.state = {
-    selectedImage : null,
-    isOpen : false
+    selectedImage : null
     }
+  }
+
+  closeImage = () => {
+    this.setState({
+      selectedImage: null
+    })
   }
 
   componentDidMount () {
@@ -35,10 +40,6 @@ class CategoryTable extends Component {
     background: isDragging && ("lightblue"),
     ...draggableStyle,
   })
-
-  handleShowDialog = () => {
-    this.setState({ isOpen: !this.state.isOpen });
-  };
 
   onDragEnd = result => {
     
@@ -65,8 +66,7 @@ class CategoryTable extends Component {
 
   setSelectedImage = (e) => {
     this.setState({
-      selectedImage : e.target.src,
-      isOpen : true
+      selectedImage : e.target.src
     });
   }
 
@@ -112,21 +112,7 @@ class CategoryTable extends Component {
                                 <img alt = "" style = {{width: "60px", borderRadius: "50%"}}
                                   src={"data:image/png;base64," + entity.image} 
                                   onClick = {this.setSelectedImage}/>
-                                  {this.state.isOpen && (
-                                    <dialog
-                                      className="dialog"
-                                      style={{ position: "absolute" }}
-                                      open
-                                      onClick={this.handleShowDialog}
-                                    >
-                                      <img
-                                        className="image"
-                                        src={selectedImage} 
-                                        onClick={this.handleShowDialog}
-                                        alt=""
-                                      />
-                                    </dialog>
-                                  )}
+                                  
                               </TableCell>
                               <TableCell>{entity.id}</TableCell>
                               <TableCell>{entity.name}</TableCell>
@@ -157,6 +143,7 @@ class CategoryTable extends Component {
             </Droppable>
           </Table>
         </DragDropContext>
+        {selectedImage && <ImageModal selectedImage = {selectedImage} closeImage = {this.closeImage}/>}
       </div>
     );
   }
