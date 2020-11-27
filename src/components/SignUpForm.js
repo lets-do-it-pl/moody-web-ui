@@ -103,13 +103,15 @@ function SignUpForm(props)
           <Recaptcha
             sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
             render="explicit"
-            onChange={handleChange}
-            verifyCallback={(response) =>
+            verifyCallback={() =>
             {
-              setFieldValue('recaptcha', response);
+              setFieldValue('recaptcha', true);
             }}
           />
-          {errors.recaptcha ? <FormLabel error>{errors.recaptcha}</FormLabel> : null}
+          {errors.recaptcha
+          && touched.recaptcha && (
+            <FormLabel error>{errors.recaptcha}</FormLabel>
+          )}
         </Grid>
 
         <Button color="primary" variant="contained" fullWidth type="submit" className={classes.submit}>

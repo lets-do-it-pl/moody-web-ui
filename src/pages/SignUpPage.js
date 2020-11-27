@@ -57,8 +57,8 @@ const validationSchema = yup.object({
     .string()
     .required('Required'),
   recaptcha: yup
-    .string()
-    .required('Please verify reCAPTCHA'),
+    .bool()
+    .oneOf([true], 'Please verify reCaptcha'),
 });
 
 const SignUpPage = () =>
@@ -74,6 +74,7 @@ const SignUpPage = () =>
       {
         const response = await Axios.post('/api/user',
           values, { cancelToken: Request.token });
+          console.log(response.data)
       } catch (e)
       {
         console.log('There was a problem or the request cancelled.');
@@ -91,7 +92,7 @@ const SignUpPage = () =>
     firstName: '',
     lastName: '',
     username: '',
-    recaptcha: '',
+    recaptcha: false,
   };
 
 
@@ -117,7 +118,7 @@ const SignUpPage = () =>
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
           classes={useStyles()}
-          />
+        />
       </div>
     </Container>
 
