@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { useFormik } from 'formik';
+import { Formik, useFormik } from 'formik';
 import * as yup from 'yup';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -10,6 +9,8 @@ import { Link } from 'react-router-dom';
 import logo200Image from '../assets/img/logo/logo_200.png';
 import Recaptcha from 'react-recaptcha';
 import loadjs from 'loadjs';
+import Axios from 'axios';
+import SignUpForm from '../components/SignUpForm';
 
 loadjs('https://www.google.com/recaptcha/api.js');
 
@@ -47,7 +48,7 @@ const validationSchema = yup.object({
     .required('Required'),
   username: yup
     .string()
-    .min(3,'Username must be at least 3 characters')
+    .min(3, 'Username must be at least 3 characters')
     .required('Required'),
   firstName: yup
     .string()
@@ -55,26 +56,44 @@ const validationSchema = yup.object({
   lastName: yup
     .string()
     .required('Required'),
-
+  recaptcha: yup
+    .string()
+    .required('Please verify reCAPTCHA'),
 });
 
 const SignUpPage = () =>
 {
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-      firstName: '',
-      lastName:'',
-      username:''
-    },
-    validateOnBlur:true,
-    validationSchema: validationSchema,
-    onSubmit: (values) =>
+
+  function handleSubmit(values)
+  {
+    const Request = Axios.CancelToken.source();
+
+    async function fetchResults()
     {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
+      try
+      {
+        const response = await Axios.post('/api/user',
+          values, { cancelToken: Request.token });
+      } catch (e)
+      {
+        console.log('There was a problem or the request cancelled.');
+        console.log(e.response);
+      }
+    }
+
+    fetchResults();
+    return () => Request.cancel();
+  }
+
+  const values = {
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    username: '',
+    recaptcha: '',
+  };
+
 
   const classes = useStyles();
 
@@ -92,100 +111,13 @@ const SignUpPage = () =>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form onSubmit={formik.handleSubmit} className={classes.form}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                required
-                autoFocus
-                id="firstName"
-                name="firstName"
-                label="First Name"
-                variant="outlined"
-                value={formik.values.firstName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.firstName && Boolean(formik.errors.firstName) }
-                helperText={formik.touched.firstName && formik.errors.firstName} />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                fullWidth
-                required
-                id="lastName"
-                name="lastName"
-                label="Last Name"
-                variant="outlined"
-                value={formik.values.lastName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.lastName && Boolean(formik.errors.lastName) }
-                helperText={formik.touched.lastName && formik.errors.lastName} />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                required
-                id="username"
-                name="username"
-                label="Username"
-                variant="outlined"
-                value={formik.values.username}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.username && Boolean(formik.errors.username) }
-                helperText={formik.touched.username && formik.errors.username} />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                required
-                id="email"
-                name="email"
-                label="Email"
-                variant="outlined"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email) }
-                helperText={formik.touched.email && formik.errors.email} />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                required
-                id="password"
-                name="password"
-                label="Password"
-                type="password"
-                variant="outlined"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.password && Boolean(formik.errors.password)}
-                helperText={formik.touched.password && formik.errors.password}
-              />
-            </Grid>
-            <Grid item xs={12} className="center-recapthca">
-              <Recaptcha
-                sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
-                render="explicit"
-              />
-              <FormLabel error>Please Verify ReCaptcha</FormLabel>
-            </Grid>
-            <Button color="primary" variant="contained" fullWidth type="submit" className={classes.submit}>
-              Submit
-            </Button>
-            <Grid container justify="flex-end">
-              <Grid item>
-                <Link to='/login' variant="body2">
-                  Already have an account? Login
-                </Link>
-              </Grid>
-            </Grid>
-          </Grid>
-        </form>
+        <Formik
+          render={props => <SignUpForm classes={classes} {...props} />}
+          initialValues={values}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+          classes={useStyles()}
+          />
       </div>
     </Container>
 
