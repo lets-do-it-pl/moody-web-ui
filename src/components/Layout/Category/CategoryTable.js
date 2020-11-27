@@ -13,13 +13,19 @@ import TableRow from '@material-ui/core/TableRow';
 import {connect} from 'react-redux';
 import * as actions from 'actions/categoryAction';
 import IconButton from '@material-ui/core/IconButton';
-import Warning from './Warning';
+import DeleteCategoryModal from './DeleteCategoryModal';
+import UpdateCategoryModal from './UpdateCategoryModal';
+import '../../../style.css';
 
 class CategoryTable extends Component {
-  state = {
-    selectedRowIds: [],
-    draggingRowId: null,
-  };
+
+  constructor(props){
+    super(props);
+    this.state = {
+    selectedImage : null,
+    isOpen : false
+    }
+  }
 
   componentDidMount () {
     this.props.getCategories();
@@ -30,14 +36,15 @@ class CategoryTable extends Component {
     ...draggableStyle,
   })
 
+  handleShowDialog = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
+
   onDragEnd = result => {
+    
     const { destination, source, reason } = result;
 
-    // Not a thing to do...
     if (!destination || reason === 'CANCEL') {
-      this.setState({
-        draggingRowId: null,
-      });
       return;
     }
 
@@ -48,17 +55,23 @@ class CategoryTable extends Component {
       return;
     }
 
-    const entities = Object.assign([], this.props.entities);
-    const quote = this.props.entities[source.index];
-    entities.splice(source.index, 1);
-    entities.splice(destination.index, 0, quote);
+    const entities = Object.assign([],this.props.entities);
+    const droppedCategory = this.props.entities[source.index]
 
+    entities.splice(source.index, 1);
+    entities.splice(destination.index, 0, droppedCategory);
+
+  }
+
+  setSelectedImage = (e) => {
     this.setState({
-      entities
+      selectedImage : e.target.src,
+      isOpen : true
     });
   }
 
   render() {
+    const {selectedImage} = this.state;
     return (
       <div style={{ padding: "30px" }}>
       <DragDropContext
@@ -74,19 +87,19 @@ class CategoryTable extends Component {
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
-            <Droppable droppableId="tableBody">
-              {(provided, snapshot) => (
+            <Droppable droppableId="category">
+              {(provided) => (
                 <Ref innerRef={provided.innerRef}>
                   <TableBody {...provided.droppableProps}>
-                    {this.props.entities.map((entity, index) => (
+                    {this.props.entities.sort((a, b) => (a.order > b.order) ? 1 : -1).map((entity, index) => (
                       <Draggable
-                        draggableId={"" + entity.order}
-                        index={index}
                         key={entity.id}
+                        draggableId={entity.order + ''}
+                        index={entity.order}
                       >
                         {(provided, snapshot) => (
                           <Ref innerRef={provided.innerRef}>
-                            <TableRow
+                            <TableRow 
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                               style={this.getItemStyle(
@@ -95,12 +108,41 @@ class CategoryTable extends Component {
                               )}
                             >
                               <TableCell>{entity.order}</TableCell>
-                              <TableCell><img alt = "" style = {{width: "60px", borderRadius: "50%"}}src={"data:image/png;base64," + entity.image} /></TableCell>
+                              <TableCell>
+                                <img alt = "" style = {{width: "60px", borderRadius: "50%"}}
+                                  src={"data:image/png;base64," + entity.image} 
+                                  onClick = {this.setSelectedImage}/>
+                                  {this.state.isOpen && (
+                                    <dialog
+                                      className="dialog"
+                                      style={{ position: "absolute" }}
+                                      open
+                                      onClick={this.handleShowDialog}
+                                    >
+                                      <img
+                                        className="image"
+                                        src={selectedImage} 
+                                        onClick={this.handleShowDialog}
+                                        alt=""
+                                      />
+                                    </dialog>
+                                  )}
+                              </TableCell>
                               <TableCell>{entity.id}</TableCell>
                               <TableCell>{entity.name}</TableCell>
                               <TableCell>
+                                Edit
                                 <IconButton>
-                                  <Warning categoryId = {entity.id}/>
+                                  <UpdateCategoryModal 
+                                    id = {entity.id}
+                                    order = {entity.order}
+                                    name = {entity.name}
+                                    image = {entity.image}
+                                    />
+                                </IconButton>
+                                Delete
+                                <IconButton>
+                                  <DeleteCategoryModal categoryId = {entity.id}/>
                                 </IconButton>
                               </TableCell>
                             </TableRow>

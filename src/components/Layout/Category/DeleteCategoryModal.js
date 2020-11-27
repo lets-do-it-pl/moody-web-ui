@@ -11,13 +11,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import {connect} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    fontSize : ""
-
+  submit: {
+    backgroundColor: "#5cb85c",
+    color : "white"
   },
 }));
 
-const Warning = ({...props}) => {
+const DeleteCategoryModal = ({...props}) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -43,10 +43,10 @@ const Warning = ({...props}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => props.deleteCategory(props.categoryId)} color="primary">
+          <Button className={classes.submit} onClick={() => props.deleteCategory(props.categoryId)} color="primary">
             Confirm
           </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
+          <Button onClick={handleClose} color="secondary" variant = "contained">
             Cancel
           </Button>
         </DialogActions>
@@ -59,4 +59,4 @@ const mapActionToProps = {
     deleteCategory : actions.deleteCategory
 }
 
-export default connect(null, mapActionToProps)(Warning);
+export default connect(null, mapActionToProps)(DeleteCategoryModal);

@@ -22,7 +22,7 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  { to: '/category', name: 'category', exact: false, Icon: MdCollections },
+  { to: '/category', name: 'category', exact: true, Icon: MdCollections },
 ];
 
 const navItems = [

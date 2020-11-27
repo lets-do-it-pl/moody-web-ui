@@ -6,7 +6,7 @@ export const Styles = styled.div`
         color : #777;
     }
 
-    form {
+    Form {
         display : flex;
         flex-direction : column;
         width : 70%;

@@ -5,10 +5,8 @@ import React from 'react';
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
-
-
-const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
-const CategoryPage = React.lazy(() => import('pages/CategoryPage'));
+import DashboardPage from './pages/DashboardPage';
+import CategoryPage from './pages/CategoryPage';
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -24,8 +22,8 @@ class App extends React.Component {
 
               <MainLayout breakpoint={this.props.breakpoint}>
                 <React.Suspense fallback={<PageSpinner />}>
-                  <Route exact path="/" component={DashboardPage} />  
-                  <Route exact path="/category" component={CategoryPage} />                          
+                  <Route exact path="/" component={DashboardPage} />
+                  <Route exact path="/category" component = {props => <CategoryPage {...props} />} />                          
                 </React.Suspense>
 
               </MainLayout>

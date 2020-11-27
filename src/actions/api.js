@@ -10,8 +10,17 @@ export default {
         return {
             getCategories: () => axios.get(url + 'list'),
             createCategory: newRecord => axios.post(url + 'api/categories' , newRecord),
-            updateCategoy: (id, updateRecord) => axios.put(url + 'api/categories/' + 'api/categories' + id, updateRecord),
+            updateCategory: (id, updateRecord) => axios.put(url + 'api/categories/' + id, updateRecord),
             deleteCategory: id => axios.delete(url + 'api/categories/' + id)
+        }
+    },
+
+    categoryDetails(url = baseUrl ) {
+        return {
+            getCategories: (categoryId) => axios.get(url + categoryId + '/details'),
+            createCategory: (categoryId ,newRecord) => axios.post(url + 'api/categories/' + categoryId + '/details', newRecord),
+            updateCategory: (categoryId, detailsId, updateRecord) => axios.put(url + 'api/categories/' + categoryId + '/details/' + detailsId, updateRecord),
+            deleteCategory: (categoryId, detailsId) => axios.delete(url + 'api/categories/' + categoryId + '/details/' + detailsId)
         }
     }
 }

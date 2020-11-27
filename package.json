@@ -23,6 +23,7 @@
     "react-dom": "^16.8.4",
     "react-ga": "^2.5.7",
     "react-icons": "^3.5.0",
+    "react-images-upload": "^1.2.8",
     "react-infinite-calendar": "^2.3.1",
     "react-notification-system": "^0.2.17",
     "react-redux": "^7.2.2",

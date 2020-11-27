@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import FormikForm from 'components/Layout/Category/FormikForm';
+import CreateCategoryForm from 'components/Layout/Category/CreateCategoryForm';
 import AddIcon from '@material-ui/icons/Add';
 
 export default function FormDialog() {
@@ -22,12 +22,12 @@ export default function FormDialog() {
     <div>
       <AddIcon onClick={handleClickOpen}/>
       <Dialog open={open} fullWidth onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title"><h2>Create new Category</h2></DialogTitle>
+        <DialogTitle id="form-dialog-title">Create</DialogTitle>
         <DialogContent>
-            <FormikForm/>
+            <CreateCategoryForm/>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="secondary" variant = "contained">
             Cancel
           </Button>
         </DialogActions>
