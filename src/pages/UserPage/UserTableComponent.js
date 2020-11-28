@@ -1,26 +1,18 @@
 import React, {useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardBody, Table } from 'reactstrap';
+//import API from '../../api/API';
 
-
-const URL = 'http://localhost:1234/api/users'
-
-// common url http://localhost:1234/api
 
 const UserTableComponent = () => {
   const [users, setUsers] = useState([])
 
   useEffect(() => {
-      getData()
+  //    userData()
   }, [])
 
-  const getData = async () => {
 
-    const response = await axios.get(URL)
-    console.log('response', response)
-    // check response status 
-    setUsers(response.data)
-}
+// const userData = API.GetUsers;
 
 const removeData = (id) => {
 
