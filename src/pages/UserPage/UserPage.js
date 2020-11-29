@@ -11,7 +11,8 @@ import modal from './modal.css'
 
 const UserPage  = () => {
 
-  const triggerText = 'New User';
+  const triggerTextUser = 'New User';
+  const triggerText2 = 'New User';
   const onSubmit = (event) => {
     event.preventDefault(event);
     console.log(event.target.name.value);
@@ -21,17 +22,16 @@ const UserPage  = () => {
     return (
       <div>
         <Row>
-          <Col>  <Container triggerText={triggerText} onSubmit={onSubmit} />
-          </Col>
-          <Col> <Button className="float-right" color="primary">Send Confirmation</Button></Col>
+          <Col> <Container triggerText={triggerTextUser} onSubmit={onSubmit} /> </Col>
+          <Col> <Button className="float-right" color="primary">Send Confirmation</Button> </Col>
         </Row>
 
         <Row>
           <Col> <UserTableComponent /> </Col>
           <Col>
             <Row>Detailed User List</Row>
-            <Button className="float-right" color="primary">Save</Button>
           </Col>
+          <Col>  <Container triggerText={triggerText2} onSubmit={onSubmit} /> </Col>
         </Row>
 
       </div>
