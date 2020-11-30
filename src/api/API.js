@@ -4,28 +4,29 @@
 import axios from 'axios';
 import { NotificationManager } from 'react-notifications';
 import { Redirect } from 'react-router-dom';
+import React from 'react';
 
-const apiUrl = "http://localhost:1234/api";
-const userToken = localStorage.getItem("userToken");
+const apiUrl = 'http://localhost:1234/api';
+const userToken = localStorage.getItem('userToken');
 
 
-// Automatically sets the authorization header because of the request interceptor
-axios.interceptors.request.use(req => {
-  req.headers.authorization = userToken;
-  return req;
-});
-
-function parseJwt(token, claimName) {
-  var base64Url = token.split('.')[1];
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-
-  return JSON.parse(jsonPayload)[claimName];
-};
-
-var userId = parseJwt(userToken, "userId");
+// // Automatically sets the authorization header because of the request interceptor
+// axios.interceptors.request.use(req => {
+//   req.headers.authorization = userToken;
+//   return req;
+// });
+//
+// function parseJwt(token, claimName) {
+//   var base64Url = token.split('.')[1];
+//   var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+//   var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+//     return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+//   }).join(''));
+//
+//   return JSON.parse(jsonPayload)[claimName];
+// };
+//
+// var userId = parseJwt(userToken, 'userId');
 
 
 function CallApiByAxios(Url, Data, httpMethodType) {
@@ -33,11 +34,12 @@ function CallApiByAxios(Url, Data, httpMethodType) {
   axios({
     method: httpMethodType,
     url: Url,
-    data: Data
+    data: Data,
   })
-    .then(function (response) {
+    .then(function(response) {
       // handle success
       console.log(response.data);
+      NotificationManager.success('Success!', response.data);
       return response.data;
 
     })
@@ -46,11 +48,11 @@ function CallApiByAxios(Url, Data, httpMethodType) {
         console.log(error.response);
         NotificationManager.error('Error!', 'Unauthorized user');
         // eslint-disable-next-line react/react-in-jsx-scope
-        return <Redirect to="/sign-in" />
+        return <Redirect to="/sign-in" />;
 
       } else if (error.response) {
         console.log(error.response);
-        NotificationManager.error("Error!", error.response.status);
+        NotificationManager.error('Error!', error.response.status);
       } else {
 
         console.log('Error', error.message);
@@ -64,17 +66,23 @@ function CallApiByAxios(Url, Data, httpMethodType) {
 
 
 function GetUsers() {
-  var url = '${apiUrl}/users';
-  return CallGetApiByAxios(url, 'get');
+  var url = `${apiUrl}/users`;
+  return CallApiByAxios(url, null,'get');
 }
 
 function GetUserDetails(id) {
-  var url = '${apiUrl}/{id}/details';
-  return CallGetApiByAxios(url, 'get');
+  var url = `${apiUrl}/{id}/details`;
+  return CallApiByAxios(url, null,'get');
+}
+
+function SaveUser(values) {
+  var url = `${apiUrl}/user`;
+  return CallApiByAxios(url, values, 'post');
 }
 
 export default {
   GetUsers,
-  GetUserDetails
+  GetUserDetails,
+  SaveUser
 };
 

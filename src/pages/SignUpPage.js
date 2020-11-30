@@ -1,16 +1,16 @@
 import React from 'react';
 import { Formik, useFormik } from 'formik';
 import * as yup from 'yup';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, CssBaseline, FormLabel, Grid, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import logo200Image from '../assets/img/logo/logo_200.png';
-import Recaptcha from 'react-recaptcha';
 import loadjs from 'loadjs';
 import Axios from 'axios';
 import SignUpForm from '../components/SignUpForm';
+import API from '../api/API';
+import { NotificationContainer } from 'react-notifications';
+
 
 loadjs('https://www.google.com/recaptcha/api.js');
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   submit: {
-    margin: theme.spacing(2, 0, 2),
+    margin: theme.spacing(0, 0, 2),
   },
 }));
 
@@ -61,29 +61,11 @@ const validationSchema = yup.object({
     .oneOf([true], 'Please verify reCaptcha'),
 });
 
-const SignUpPage = () =>
-{
+const SignUpPage = () => {
 
-  function handleSubmit(values)
-  {
-    const Request = Axios.CancelToken.source();
+  function handleSubmit(values) {
 
-    async function fetchResults()
-    {
-      try
-      {
-        const response = await Axios.post('/api/user',
-          values, { cancelToken: Request.token });
-          console.log(response.data)
-      } catch (e)
-      {
-        console.log('There was a problem or the request cancelled.');
-        console.log(e.response);
-      }
-    }
-
-    fetchResults();
-    return () => Request.cancel();
+    API.SaveUser(values);
   }
 
   const values = {
@@ -119,6 +101,7 @@ const SignUpPage = () =>
           onSubmit={handleSubmit}
           classes={useStyles()}
         />
+        <NotificationContainer />
       </div>
     </Container>
 

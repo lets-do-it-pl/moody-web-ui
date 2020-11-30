@@ -1,5 +1,5 @@
 import GAListener from 'components/GAListener';
-import {  MainLayout } from 'components/Layout';
+import { MainLayout, EmptyLayout, LayoutRoute } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
 import React from 'react';
 import componentQueries from 'react-component-queries';
@@ -8,14 +8,8 @@ import './styles/reduction.scss';
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
 
-
 //Components
 import SignUpPage from './pages/SignUpPage';
-
-
-
-
-
 
 const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
 
@@ -26,21 +20,20 @@ const getBasename = () => {
 class App extends React.Component {
   render() {
     return (
-          <BrowserRouter basename={getBasename()}>
-            <GAListener>
-              <Switch>
-                <LayoutRoute
-                  exact
-                  path="/signup"
-                  layout={EmptyLayout}
-                  component={() => (
-                    <SignUpPage />
-                  )}
-                />
-
+      <BrowserRouter basename={getBasename()}>
+        <GAListener>
+          <Switch>
+            <LayoutRoute
+              exact
+              path="/signup"
+              layout={EmptyLayout}
+              component={() => (
+                <SignUpPage />
+              )}
+            />
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
-                <Route exact path="/" component={DashboardPage} />              
+                <Route exact path="/" component={DashboardPage} />
               </React.Suspense>
 
             </MainLayout>
