@@ -1,7 +1,5 @@
 import Avatar from 'components/Avatar';
 import { UserCard } from 'components/Card';
-import Notifications from 'components/Notifications';
-import { notificationsData } from 'demos/header';
 import React from 'react';
 import {
   MdClearAll,
@@ -83,9 +81,7 @@ class Header extends React.Component {
               toggle={this.toggleNotificationPopover}
               target="Popover1"
             >
-              <PopoverBody>
-                <Notifications notificationsData={notificationsData} />
-              </PopoverBody>
+              
             </Popover>
           </NavItem>
 
