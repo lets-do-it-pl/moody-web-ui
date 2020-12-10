@@ -2,7 +2,7 @@ import React from 'react'
 import ResetPasswordComponent from './ResetPasswordComponent'
 import ReactDOM from 'react-dom';
 
-export const Modal = ({
+export const ModalReset = ({
   onClickOutside,
   onKeyDown,
   modalRef,
@@ -46,6 +46,6 @@ export const Modal = ({
   );
 };
 
-export default Modal;
+export default ModalReset;
 
 

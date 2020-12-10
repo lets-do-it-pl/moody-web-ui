@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Modal } from './ModalReset';
-import TriggerButton from './TriggerButton';
+import { ModalReset } from './ModalReset';
+import TriggerButton from '../CreateUserPopup/TriggerButton';
 
-export class Container extends Component {
+export class ContainerResetPassword extends Component {
 
   state = { isShown: false };
   showModal = () => {
@@ -33,11 +33,11 @@ export class Container extends Component {
       <React.Fragment>
         <TriggerButton
           showModal={this.showModal}
-          buttonRef={(n) => (this.TriggerButton = n)}
+          buttonRef={(n) => (this.TriggerButtonReset = n)}
           triggerText={this.props.triggerText}
         />
         {this.state.isShown ? (
-          <Modal
+          <ModalReset
             onSubmit={this.props.onSubmit}
             modalRef={(n) => (this.modal = n)}
             buttonRef={(n) => (this.closeButton = n)}
@@ -51,4 +51,4 @@ export class Container extends Component {
   }
 }
 
-export default Container;
+export default ContainerResetPassword;

@@ -3,6 +3,7 @@ import UserTableComponent from './UserTableComponent'
 //import UserDetailsTableComponent from './UserDetailsTableComponent'
 import { Button, Row, Col } from 'reactstrap';
 import Container from './CreateUserPopup/Container';
+import ContainerResetPassword from './ResetPasswordPopup/ContainerResetPassword';
 import modal from './modal.css'
 
 
@@ -12,7 +13,8 @@ import modal from './modal.css'
 const UserPage  = () => {
 
   const triggerTextUser = 'New User';
-  const triggerText2 = 'New User';
+  const triggerTextReset = 'Reset Password';
+
   const onSubmit = (event) => {
     event.preventDefault(event);
     console.log(event.target.name.value);
@@ -31,7 +33,7 @@ const UserPage  = () => {
           <Col>
             <Row>Detailed User List</Row>
           </Col>
-          <Col>  <Container triggerText={triggerText2} onSubmit={onSubmit} /> </Col>
+          <Col>  <ContainerResetPassword triggerText={triggerTextReset} onSubmit={onSubmit} /> </Col>
         </Row>
 
       </div>

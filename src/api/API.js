@@ -25,8 +25,9 @@ function parseJwt(token, claimName) {
   return JSON.parse(jsonPayload)[claimName];
 };
 
-var userId = parseJwt(userToken, "userId");
+//var userId = parseJwt(userToken, "userId");
 
+var userId = 1;
 
 function CallApiByAxios(Url, Data, httpMethodType) {
 
@@ -65,12 +66,12 @@ function CallApiByAxios(Url, Data, httpMethodType) {
 
 function GetUsers() {
   var url = '${apiUrl}/users';
-  return CallGetApiByAxios(url, 'get');
+  return CallApiByAxios(url, 'get');
 }
 
 function GetUserDetails(id) {
   var url = '${apiUrl}/{id}/details';
-  return CallGetApiByAxios(url, 'get');
+  return CallApiByAxios(url, 'get');
 }
 
 export default {

@@ -1,18 +1,18 @@
 import React, {useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, CardBody, Table } from 'reactstrap';
-//import API from '../../api/API';
+import API from '../../api/API';
 
 
 const UserTableComponent = () => {
   const [users, setUsers] = useState([])
 
   useEffect(() => {
-  //    userData()
+      userData()
   }, [])
 
 
-// const userData = API.GetUsers;
+ const userData = API.GetUsers;
 
 const removeData = (id) => {
 
