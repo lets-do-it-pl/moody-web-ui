@@ -15,21 +15,7 @@ axios.interceptors.request.use(req => {
   return req;
 });
 
-function parseJwt(token, claimName) {
-  var base64Url = token.split('.')[1];
-  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-  var jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-  }).join(''));
-
-  return JSON.parse(jsonPayload)[claimName];
-};
-
-var userId = parseJwt(userToken, "userId");
-
-
 function CallApiByAxios(Url, Data, httpMethodType) {
-
   axios({
     method: httpMethodType,
     url: Url,
@@ -48,28 +34,28 @@ function CallApiByAxios(Url, Data, httpMethodType) {
         // eslint-disable-next-line react/react-in-jsx-scope
         return <Redirect to="/sign-in" />
 
-      } else if (error.response) {
+      }
+      else if (error.response) {
         console.log(error.response);
         NotificationManager.error("Error!", error.response.status);
-      } else {
 
+      }
+      else {
         console.log('Error', error.message);
         NotificationManager.error(error.response.headers, error.response.status);
 
       }
       console.log(error.config);
     });
-
 }
 
-
 function GetUsers() {
-  var url = '${apiUrl}/users';
+  var url = `${apiUrl}/users`;
   return CallGetApiByAxios(url, 'get');
 }
 
 function GetUserDetails(id) {
-  var url = '${apiUrl}/{id}/details';
+  var url = `${apiUrl}/{id}/details`;
   return CallGetApiByAxios(url, 'get');
 }
 
@@ -77,4 +63,3 @@ export default {
   GetUsers,
   GetUserDetails
 };
-
