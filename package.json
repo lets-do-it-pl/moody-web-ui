@@ -5,7 +5,7 @@
   "homepage": "https://reduction-admin.github.io/react-reduction",
   "dependencies": {
     "axios": "^0.21.0",
-    "bootstrap": "4.3.1",
+    "bootstrap": "^4.3.1",
     "chart.js": "2.7.2",
     "classnames": "^2.2.6",
     "d3-geo": "^1.11.3",
