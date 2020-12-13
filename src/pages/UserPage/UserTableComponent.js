@@ -8,6 +8,7 @@ const UserTableComponent = () => {
   const [users, setUsers] = useState([])
 
   useEffect(() => {
+      setUsers([userData])
       userData()
   }, [])
 

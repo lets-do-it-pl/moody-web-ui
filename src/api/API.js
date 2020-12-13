@@ -66,12 +66,12 @@ function CallApiByAxios(Url, Data, httpMethodType) {
 
 function GetUsers() {
   var url = '${apiUrl}/user';
-  return CallApiByAxios(url, 'get');
+  return CallApiByAxios(url,null, 'get');
 }
 
 function GetUserDetails(id) {
   var url = '${apiUrl}/{id}/details';
-  return CallApiByAxios(url, 'get');
+  return CallApiByAxios(url, null, 'get');
 }
 
 export default {
