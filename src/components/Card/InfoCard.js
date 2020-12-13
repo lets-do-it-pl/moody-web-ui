@@ -1,6 +1,8 @@
-import axios from 'axios';
+//import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'utils/propTypes';
+import API from '../../api/API';
+
 import {
   Button,
   TextField,
@@ -24,7 +26,7 @@ function InfoCard({
   ...restProps
 }) {
 
-  const URL = 'http://localhost:1234/api/user/5'
+  //const URL = 'http://localhost:1234/api/user/7'
 
   const [userDetails, setUserDetails] = useState([])
   
@@ -39,16 +41,19 @@ function InfoCard({
     }
   }
 
+  const userData = API.GetUser;
+
   useEffect(() => {
-      getData()
+      setUserDetails([userData])
+      userData()
+      //getData()
   }, [])
-
-  const getData = async () => {
-
+  
+  /* const getData = async () => {
     const response = await axios.get(URL)
     console.log('response', response)
     setUserDetails(response.data)
-  }
+  }  */
 
   const bgColor = `bg-${color}`;  
   const classes = classNames(bgColor, className);
@@ -56,7 +61,7 @@ function InfoCard({
   const [pass1, setPass1] = useState('');
   const [pass2, setPass2] = useState('');
 
-  console.log(userDetails.id);
+  console.log(userDetails);
 
   return (
     <Card className={classes} {...restProps}>
@@ -64,7 +69,7 @@ function InfoCard({
           <TextField
             id="outlined-Name"
             label="Name"
-            defaultValue={userDetails.fullName}
+            value={userDetails.fullName}
             variant="outlined"
             fullWidth
             style={{ margin: 8 }}

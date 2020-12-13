@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-template-curly-in-string */
 import axios from 'axios';
+import { array } from 'prop-types';
 import { NotificationManager } from 'react-notifications';
 import { Redirect } from 'react-router-dom';
 
@@ -25,7 +26,7 @@ function parseJwt(token, claimName) {
   return JSON.parse(jsonPayload)[claimName];
 };
 
-var userId = parseJwt(userToken, "userId");
+//var userId = parseJwt(userToken, "userId");
 
 
 function CallApiByAxios(Url, Data, httpMethodType) {
@@ -62,19 +63,24 @@ function CallApiByAxios(Url, Data, httpMethodType) {
 
 }
 
-
 function GetUsers() {
-  var url = '${apiUrl}/users';
-  return CallGetApiByAxios(url, 'get');
+  var url = '${apiUrl}/user';
+  return CallApiByAxios(url, 'get');
+}
+
+function GetUser() {
+  var url = '${apiUrl}/user/5' /*+ {userId}*/;
+  return CallApiByAxios(url, null, 'get');
 }
 
 function GetUserDetails(id) {
   var url = '${apiUrl}/{id}/details';
-  return CallGetApiByAxios(url, 'get');
+  return CallApiByAxios(url, 'get');
 }
 
 export default {
   GetUsers,
+  GetUser,
   GetUserDetails
 };
 
