@@ -8,6 +8,7 @@ import ImageUploader from "react-images-upload";
 import * as actions from 'actions/categoryAction';
 import convertBase64 from './Common';
 import { makeStyles } from '@material-ui/core/styles';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const ValidationSchema = Yup.object().shape({
     name : Yup.string()
@@ -25,11 +26,9 @@ const useStyles = makeStyles((theme) => ({
 
 const CreateCategoryForm = ({...props}) =>  {
     const classes = useStyles();
-    const [picture, setPicture] = useState();
     const [image, setImage] = useState();
 
     const onDrop = async (file) => {
-      setPicture(file);
       const base64 = await convertBase64(file[0]);
       const base = base64.split(/[,]+/);
       setImage(base[1]);
@@ -73,11 +72,13 @@ const CreateCategoryForm = ({...props}) =>  {
 
                 {({ errors, touched}) => (
                 <Form>
+                    <FormLabel >Category Name</FormLabel>
                     <Field name="name" value = {props.name}/>
                     {touched.name && errors.name && <div>{errors.name}</div>}
+                    <FormLabel >Category Image</FormLabel>
                     <ImageUploader
                                 {...props}
-                                name = "Image"
+                                name = "image"
                                 withIcon={false}
                                 onChange={onDrop}
                                 buttonText="Upload"

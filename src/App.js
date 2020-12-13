@@ -18,8 +18,6 @@ class App extends React.Component {
         <BrowserRouter basename={getBasename()}>
           <GAListener>
             <Switch>
-              
-
               <MainLayout breakpoint={this.props.breakpoint}>
                 <React.Suspense fallback={<PageSpinner />}>
                   <Route exact path="/" component={DashboardPage} />

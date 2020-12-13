@@ -9,9 +9,9 @@ export default {
     category(url = baseUrl ) {
         return {
             getCategories: () => axios.get(url + 'list'),
-            createCategory: newRecord => axios.post(url + 'api/categories' , newRecord),
-            updateCategory: (id, updateRecord) => axios.put(url + 'api/categories/' + id, updateRecord),
-            deleteCategory: id => axios.delete(url + 'api/categories/' + id)
+            createCategory: newRecord => axios.post(url + 'api/category' , newRecord),
+            updateCategory: (id, updateRecord) => axios.put(url + 'api/category/' + id, updateRecord),
+            deleteCategory: id => axios.delete(url + 'api/category/' + id)
         }
     },
 

@@ -12,7 +12,7 @@ export const getCategories = () => dispatch => {
         .then(response => {
             dispatch({
                 type: ACTION_TYPES.GET_CATEGORIES,
-                payload: response.data.categories
+                payload: response.data
             })
         })
 }

@@ -21,7 +21,7 @@ export default function FormDialog(props) {
   return (
     <div>
       <EditIcon onClick={handleClickOpen}/>
-      <Dialog open={open} fullWidth onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog open={open} fullWidth onClose={handleClose}  aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Update</DialogTitle>
         <DialogContent>
             <UpdateCategoryForm 
