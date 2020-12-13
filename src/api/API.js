@@ -65,7 +65,7 @@ function CallApiByAxios(Url, Data, httpMethodType) {
 
 
 function GetUsers() {
-  var url = '${apiUrl}/users';
+  var url = '${apiUrl}/user';
   return CallApiByAxios(url, 'get');
 }
 
