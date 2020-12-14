@@ -29,14 +29,14 @@ function parseJwt(token, claimName) {
 
 var userId = 1;
 
-function CallApiByAxios(Url, Data, httpMethodType) {
+async function CallApiByAxios(Url, Data, httpMethodType) {
 
-  axios({
+  await axios({
     method: httpMethodType,
     url: Url,
     data: Data
   })
-    .then(function (response) {
+    .then( function (response) {
       // handle success
       console.log(response.data);
       return response.data;
@@ -64,14 +64,14 @@ function CallApiByAxios(Url, Data, httpMethodType) {
 }
 
 
-function GetUsers() {
+async function GetUsers() {
   var url = '${apiUrl}/user';
-  return CallApiByAxios(url,null, 'get');
+  return await CallApiByAxios(url,null, 'get');
 }
 
-function GetUserDetails(id) {
+ function GetUserDetails(id) {
   var url = '${apiUrl}/{id}/details';
-  return CallApiByAxios(url, null, 'get');
+  return  CallApiByAxios(url, null, 'get');
 }
 
 export default {

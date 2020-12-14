@@ -5,8 +5,10 @@ import { Button, Row, Col } from 'reactstrap';
 import Container from './CreateUserPopup/Container';
 import ContainerResetPassword from './ResetPasswordPopup/ContainerResetPassword';
 import modal from './modal.css'
+import API from '../../api/API';
 
 
+const userData = API.GetUsers;
 
 
 
@@ -25,17 +27,14 @@ const UserPage  = () => {
       <div>
         <Row>
           <Col> <Container triggerText={triggerTextUser} onSubmit={onSubmit} /> </Col>
-          <Col> <Button className="float-right" color="primary">Send Confirmation</Button> </Col>
+          <Col>  <Button className="float-right" color="primary">Send Confirmation</Button> </Col>
         </Row>
-
+        
         <Row>
           <Col> <UserTableComponent /> </Col>
-          <Col>
-            <Row>Detailed User List</Row>
-          </Col>
           <Col>  <ContainerResetPassword triggerText={triggerTextReset} onSubmit={onSubmit} /> </Col>
         </Row>
-
+        
       </div>
     )
   }
