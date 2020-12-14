@@ -1,14 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import * as Yup from 'yup';
-import {Styles} from './Styles';
 import {connect} from "react-redux";
+import {Styles} from './CategoryStyles';
 import {Formik, Form, Field} from 'formik';
-import Button from '@material-ui/core/Button';
 import ImageUploader from "react-images-upload";
 import * as actions from 'actions/categoryAction';
-import convertBase64 from './Common';
-import { makeStyles } from '@material-ui/core/styles';
-import FormLabel from '@material-ui/core/FormLabel';
+import {Button, makeStyles, FormLabel} from '@material-ui/core';
 
 const ValidationSchema = Yup.object().shape({
     name : Yup.string()
@@ -23,6 +20,21 @@ const useStyles = makeStyles((theme) => ({
       color : "white"
     },
   }));
+
+  const convertBase64 = (image) => {
+    return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(image);
+
+        fileReader.onload = () => {
+            resolve(fileReader.result);
+        };
+
+        fileReader.onerror = (error) => {
+            reject(error);
+        };
+    });
+}
 
 const CreateCategoryForm = ({...props}) =>  {
     const classes = useStyles();

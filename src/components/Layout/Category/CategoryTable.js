@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
 import {Ref } from "semantic-ui-react";
+import {connect} from 'react-redux';
 import {
   DragDropContext,
   Droppable,
   Draggable,
 } from "react-beautiful-dnd";
-import {Table, TableBody, TableCell, TableHead, TableRow, IconButton} from '@material-ui/core';
-import {connect} from 'react-redux';
+import EditIcon from '@material-ui/icons/Edit';
+import {Table, 
+        TableBody, 
+        TableCell, 
+        TableHead, 
+        TableRow, 
+        IconButton,
+        Avatar} from '@material-ui/core';
 import * as actions from 'actions/categoryAction';
-import DeleteCategoryModal from './DeleteCategoryModal';
-import UpdateCategoryModal from './UpdateCategoryModal';
 import ImageModal from './ImageModal';
+import CategoryModal from './CategoryModal';
+import UpdateCategoryForm from './UpdateCategoryForm';
+import DeleteCategoryModal from './DeleteCategoryModal';
 
 class CategoryTable extends Component {
 
@@ -45,13 +53,9 @@ class CategoryTable extends Component {
 
     if(!result.destination) return;
 
-    const entities = Array.from(this.props.entities);
-    const reorderedItem = entities.splice(result.source.index, 1);
-    entities.splice(result.destination.index, 0, reorderedItem);
-
-    // console.log(reorderedItem);
-    // console.log(result.source.index);
-    // console.log(this.props.entities[result.destination.index]);
+    // const entities = Array.from(this.props.entities);
+    // const reorderedItem = entities.splice(result.source.index, 1);
+    // entities.splice(result.destination.index, 0, reorderedItem);
 
     const updatedOrder = this.props.entities[result.destination.index];
     const updatedOrderTop = this.props.entities[result.destination.index - 1];
@@ -103,7 +107,6 @@ class CategoryTable extends Component {
       }
 
     });
-
   }
 
   setSelectedImage = (e) => {
@@ -151,22 +154,24 @@ class CategoryTable extends Component {
                             >
                               <TableCell>{entity.order}</TableCell>
                               <TableCell>
-                                <img alt = "" style = {{width: "60px", borderRadius: "50%"}}
-                                  src={"data:image/png;base64," + entity.image} 
-                                  onClick = {this.setSelectedImage}/>
-                                  
+                              <Avatar alt="" src={"data:image/png;base64," + entity.image} 
+                                  onClick = {this.setSelectedImage} />
                               </TableCell>
                               <TableCell>{entity.id}</TableCell>
                               <TableCell>{entity.name}</TableCell>
                               <TableCell>
                                 Edit
                                 <IconButton>
-                                  <UpdateCategoryModal 
-                                    id = {entity.id}
-                                    order = {entity.order}
-                                    name = {entity.name}
-                                    image = {entity.image}
-                                    />
+                                  <CategoryModal
+                                    title = "Update"
+                                    content = {<UpdateCategoryForm
+                                      id = {entity.id}
+                                      order = {entity.order}
+                                      name = {entity.name}
+                                      image = {entity.image}
+                                    />}
+                                    icon = {<EditIcon/>}
+                                  />
                                 </IconButton>
                                 Delete
                                 <IconButton>
