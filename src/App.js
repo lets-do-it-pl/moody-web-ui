@@ -19,7 +19,7 @@ const getBasename = () => {
 class App extends React.Component {
 
   state = {
-    authed: false
+    isAuthed: false
   };
 
   componentDidMount() {
@@ -27,10 +27,10 @@ class App extends React.Component {
   }
 
   checkAuth = () => {
-    var authed = UserService.isUserLoggedIn();
+    var isAuthed = UserService.isUserLoggedIn();
 
     this.setState({
-      authed: authed
+      isAuthed: isAuthed
     });
   }
 
@@ -49,7 +49,7 @@ class App extends React.Component {
                 <Route path="/" component={DashboardPage} />
               </React.Suspense>
             </MainLayout>
-            {this.state.tokenValid ?
+            {this.state.isAuthed ?
               <Redirect to="/" /> :
               <Redirect to="/auth" />
             }
