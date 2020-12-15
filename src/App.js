@@ -1,15 +1,15 @@
-import GAListener from 'components/GAListener';
-import { MainLayout, EmptyLayout, LayoutRoute } from 'components/Layout';
-import PageSpinner from 'components/PageSpinner';
 import React from 'react';
+import GAListener from 'components/GAListener';
+import { MainLayout, EmptyLayout } from 'components/Layout';
+import PageSpinner from 'components/PageSpinner';
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/moody.scss';
 import 'react-notifications/lib/notifications.css';
-import { NotificationContainer } from 'react-notifications';
-import UserProcess from './common/UserProcess';
+import NotificationContainer from 'react-notifications';
+import UserService from './services/user.service';
 
-const Auth = React.lazy(() => import('./pages/AuthPage'));
+const AuthPage = React.lazy(() => import('./pages/AuthPage'));
 const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
 
 const getBasename = () => {
@@ -18,55 +18,41 @@ const getBasename = () => {
 
 class App extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = { tokenValid: false, isLoaded: false };
-  }
+  state = {
+    authed: false
+  };
 
   componentDidMount() {
     this.checkAuth();
   }
 
-  checkAuth() {
-    var isTokenValid = UserProcess.isTokenValid();
+  checkAuth = () => {
+    var authed = UserService.isUserLoggedIn();
 
     this.setState({
-      tokenValid: isTokenValid,
-      isLoaded: true
+      authed: authed
     });
   }
 
   render() {
-
-    let layout;
-    let redirect;
-
-    if (this.state.tokenValid) {
-      layout = <MainLayout>
-        <React.Suspense fallback={<PageSpinner />}>
-          <Route exact path="/" component={DashboardPage} />
-        </React.Suspense>
-      </MainLayout>
-
-      redirect = <Redirect to="/" />
-
-    } else {
-      layout = <EmptyLayout>
-        <React.Suspense fallback={<PageSpinner />}>
-          <Route exact path="/auth" component={Auth} />
-        </React.Suspense>
-      </EmptyLayout>
-
-      redirect = <Redirect to="/auth" />
-    }
-
     return (
       <BrowserRouter basename={getBasename()}>
         <GAListener>
           <Switch>
-            {layout}
-            {redirect}
+            <EmptyLayout>
+              <React.Suspense fallback={<PageSpinner />}>
+                <Route path="/auth" component={AuthPage} />
+              </React.Suspense>
+            </EmptyLayout>
+            <MainLayout>
+              <React.Suspense fallback={<PageSpinner />}>
+                <Route path="/" component={DashboardPage} />
+              </React.Suspense>
+            </MainLayout>
+            {this.state.tokenValid ?
+              <Redirect to="/" /> :
+              <Redirect to="/auth" />
+            }
             <NotificationContainer />
 
           </Switch>

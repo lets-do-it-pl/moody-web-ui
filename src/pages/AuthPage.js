@@ -1,15 +1,14 @@
 import React from 'react';
-import { Formik, useFormik } from 'formik';
+import { Formik } from 'formik';
 import * as yup from 'yup';
 import { makeStyles } from '@material-ui/core/styles';
-import { CssBaseline, Typography, Card, CardActions, CardContent, CardHeader, Avatar, Grid } from '@material-ui/core';
-import { sizing, shadows } from '@material-ui/system';
-import { Link } from 'react-router-dom';
+import { CssBaseline, Typography, Card, CardContent, CardHeader, Avatar, Grid } from '@material-ui/core';
 import logo200Image from '../assets/img/logo/logo_200.png';
 import loadjs from 'loadjs';
 import SignInForm from '../components/SignInForm';
-import Api from '../common/Api';
-import { NotificationContainer } from 'react-notifications';
+import ApiService from '../services/api.service';
+import NotificationContainer from 'react-notifications';
+import NotificationManager from 'react-notifications/lib/NotificationManager';
 
 loadjs('https://www.google.com/recaptcha/api.js');
 
@@ -38,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
 const validationSchema = yup.object({
     email: yup
         .string('Enter your email')
@@ -57,10 +55,13 @@ const AuthPage = () => {
 
     function handleSubmit(values) {
 
-        console.log("Loginnnn: " + values);
-        // var result = Api.Login(values);
+        if (values.recaptcha == false) {
+            return;
+        }
 
-        // console.log(`Login ${result}`);
+        var result = ApiService.authenticate(values.email, values.password);
+
+        console.log(`Login ${result}`);
     }
 
     const values = {
@@ -72,8 +73,13 @@ const AuthPage = () => {
     const classes = useStyles();
 
     return (
-        <Grid container className={classes.root} spacing={3}>
-            <Grid item xs={6}>
+        <Grid container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justify="center"
+            style={{ minHeight: '100vh', marginTop: 8, marginBottom: 6 }}>
+            <Grid item xs={2}>
                 <CssBaseline />
                 <Card>
                     <CardHeader

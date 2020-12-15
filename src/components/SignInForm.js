@@ -58,6 +58,7 @@ function SignInForm(props) {
             render="explicit"
             verifyCallback={() => {
               setFieldValue('recaptcha', true);
+              props.values.recaptcha = true;
             }}
           />
           {errors.recaptcha
