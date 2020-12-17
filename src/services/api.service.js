@@ -5,11 +5,11 @@ import { Navigate } from 'react-router-dom';
 
 import UserService from './user.service';
 
-const apiUrl = process.env.REACT_APP_SOURCE_URL;
+const apiUrl = process.env.REACT_APP_API_URL;
 
 class ApiService extends React.Component {
 
-  callApi = (url, httpMethodType, data, isAnonymous = false) => {
+  static callApi = (url, httpMethodType, data, isAnonymous = false) => {
 
     let config = {
       headers: {}
@@ -19,15 +19,16 @@ class ApiService extends React.Component {
       var accessToken = UserService.getAccessToken();
       if (accessToken == null) {
         NotificationManager.warning('Unauthorized!', 'You are redirected to Sign In Page');
-        return <Navigate to="/sign-in" />
+        return <Navigate to="/login" />
       }
 
       config.headers = { Authorization: `Bearer ${accessToken}` };
     }
 
-    axios({
+    return axios({
       method: httpMethodType,
-      url: `${apiUrl}/${url}`,
+      baseURL: apiUrl,
+      url: `${url}`,
       data: data,
       headers: config.headers
     })
@@ -38,21 +39,26 @@ class ApiService extends React.Component {
         return response.data;
       })
       .catch((error) => {
-        if (error.response.status === 401) {
+        if (error.response === undefined) {
+          // console.log(error);
+          NotificationManager.error('Error!', 'Unexpected Exception!');
+
+        }
+        else if (error.response.status !== undefined && error.response.status === 401) {
           console.log(error.response);
           NotificationManager.error('Error!', 'Unauthorized user');
-          // eslint-disable-next-line react/react-in-jsx-scope
-          return <Navigate to="/sign-in" />
+
+          return <Navigate to="/login" />
 
         }
         else if (error.response) {
           console.log(error.response);
-          NotificationManager.error("Error!", error.response.status);
+          NotificationManager.error("Error!", error.response);
 
         }
         else {
-          console.log('Error', error.message);
-          NotificationManager.error(error.response.headers, error.response.status);
+          console.log('Error', error);
+          NotificationManager.error(error.response.headers, error.response);
 
         }
         console.log(error.config);

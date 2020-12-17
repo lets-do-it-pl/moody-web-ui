@@ -1,6 +1,6 @@
 import React from 'react';
 import jwt from "jsonwebtoken";
-
+import { useNavigate } from 'react-router-dom';
 import ApiService from './api.service';
 
 export default class UserService extends React.Component {
@@ -25,15 +25,43 @@ export default class UserService extends React.Component {
         return token;
     }
 
+    static setAccessToken(token) {
+        const userTokenKey = "UserToken";
+
+        var decodedToken = jwt.decode(token, { complete: true });
+        var dateNow = new Date();
+
+        if (decodedToken.exp < dateNow.getTime()) {
+            console.log("Token is expired!");
+            return null;
+        }
+
+        localStorage.setItem(userTokenKey, token);
+
+        return true;
+
+    }
+
     static isAuthenticated() {
         return this.getValidAccessToken() != null;
     }
 
-    authenticate = (email, password) => {
-        var data = { Email: email, Password: password };
-        var result = ApiService.callApi("/user/authentication", "post", data, true);
+    static authenticate(email, password) {
+        var data = { 'email': email, 'password': password };
 
-        alert(result);
+        ApiService.callApi("user/authenticate", "post", data, true)
+            .then(response => {
+                var result = this.setAccessToken(response);
+
+                if (result !== true) {
+                    return;
+                }
+
+                const navigate = useNavigate();
+
+                navigate('/app/Dashboard', { replace: true });
+            })
+
 
     }
 }
