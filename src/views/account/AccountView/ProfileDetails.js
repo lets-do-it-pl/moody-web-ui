@@ -13,21 +13,6 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
-
 const useStyles = makeStyles(() => ({
   root: {}
 }));
@@ -35,13 +20,23 @@ const useStyles = makeStyles(() => ({
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
   const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
+    fullname: 'Katarina',
     email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
+    userType: '',
+    pass1: '',
+    pass2: ''
   });
+
+  const renderSwitch = (param) => {
+    switch(param) {
+      case 'S':
+        return 'Standart';
+      case 'A':
+        return 'Admin';
+      default:
+        return 'None';
+    }
+  }
 
   const handleChange = (event) => {
     setValues({
@@ -70,32 +65,16 @@ const ProfileDetails = ({ className, ...rest }) => {
           >
             <Grid
               item
-              md={6}
+              md={12}
               xs={12}
             >
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                name="firstName"
+                label="Fullname"
+                name="fullname"
                 onChange={handleChange}
                 required
-                value={values.firstName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Last name"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName}
+                value={values.fullname}
                 variant="outlined"
               />
             </Grid>
@@ -109,7 +88,9 @@ const ProfileDetails = ({ className, ...rest }) => {
                 label="Email Address"
                 name="email"
                 onChange={handleChange}
-                required
+                InputProps={{
+                  readOnly: true,
+                }}
                 value={values.email}
                 variant="outlined"
               />
@@ -121,11 +102,13 @@ const ProfileDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="Phone Number"
-                name="phone"
+                label="User Type"
+                name="userType"
                 onChange={handleChange}
-                type="number"
-                value={values.phone}
+                InputProps={{
+                  readOnly: true,
+                }}
+                value={renderSwitch(values.userType)}
                 variant="outlined"
               />
             </Grid>
@@ -136,11 +119,11 @@ const ProfileDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="Country"
-                name="country"
+                label="New Password"
+                name="pass1"
                 onChange={handleChange}
                 required
-                value={values.country}
+                value={values.pass1}
                 variant="outlined"
               />
             </Grid>
@@ -151,23 +134,15 @@ const ProfileDetails = ({ className, ...rest }) => {
             >
               <TextField
                 fullWidth
-                label="Select State"
-                name="state"
+                label="Confirm New Password"
+                name="pass2"
                 onChange={handleChange}
                 required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
+                value={values.pass2}
                 variant="outlined"
+                helperText={(values.pass1 !== values.pass2) ? "Passwords are not match!" : null}
+                error={values.pass1.length>1 && values.pass1 !== values.pass2}
               >
-                {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
               </TextField>
             </Grid>
           </Grid>
@@ -181,6 +156,7 @@ const ProfileDetails = ({ className, ...rest }) => {
           <Button
             color="primary"
             variant="contained"
+            disabled={values.pass1.length>1 && values.pass1 !== values.pass2}
           >
             Save details
           </Button>

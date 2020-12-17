@@ -25,8 +25,8 @@ import {
 import NavItem from './NavItem';
 
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
+  avatar: '/static/images/avatars/avatar_6.png',  //these infoes should have change with infos in db
+  jobTitle: 'Senior Developer',                   //no jobtitle yes email
   name: 'Katarina Smith'
 };
 
@@ -47,8 +47,8 @@ const items = [
     title: 'Products'
   },
   {
-    href: '/app/account',
-    icon: UserIcon,
+    href: '/app/account',     //redirects views/account
+    icon: UserIcon,           //icon gonna be come from db
     title: 'Account'
   },
   {
