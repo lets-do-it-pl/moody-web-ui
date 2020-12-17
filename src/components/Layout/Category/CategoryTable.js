@@ -25,7 +25,15 @@ class CategoryTable extends Component {
   constructor(props){
     super(props);
     this.state = {
-    selectedImage : null
+    selectedImage : null,
+    category : [
+      { id : 1, name: 'Alison', order : 1.0, image: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=688&q=80' },
+      { id : 2, name: 'Michael', order : 2.0, image: 'https://images.unsplash.com/photo-1548544149-4835e62ee5b3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80' },
+      { id : 3, name: 'Brook', order : 3.0, image: 'https://images.unsplash.com/photo-1545996124-0501ebae84d0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80' },
+      { id : 4, name: 'Sara', order : 4.0, image: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-1.2.1&auto=format&fit=crop&w=666&q=80' },
+      { id : 5, name: 'Alex', order : 5.0, image: 'https://images.unsplash.com/photo-1545167622-3a6ac756afa4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=712&q=80' },
+      { id : 6, name: 'Simon', order : 6.0, image: 'https://images.unsplash.com/photo-1542973748-658653fb3d12?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=666&q=80' },
+    ]
     }
   }
 
@@ -116,7 +124,7 @@ class CategoryTable extends Component {
   }
 
   render() {
-    const {selectedImage} = this.state;
+    const {selectedImage, category} = this.state;
     return (
       <div style={{ padding: "30px" }}>
       <DragDropContext
@@ -136,7 +144,8 @@ class CategoryTable extends Component {
               {(provided) => (
                 <Ref innerRef={provided.innerRef}>
                   <TableBody {...provided.droppableProps}>
-                    {this.props.entities.map((entity, index) => (
+                    {//this.props.entities
+                    category.map((entity, index) => (
                       <Draggable
                         key={entity.id}
                         draggableId={entity.id + ''}
@@ -154,7 +163,8 @@ class CategoryTable extends Component {
                             >
                               <TableCell>{entity.order}</TableCell>
                               <TableCell>
-                              <Avatar alt="" src={"data:image/png;base64," + entity.image} 
+                              <Avatar alt="" src={//"data:image/png;base64," + 
+                              entity.image} 
                                   onClick = {this.setSelectedImage} />
                               </TableCell>
                               <TableCell>{entity.id}</TableCell>
