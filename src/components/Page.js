@@ -1,67 +1,28 @@
-import React from 'react';
-import PropTypes from 'utils/propTypes';
+import React, { forwardRef } from 'react';
+import { Helmet } from 'react-helmet';
+import PropTypes from 'prop-types';
 
-import bn from 'utils/bemnames';
-
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-
-import Typography from './Typography';
-
-const bem = bn.create('page');
-
-const Page = ({
-  title,
-  breadcrumbs,
-  tag: Tag,
-  className,
+const Page = forwardRef(({
   children,
-  ...restProps
-}) => {
-  const classes = bem.b('px-3', className);
-
+  title = '',
+  ...rest
+}, ref) => {
   return (
-    <Tag className={classes} {...restProps}>
-      <div className={bem.e('header')}>
-        {title && typeof title === 'string' ? (
-          <Typography type="h1" className={bem.e('title')}>
-            {title}
-          </Typography>
-        ) : (
-            title
-          )}
-        {breadcrumbs && (
-          <Breadcrumb className={bem.e('breadcrumb')}>
-            <BreadcrumbItem>Home</BreadcrumbItem>
-            {breadcrumbs.length &&
-              breadcrumbs.map(({ name, active }, index) => (
-                <BreadcrumbItem key={index} active={active}>
-                  {name}
-                </BreadcrumbItem>
-              ))}
-          </Breadcrumb>
-        )}
-      </div>
+    <div
+      ref={ref}
+      {...rest}
+    >
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
       {children}
-    </Tag>
+    </div>
   );
-};
+});
 
 Page.propTypes = {
-  tag: PropTypes.component,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  className: PropTypes.string,
-  children: PropTypes.node,
-  breadcrumbs: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      active: PropTypes.bool,
-    })
-  ),
-};
-
-Page.defaultProps = {
-  tag: 'div',
-  title: '',
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string
 };
 
 export default Page;
