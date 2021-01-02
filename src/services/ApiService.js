@@ -3,11 +3,11 @@ import React from 'react';
 import { NotificationManager } from 'react-notifications';
 import { Navigate } from 'react-router-dom';
 
-import UserService from './user.service';
+import UserService from './UserService.js';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-class ApiService extends React.Component {
+export default class ApiService {
 
   static callApi = (url, httpMethodType, data, isAnonymous = false) => {
 
@@ -40,7 +40,7 @@ class ApiService extends React.Component {
       })
       .catch((error) => {
         if (error.response === undefined) {
-          // console.log(error);
+          console.log(error);
           NotificationManager.error('Error!', 'Unexpected Exception!');
 
         }
@@ -51,19 +51,13 @@ class ApiService extends React.Component {
           return <Navigate to="/login" />
 
         }
-        else if (error.response) {
+        else {
           console.log(error.response);
           NotificationManager.error("Error!", error.response);
 
         }
-        else {
-          console.log('Error', error);
-          NotificationManager.error(error.response.headers, error.response);
 
-        }
         console.log(error.config);
       });
   }
 }
-
-export default ApiService

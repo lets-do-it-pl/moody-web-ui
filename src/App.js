@@ -7,13 +7,11 @@ import 'src/mixins/chartjs';
 import 'react-notifications/lib/notifications.css';
 import theme from 'src/theme';
 import routes from 'src/routes';
-import UserService from 'src/services/user.service'
+import { authenticationService } from 'src/_services';
 
 const App = () => {
 
-  const isAuthenticated = () => UserService.isAuthenticated();
-
-  const routing = useRoutes(routes(isAuthenticated()));
+  var routing = useRoutes(routes(authenticationService.currentUserValue));
 
   return (
     <ThemeProvider theme={theme}>

@@ -12,7 +12,7 @@ import {
   makeStyles
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import UserService from 'src/services/user.service'
+import { authenticationService } from 'src/_services';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginView = () => {
+
   const classes = useStyles();
   const navigate = useNavigate();
 
@@ -49,12 +50,14 @@ const LoginView = () => {
               password: Yup.string().max(255).required('Password is required')
             })}
             onSubmit={(value) => {
-              let result = UserService.authenticate(value.email, value.password);
-              if (result !== true) {
-                return;
-              }
+              authenticationService
+                .login(value.email, value.password)
+                .then(result => {
+                  if (result === true) {
+                    navigate('/', { replace: true });
+                  }
 
-              navigate('/', { replace: true });
+                });
             }}
           >
             {({
