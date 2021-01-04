@@ -55,8 +55,11 @@ const LoginView = () => {
                 .then(result => {
                   if (result === true) {
                     navigate('/', { replace: true });
+
+                    return;
                   }
 
+                  console.log(result.message);
                 });
             }}
           >

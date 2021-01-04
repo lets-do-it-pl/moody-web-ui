@@ -23,13 +23,20 @@ function login(username, password) {
         .then(handleResponse)
         .then(user => {
 
+            if (user.isSuccess !== true) {
+                return user;
+            }
+
             if (!user || Object.keys(user).length === 0) {
-                return false;
+                return {
+                    isSuccess: false,
+                    message: "Token info hasn't received!"
+                };
             }
 
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            currentUserSubject.next(user);
+            localStorage.setItem('currentUser', JSON.stringify(user.data));
+            currentUserSubject.next(user.data);
 
             return true;
         });

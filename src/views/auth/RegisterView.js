@@ -15,6 +15,8 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 
+import { userService } from 'src/_services';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -42,10 +44,10 @@ const RegisterView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: '',
-              firstName: '',
-              lastName: '',
-              password: '',
+              email: 'sd@gmail.com',
+              firstName: 'saban',
+              lastName: 'durna',
+              password: 'Password1.',
               policy: false
             }}
             validationSchema={
@@ -57,8 +59,19 @@ const RegisterView = () => {
                 policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
-            onSubmit={() => {
-              navigate('/app/dashboard', { replace: true });
+            onSubmit={value => {
+              userService
+                .register(
+                  value.firstName,
+                  value.lastName,
+                  value.email,
+                  value.password)
+                .then(result => {
+                  if (result === true) {
+                    navigate('/login', { replace: true });
+                  }
+
+                });
             }}
           >
             {({
