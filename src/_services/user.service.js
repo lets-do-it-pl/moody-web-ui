@@ -1,8 +1,6 @@
 import { HttpMethodType } from 'src/_types';
 import { apiService } from './api.service';
 
-const apiUrl = process.env.REACT_APP_API_URL;
-
 export const userService = {
     register
 };

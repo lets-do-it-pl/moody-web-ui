@@ -53,8 +53,8 @@ class LoginView extends React.Component {
           <Container maxWidth="sm">
             <Formik
               initialValues={{
-                email: 'user@gmail.com',
-                password: 'Password1.'
+                email: '',
+                password: ''
               }}
               validationSchema={Yup.object().shape({
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
