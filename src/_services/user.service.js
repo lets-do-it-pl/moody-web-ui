@@ -1,4 +1,5 @@
-import { handleResponse } from 'src/_helpers';
+import { HttpMethodType } from 'src/_types';
+import { apiService } from './api.service';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -6,27 +7,19 @@ export const userService = {
     register
 };
 
-function register(
+async function register(
     name,
     surname,
     email,
     password
 ) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            username: email,
-            password: password,
-            name,
-            surname,
-            email
-        })
+    var data = {
+        username: email,
+        password: password,
+        name,
+        surname,
+        email
     };
 
-    return fetch(`${apiUrl}/user`, requestOptions)
-        .then(handleResponse)
-        .then(() => {
-            return true;
-        });
+    return await apiService.asyncCallApi(HttpMethodType.POST, '/user', data)
 }

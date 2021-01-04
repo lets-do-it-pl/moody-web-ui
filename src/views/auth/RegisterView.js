@@ -16,6 +16,7 @@ import {
 import Page from 'src/components/Page';
 
 import { userService } from 'src/_services';
+import { StatusType } from 'src/_types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,19 +60,21 @@ const RegisterView = () => {
                 policy: Yup.boolean().oneOf([true], 'This field must be checked')
               })
             }
-            onSubmit={value => {
-              userService
+            onSubmit={async (value) => {
+              var result = await userService
                 .register(
                   value.firstName,
                   value.lastName,
                   value.email,
-                  value.password)
-                .then(result => {
-                  if (result === true) {
-                    navigate('/login', { replace: true });
-                  }
+                  value.password);
 
-                });
+              if (result.status === StatusType.Success) {
+                navigate('/login', { replace: true });
+
+                return;
+              }
+
+              alert(result.message);
             }}
           >
             {({
