@@ -1,7 +1,12 @@
+import axios from 'axios';
 import { authenticationService } from 'src/_services';
-import { StatusType } from 'src/_helpers'
+import { StatusType } from 'src/_types'
 
 const apiUrl = process.env.REACT_APP_API_URL;
+
+export const apiService = {
+    asyncCallApi
+};
 
 async function asyncCallApi(
     httpMethodType,
@@ -16,30 +21,35 @@ async function asyncCallApi(
             data: data
         });
 
-        if (!response.ok) {
-            if ([401, 403].indexOf(response.status) !== -1) {
-                authenticationService.logout();
-                window.location.reload(true);
-            }
-
-            return {
-                status: StatusType.Fail,
-                message: response ?? response.statusText
-            };;
-        }
-
         return {
             status: StatusType.Success,
-            data: response.json()
+            data: response.data
         };
 
     } catch (error) {
 
-        alert(error);
-        // kirmizi alert cikacak.
-        return {
-            status: StatusType.Fail
-        }
-    }
+        var response = error.response;
 
+        if ([401, 403].indexOf(response.status) !== -1) {
+            authenticationService.logout();
+            window.location.reload(true);
+
+            return {
+                status: StatusType.Fail,
+                message: response.data ?? response.statusText
+            };
+        }
+
+        if ([400, 500].indexOf(response.status) !== -1) {
+            return {
+                status: StatusType.Fail,
+                message: response.data
+            };
+        }
+
+        return {
+            status: StatusType.Fail,
+            message: `Unexpected Exception: ${error.message}`
+        };
+    }
 }

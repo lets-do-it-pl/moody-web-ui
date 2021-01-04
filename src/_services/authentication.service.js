@@ -1,9 +1,10 @@
 import { BehaviorSubject } from 'rxjs';
 
-import { handleResponse } from 'src/_helpers';
+import { apiService } from 'src/_services';
+import { HttpMethodType, StatusType } from 'src/_types';
 
-const apiUrl = process.env.REACT_APP_API_URL;
-const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+const tokenKeyInStorage = 'currentUser';
+const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem(tokenKeyInStorage)));
 
 export const authenticationService = {
     login,
@@ -12,38 +13,32 @@ export const authenticationService = {
     get currentUserValue() { return currentUserSubject.value }
 };
 
-function login(username, password) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: username, password })
-    };
+async function login(username, password) {
 
-    return fetch(`${apiUrl}/user/authenticate`, requestOptions)
-        .then(handleResponse)
-        .then(user => {
+    var data = { email: username, password };
 
-            if (user.isSuccess !== true) {
-                return user;
-            }
+    var response = await apiService.asyncCallApi(HttpMethodType.POST, '/user/authenticate', data);
 
-            if (!user || Object.keys(user).length === 0) {
-                return {
-                    isSuccess: false,
-                    message: "Token info hasn't received!"
-                };
-            }
+    if (response.status === StatusType.Success) {
+        if (!response.data || Object.keys(response.data).length === 0) {
+            return {
+                status: StatusType.Fail,
+                message: "Token info hasn't received!"
+            };
+        }
 
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user.data));
-            currentUserSubject.next(user.data);
+        // store user details and jwt token in local storage to keep user logged in between page refreshes
+        localStorage.setItem(tokenKeyInStorage, JSON.stringify(response.data));
+        currentUserSubject.next(response.data);
 
-            return true;
-        });
+        return { status: StatusType.Success };
+    }
+
+    return response;
 }
 
 function logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem(tokenKeyInStorage);
     currentUserSubject.next(null);
 }

@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import { authenticationService } from 'src/_services';
+import { StatusType } from 'src/_types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,18 +50,17 @@ const LoginView = () => {
               email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
               password: Yup.string().max(255).required('Password is required')
             })}
-            onSubmit={(value) => {
-              authenticationService
-                .login(value.email, value.password)
-                .then(result => {
-                  if (result === true) {
-                    navigate('/', { replace: true });
+            onSubmit={async (value) => {
+              var result = await authenticationService.login(value.email, value.password)
 
-                    return;
-                  }
+              if (result.status === StatusType.Success) {
+                navigate('/', { replace: true });
 
-                  console.log(result.message);
-                });
+                return;
+              }
+
+              alert(result.message);
+
             }}
           >
             {({
