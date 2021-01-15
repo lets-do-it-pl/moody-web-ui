@@ -2,7 +2,8 @@ import { HttpMethodType } from 'src/_types';
 import { apiService } from './api.service';
 
 export const userService = {
-    register
+    register,
+    activateUser
 };
 
 async function register(
@@ -20,4 +21,9 @@ async function register(
     };
 
     return await apiService.asyncCallApi(HttpMethodType.POST, '/user', data)
+}
+
+async function activateUser(token) {
+
+    return await apiService.asyncCallApi(HttpMethodType.POST, '/user/activate', {}, token)
 }
