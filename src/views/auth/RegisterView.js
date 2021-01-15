@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -29,6 +29,8 @@ const useStyles = makeStyles((theme) => ({
 const RegisterView = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   return (
     <Page
@@ -71,7 +73,7 @@ const RegisterView = () => {
                 return;
               }
 
-              alert(result.message);
+              setErrorMessage(result.message);
             }}
           >
             {({
@@ -154,6 +156,12 @@ const RegisterView = () => {
                     {errors.policy}
                   </FormHelperText>
                 )}
+                <Typography
+                  color="error"
+                  variant="h5"
+                >
+                  {errorMessage}
+                </Typography>
                 <Box my={2}>
                   <Button
                     color="primary"
