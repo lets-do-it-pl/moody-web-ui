@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
@@ -28,9 +28,9 @@ const useStyles = makeStyles((theme) => ({
 
 const RegisterView = () => {
   const classes = useStyles();
-  const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState('');
+  const [infoMessage, setInfoMessage] = useState('');
 
   return (
     <Page
@@ -68,7 +68,7 @@ const RegisterView = () => {
                   value.password);
 
               if (result.status === StatusType.Success) {
-                navigate('/login', { replace: true });
+                setInfoMessage("A confirmation email has been sent to you. Please check your mail box!");
 
                 return;
               }
@@ -161,6 +161,12 @@ const RegisterView = () => {
                   variant="h5"
                 >
                   {errorMessage}
+                </Typography>
+                <Typography
+                  color="primary"
+                  variant="h5"
+                >
+                  {infoMessage}
                 </Typography>
                 <Box my={2}>
                   <Button
