@@ -48,7 +48,7 @@ async function asyncCallApi(
             };
         }
 
-        if ([400, 500].indexOf(response.status) !== -1) {
+        if ([400, 499].indexOf(response.status) !== -1) {
             return {
                 status: StatusType.Fail,
                 message: response.data

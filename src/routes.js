@@ -8,6 +8,7 @@ import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
 import RegisterView from 'src/views/auth/RegisterView';
 import ActivateUserView from 'src/views/auth/ActivateUserView';
+import ForgetPasswordView from 'src/views/auth/ForgetPasswordView';
 import SettingsView from 'src/views/settings/SettingsView';
 
 const routes = (currentUser) => [
@@ -28,6 +29,7 @@ const routes = (currentUser) => [
       { path: 'login', element: <LoginView /> },
       { path: 'register', element: <RegisterView /> },
       { path: 'activate-user', element: <ActivateUserView /> },
+      { path: 'forget-password', element: <ForgetPasswordView /> },
       { path: '404', element: <NotFoundView /> },
       { path: '/', element: <Navigate to="/app/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }

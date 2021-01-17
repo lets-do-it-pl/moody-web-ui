@@ -3,7 +3,8 @@ import { apiService } from './api.service';
 
 export const userService = {
     register,
-    activateUser
+    activateUser,
+    forgetPassword
 };
 
 async function register(
@@ -26,4 +27,9 @@ async function register(
 async function activateUser(token) {
 
     return await apiService.asyncCallApi(HttpMethodType.POST, '/user/activate', {}, token)
+}
+
+async function forgetPassword(email) {
+
+    return await apiService.asyncCallApi(HttpMethodType.POST, '/user/forget-password', { email })
 }
