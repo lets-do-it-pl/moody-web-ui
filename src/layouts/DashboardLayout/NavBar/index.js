@@ -15,6 +15,7 @@ import {
   BarChart as BarChartIcon,
   Settings as SettingsIcon,
   User as UserIcon,
+  Image as CategoryIcon,
 } from 'react-feather';
 import NavItem from './NavItem';
 
@@ -29,6 +30,11 @@ const items = [
     href: '/app/dashboard',
     icon: BarChartIcon,
     title: 'Dashboard'
+  },
+  {
+    href: '/app/category',
+    icon: CategoryIcon,
+    title: 'Category'
   },
   {
     href: '/app/account',
