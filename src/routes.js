@@ -9,6 +9,7 @@ import NotFoundView from 'src/views/errors/NotFoundView';
 import RegisterView from 'src/views/auth/RegisterView';
 import ActivateUserView from 'src/views/auth/ActivateUserView';
 import ForgetPasswordView from 'src/views/auth/ForgetPasswordView';
+import ResetPasswordView from 'src/views/auth/ResetPasswordView';
 import SettingsView from 'src/views/settings/SettingsView';
 
 const routes = (currentUser) => [
@@ -30,6 +31,7 @@ const routes = (currentUser) => [
       { path: 'register', element: <RegisterView /> },
       { path: 'activate-user', element: <ActivateUserView /> },
       { path: 'forget-password', element: <ForgetPasswordView /> },
+      { path: 'reset-password', element: <ResetPasswordView /> },
       { path: '404', element: <NotFoundView /> },
       { path: '/', element: <Navigate to="/app/dashboard" /> },
       { path: '*', element: <Navigate to="/404" /> }

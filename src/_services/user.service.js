@@ -4,7 +4,8 @@ import { apiService } from './api.service';
 export const userService = {
     register,
     activateUser,
-    forgetPassword
+    forgetPassword,
+    resetPassword
 };
 
 async function register(
@@ -32,4 +33,9 @@ async function activateUser(token) {
 async function forgetPassword(email) {
 
     return await apiService.asyncCallApi(HttpMethodType.POST, '/user/forget-password', { email })
+}
+
+async function resetPassword(token, password) {
+
+    return await apiService.asyncCallApi(HttpMethodType.POST, '/user/reset-password', { password }, token)
 }
