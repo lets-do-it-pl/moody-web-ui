@@ -1,10 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import * as Yup from 'yup';
-import {connect} from "react-redux";
 import {Styles} from './common/Styles';
 import {Formik, Form, Field} from 'formik';
 import ImageUploader from "react-images-upload";
-import * as actions from '../../actions/categoryAction';
+import {categoryService} from '../../_services/categoryService';
 import {Button, makeStyles, FormLabel} from '@material-ui/core';
 
 const ValidationSchema = Yup.object().shape({
@@ -39,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
 const CreateCategoryForm = ({...props}) =>  {
     const classes = useStyles();
     const [image, setImage] = useState();
+    const [categories, setCategories] = useState([]);
 
     const onDrop = async (file) => {
       const base64 = await convertBase64(file[0]);
@@ -54,20 +54,13 @@ const CreateCategoryForm = ({...props}) =>  {
                 }}
                 validationSchema={ValidationSchema}
 
-                onSubmit = {(values, {setSubmitting, resetForm}) => {
-                    const orders = props.entities.map((entity) => (
-                        entity.order
-                    ));
+                onSubmit = {(values) => {
+
                         values = {
                             ...values,
-                            Image : image,
-                            Order : 99
+                            Image : image
                         }
-
-                        console.log(values)
-                        props.createCategory(values);
-                        resetForm({});
-                        setSubmitting(false);
+                        categoryService.createCategory(values);
                 }}>
 
                 {({ errors, touched}) => (
@@ -96,13 +89,4 @@ const CreateCategoryForm = ({...props}) =>  {
     )
 }
 
-const mapStateToProps = state => ({
-    entities : state.category.list
-  })
-
-const mapActionToProps = {
-    createCategory : actions.createCategory,
-    getCategories : actions.getCategories
-}
-
-export default connect(mapStateToProps, mapActionToProps)(CreateCategoryForm);
+export default CreateCategoryForm;

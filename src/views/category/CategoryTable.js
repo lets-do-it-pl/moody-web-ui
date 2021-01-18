@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import {Ref } from "semantic-ui-react";
-import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   DragDropContext,
   Droppable,
   Draggable,
 } from "react-beautiful-dnd";
+import { withStyles } from '@material-ui/styles';
 import EditIcon from '@material-ui/icons/Edit';
+import DetailsIcon from '@material-ui/icons/Details';
 import {Table, 
         TableBody, 
         TableCell, 
@@ -14,20 +16,41 @@ import {Table,
         TableRow, 
         IconButton,
         Avatar} from '@material-ui/core';
-import * as actions from '../../actions/categoryAction';
 import ImageModal from './common/ImageModal';
 import CategoryModal from './common/CategoryModal';
 import UpdateCategoryForm from './UpdateCategoryForm';
 import DeleteCategoryModal from './common/DeleteModal';
-import { update } from 'lodash';
+import {categoryService} from '../../_services/categoryService';
+
+const styles = theme => ({
+  update: {
+    color: "orange"
+  },
+  details: {
+    color: "purple"
+  }
+});
 
 class CategoryTable extends Component {
 
   constructor(props){
     super(props);
     this.state = {
-    selectedImage : null
+    selectedImage : null,
+    categories: []
     }
+  }
+
+  componentDidMount () {
+    categoryService.listCategories().then(result => this.setState({
+      categories: result.data
+    }));
+  }
+
+  componentDidUpdate () {
+    categoryService.listCategories().then(result => this.setState({
+      categories: result.data
+    }));
   }
 
   closeImage = () => {
@@ -35,11 +58,6 @@ class CategoryTable extends Component {
       selectedImage: null
     })
   }
-
-  componentDidMount () {
-    console.log(this.props.getCategories());
-  }
-
 
   getItemStyle = (isDragging, draggableStyle) => ({
     background: isDragging && ("lightblue"),
@@ -50,60 +68,23 @@ class CategoryTable extends Component {
 
     if(!result.destination) return;
 
-    const updatedOrder = this.props.entities[result.destination.index];
-    const updatedOrderTop = this.props.entities[result.destination.index - 1];
-    const updatedOrderBottom = this.props.entities[result.destination.index + 1];
-
-    this.props.entities.map((entity) => {
-
-      if(Number(result.draggableId) === entity.id) {
-
-        update = (order) => {
-          const category = {
-            Name : entity.name,
-            Order : order,
-            Image : entity.image
-          }
-          this.props.updateCategory(Number(result.draggableId), category);
-        }
-
-        if(result.source.index > result.destination.index) {
-          if(result.destination.index === 0)
-          {
-            update(updatedOrder.order - 1);
-          }
-          else {
-            update((updatedOrder.order + updatedOrderTop.order) / 2);
-          }
-        }
+    return categoryService.updateOrder();
     
-        if(result.source.index < result.destination.index) {
-          if(result.destination.index + 1 === this.props.entities.length)
-          {
-            update(updatedOrder.order + 1);
-          }
-          else {
-            update((updatedOrder.order + updatedOrderBottom.order) / 2);
-          }
-        }
-      }
-
-    });
   }
 
   render() {
-    const {selectedImage, category} = this.state;
+    const { classes } = this.props;
+    const {selectedImage, categories} = this.state;
     return (
       <div style={{ padding: "30px" }}>
       <DragDropContext
         onDragEnd={this.onDragEnd}
       >
-      <Table>
+      <Table size = "small">
             <TableHead>
               <TableRow>
-                <TableCell>Order</TableCell>
+                <TableCell>#</TableCell>
                 <TableCell>Image</TableCell>
-                <TableCell>Id</TableCell>
                 <TableCell>Name</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
@@ -112,7 +93,7 @@ class CategoryTable extends Component {
               {(provided) => (
                 <Ref innerRef={provided.innerRef}>
                   <TableBody {...provided.droppableProps}>
-                    {this.props.entities.map((entity, index) => (
+                    {categories.map((entity, index) => (
                       <Draggable
                         key={entity.id}
                         draggableId={entity.id + ''}
@@ -128,33 +109,36 @@ class CategoryTable extends Component {
                                 provided.draggableProps.style
                               )}
                             >
-                              <TableCell>{entity.order}</TableCell>
+                              <TableCell>{index + 1}</TableCell>
                               <TableCell>
-                              <Avatar alt="" src={//"data:image/png;base64," + 
+                              <Avatar alt="" src={"data:image/png;base64," + 
                               entity.image} 
                                   onClick = {(e) => this.setState({
                                     selectedImage : e.target.src
                                   })} />
                               </TableCell>
-                              <TableCell>{entity.id}</TableCell>
                               <TableCell>{entity.name}</TableCell>
                               <TableCell>
-                                Edit
+                                <IconButton>
+                                  <DetailsIcon className = {classes.details}/>
+                                </IconButton>
                                 <IconButton>
                                   <CategoryModal
                                     title = "Update"
                                     content = {<UpdateCategoryForm
                                       id = {entity.id}
-                                      order = {entity.order}
                                       name = {entity.name}
                                       image = {entity.image}
                                     />}
-                                    icon = {<EditIcon/>}
+                                    icon = {<EditIcon className = {classes.update}/>}
                                   />
                                 </IconButton>
-                                Delete
                                 <IconButton>
-                                  <DeleteCategoryModal categoryId = {entity.id}/>
+                                  <DeleteCategoryModal 
+                                  id = {entity.id}
+                                  title = "Delete Category"
+                                  message = "Are you sure you want to delete this Category?"
+                                  />
                                 </IconButton>
                               </TableCell>
                             </TableRow>
@@ -175,13 +159,8 @@ class CategoryTable extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  entities : state.category.list
-})
+CategoryTable.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-const mapActionToProps = {
-  getCategories : actions.getCategories,
-  updateCategory : actions.updateCategory
-}
-
-export default connect(mapStateToProps, mapActionToProps)(CategoryTable)
+export default withStyles(styles)(CategoryTable);

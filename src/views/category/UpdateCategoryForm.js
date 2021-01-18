@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import * as Yup from 'yup';
 import {Styles} from './common/Styles';
-import {connect} from "react-redux";
 import { Formik, Form, Field } from 'formik';
 import {Button, makeStyles, FormLabel} from '@material-ui/core';
 import ImageUploader from "react-images-upload";
-import * as actions from '../../actions/categoryAction';
+import {categoryService} from '../../_services/categoryService';
 
 const ValidationSchema = Yup.object().shape({
     name : Yup.string()
@@ -46,14 +45,6 @@ const UpdateCategoryForm = ({...props}) => {
       setImage(base[1]);
     };
 
-    useEffect(() => {
-        props.getCategories();
-    });
-
-    const onHandleChange = (e) => {
-        setName(e.target.value);
-    }
-
  return(
     <Styles>
         <Formik
@@ -63,19 +54,17 @@ const UpdateCategoryForm = ({...props}) => {
             validationSchema={ValidationSchema}
             
             onSubmit={values => {
-                console.log(name, image);
                 values = {
                     Name : name,
-                    Image : image,
-                    Order : props.order
+                    Image : image
                 }
-                props.updateCategory(props.id, values);
+                categoryService.updateCategory(props.id, values);
             }}
             >
             {({ errors, touched}) => (
                 <Form>
                     <FormLabel >Category Name</FormLabel>
-                    <Field name="name" value = {name} onChange={onHandleChange}/>
+                    <Field name="name" value = {name} onChange={(e) => setName(e.target.value)}/>
                     {touched.name && errors.name && <div>{errors.name}</div>}
                     <FormLabel >Category Image</FormLabel>
                     <ImageUploader
@@ -98,13 +87,4 @@ const UpdateCategoryForm = ({...props}) => {
     )
 }
 
-const mapStateToProps = state => ({
-    entities : state.category.list
-  });
-
-const mapActionToProps = {
-    updateCategory : actions.updateCategory,
-    getCategories : actions.getCategories
-}
-
-export default connect(mapStateToProps, mapActionToProps)(UpdateCategoryForm);
+export default UpdateCategoryForm;

@@ -7,6 +7,7 @@ import {
   Grid,
   makeStyles
 } from '@material-ui/core';
+import "../../style.css"
 import Page from 'src/components/Page';
 import AddIcon from '@material-ui/icons/Add';
 import CreateCategoryForm from './CreateCategoryForm';
@@ -22,7 +23,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(3)
   },
   title: {
-      size: "30px"
+      fontSize: "25px"
+  },
+  add: {
+    color: "green"
   }
 }));
 
@@ -44,10 +48,11 @@ const Category = () => {
                 title = "Category"
                 action={
                   <IconButton>
+                    <p className = "fontStyle">Create a new Category</p>
                     <CategoryModal
                       title = "Create"
                       content = {<CreateCategoryForm/>}
-                      icon = {<AddIcon/>}
+                      icon = {<AddIcon className = {classes.add}/>}
                     />
                   </IconButton>
                 }/>
@@ -65,7 +70,8 @@ const Category = () => {
                 title = "Category Details"
                 action={
                   <IconButton>
-                    <AddIcon/>
+                    <p className = "fontStyle">Create a new Category Detail</p>
+                    <AddIcon className = {classes.add}/>
                   </IconButton>
                 }/>
               <CardContent>

@@ -1,6 +1,4 @@
 import React from 'react';
-import {connect} from "react-redux";
-import * as actions from '../../../actions/categoryAction';
 import {makeStyles,
         Button,
         Dialog, 
@@ -9,15 +7,19 @@ import {makeStyles,
         DialogContentText, 
         DialogTitle} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import {categoryService} from '../../../_services/categoryService';
 
 const useStyles = makeStyles((theme) => ({
   submit: {
     backgroundColor: "#5cb85c",
     color : "white"
   },
-  cancel : {
+  cancel: {
     backgroundColor: "#f44336",
     color : "white"
+  },
+  delete: {
+    color: "red"
   }
 }));
 
@@ -35,19 +37,20 @@ const DeleteCategoryModal = ({...props}) => {
 
   return (
     <div>
-      <DeleteIcon onClick={handleClickOpen}/>
+      <DeleteIcon onClick={handleClickOpen} className = {classes.delete}/>
       <Dialog
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>{"Delete Category"}</DialogTitle>
+        <DialogTitle>{props.title}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete this category?
+            {props.message}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button className={classes.submit} onClick={() => props.deleteCategory(props.categoryId)} color="primary">
+          <Button className={classes.submit} color="primary" 
+                  onClick = {() => categoryService.deleteCategory(props.id) }>
             Confirm
           </Button>
           <Button onClick={handleClose} className = {classes.cancel} variant = "contained">
@@ -58,9 +61,4 @@ const DeleteCategoryModal = ({...props}) => {
     </div>
   );
 }
-
-const mapActionToProps = {
-    deleteCategory : actions.deleteCategory
-}
-
-export default connect(null, mapActionToProps)(DeleteCategoryModal);
+export default DeleteCategoryModal;
