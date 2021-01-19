@@ -3,11 +3,9 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   Avatar,
-  Box,
   Card,
   CardContent,
   Grid,
-  LinearProgress,
   Typography,
   makeStyles,
   colors
@@ -25,7 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const MobilClientCount = ({ className, ...rest }) => {
+const MobilClientCount = (props,{ className, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -51,7 +49,7 @@ const MobilClientCount = ({ className, ...rest }) => {
               color="textPrimary"
               variant="h3"
             >
-              75.5%
+              {props.TotalNumber}
             </Typography>
           </Grid>
           <Grid item>
@@ -60,12 +58,6 @@ const MobilClientCount = ({ className, ...rest }) => {
             </Avatar>
           </Grid>
         </Grid>
-        <Box mt={3}>
-          <LinearProgress
-            value={75.5}
-            variant="determinate"
-          />
-        </Box>
       </CardContent>
     </Card>
   );

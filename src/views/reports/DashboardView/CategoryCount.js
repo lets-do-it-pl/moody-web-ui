@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   Avatar,
-  Box,
   Card,
   CardContent,
   Grid,
@@ -11,7 +10,6 @@ import {
   colors,
   makeStyles
 } from '@material-ui/core';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function CategoryCount({ className, ...rest }) {
+function CategoryCount(props,{className, ...rest}) {
   const classes = useStyles();
 
   return (
@@ -58,7 +56,7 @@ function CategoryCount({ className, ...rest }) {
               color="textPrimary"
               variant="h3"
             >
-              $24,000
+              {props.TotalNumber}
             </Typography>
           </Grid>
           <Grid item>
@@ -67,25 +65,6 @@ function CategoryCount({ className, ...rest }) {
             </Avatar>
           </Grid>
         </Grid>
-        <Box
-          mt={2}
-          display="flex"
-          alignItems="center"
-        >
-          <ArrowDownwardIcon className={classes.differenceIcon} />
-          <Typography
-            className={classes.differenceValue}
-            variant="body2"
-          >
-                        12%
-          </Typography>
-          <Typography
-            color="textSecondary"
-            variant="caption"
-          >
-            Since last month
-          </Typography>
-        </Box>
       </CardContent>
     </Card>
   );

@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TotalProfit = ({ className, ...rest }) => {
+const TotalProfit = (props,{ className, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -49,7 +49,7 @@ const TotalProfit = ({ className, ...rest }) => {
               color="textPrimary"
               variant="h3"
             >
-              $23,200
+              {props.TotalNumber}
             </Typography>
           </Grid>
           <Grid item>

@@ -9,8 +9,14 @@ import CategoryCount from './CategoryCount';
 import MobileClientCount from './MobilClientCount';
 import CategoryDetails from './CategoryDetails';
 import AverageDailyClientRegister from './AverageDailyClientRegister';
+import { SignalCellularNullRounded } from '@material-ui/icons';
 
-
+const widget=[
+  {'Name': 'Category','TotalNumber':'5'},
+  {'Name': 'AverageDailyClient','TotalNumber':'5'},
+  {'Name': 'CategoryDetails','TotalNumber':'5'},
+  {'Name': 'MobilClient','TotalNumber':'5'}
+]
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -29,6 +35,7 @@ const Dashboard = () => {
       title="Dashboard"
     >
       <Container maxWidth={false}>
+        
         <Grid
           container
           spacing={3}
@@ -40,7 +47,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <CategoryCount />
+            <CategoryCount TotalNumber = {widget[0].TotalNumber} />
           </Grid>
           <Grid
             item
@@ -49,7 +56,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <CategoryDetails />
+            <CategoryDetails TotalNumber = {widget[1].TotalNumber}/>
           </Grid>
           <Grid
             item
@@ -58,7 +65,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <MobileClientCount />
+            <MobileClientCount TotalNumber = {widget[2].TotalNumber} />
           </Grid>
           <Grid
             item
@@ -67,7 +74,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <AverageDailyClientRegister />
+            <AverageDailyClientRegister TotalNumber = {widget[3].TotalNumber} />
           </Grid>
           <Grid
             item
