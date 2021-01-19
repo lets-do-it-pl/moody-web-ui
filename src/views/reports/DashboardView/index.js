@@ -9,7 +9,6 @@ import CategoryCount from './CategoryCount';
 import MobileClientCount from './MobilClientCount';
 import CategoryDetails from './CategoryDetails';
 import AverageDailyClientRegister from './AverageDailyClientRegister';
-import { SignalCellularNullRounded } from '@material-ui/icons';
 
 const widget=[
   {'Name': 'Category','TotalNumber':'5'},
