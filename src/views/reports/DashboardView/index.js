@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Container,
   Grid,
@@ -9,8 +9,13 @@ import CategoryCount from './CategoryCount';
 import MobileClientCount from './MobilClientCount';
 import CategoryDetailsCount from './CategoryDetails';
 import AverageDailyClientRegister from './AverageDailyClientRegister';
-import { dashboardService } from 'src/_services';
 
+const widget=[
+  {'Name': 'Category','TotalNumber':'5'},
+  {'Name': 'AverageDailyClient','TotalNumber':'5'},
+  {'Name': 'CategoryDetails','TotalNumber':'5'},
+  {'Name': 'MobilClient','TotalNumber':'5'}
+]
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.dark,
@@ -22,11 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-  const [widgets, setWidgets] = useState([]);
 
-  useEffect(() => {
-      dashboardService.getDashboardWidgets().then(result =>setWidgets(result.data));
-    })
   return (
     <Page
       className={classes.root}
@@ -45,7 +46,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <CategoryCount TotalNumber = {widgets[0].TotalNumber} />
+            <CategoryCount TotalNumber = {widget[0].TotalNumber} />
           </Grid>
           <Grid
             item
@@ -54,7 +55,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <CategoryDetailsCount TotalNumber = {widgets[1].TotalNumber}/>
+            <CategoryDetailsCount TotalNumber = {widget[1].TotalNumber}/>
           </Grid>
           <Grid
             item
@@ -63,7 +64,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <MobileClientCount TotalNumber = {widgets[2].TotalNumber} />
+            <MobileClientCount TotalNumber = {widget[2].TotalNumber} />
           </Grid>
           <Grid
             item
@@ -72,7 +73,7 @@ const Dashboard = () => {
             xl={3}
             xs={12}
           >
-            <AverageDailyClientRegister TotalNumber = {widgets[3].TotalNumber} />
+            <AverageDailyClientRegister TotalNumber = {widget[3].TotalNumber} />
           </Grid>
           <Grid
             item

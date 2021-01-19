@@ -12,7 +12,7 @@ import SettingsView from 'src/views/settings/SettingsView';
 const routes = (currentUser) => [
   {
     path: 'app',
-    //element: currentUser ? <DashboardLayout /> : <Navigate to="/login" />,
+    element: currentUser ? <DashboardLayout /> : <Navigate to="/login" />,
     children: [
       { path: 'account', element: <AccountView /> },
       { path: 'dashboard', element: <DashboardView /> },
@@ -22,7 +22,7 @@ const routes = (currentUser) => [
   },
   {
     path: '/',
-   // element: !currentUser ? <MainLayout /> : <Navigate to="/app/dashboard" />,
+   element: !currentUser ? <MainLayout /> : <Navigate to="/app/dashboard" />,
     children: [
       { path: 'login', element: <LoginView /> },
       { path: 'register', element: <RegisterView /> },
