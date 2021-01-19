@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const TotalProfit = (props,{ className, ...rest }) => {
+const AverageDailyClientRegister = (props,{ className, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -43,7 +43,7 @@ const TotalProfit = (props,{ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-            AVERAGE DAILY REGISTER
+           AVERAGE DAILY REGISTER COUNT
             </Typography>
             <Typography
               color="textPrimary"
@@ -63,8 +63,8 @@ const TotalProfit = (props,{ className, ...rest }) => {
   );
 };
 
-TotalProfit.propTypes = {
+AverageDailyClientRegister.propTypes = {
   className: PropTypes.string
 };
 
-export default TotalProfit;
+export default AverageDailyClientRegister;

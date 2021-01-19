@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CategoryDetails = (props,{className, ...rest }) => {
+const CategoryDetailsCount = (props,{className, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -50,7 +50,7 @@ const CategoryDetails = (props,{className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              CATEGORY DETAILS
+              CATEGORY DETAILS COUNT
             </Typography>
             <Typography
               color="textPrimary"
@@ -70,8 +70,8 @@ const CategoryDetails = (props,{className, ...rest }) => {
   );
 };
 
-CategoryDetails.propTypes = {
+CategoryDetailsCount.propTypes = {
   className: PropTypes.string
 };
 
-export default CategoryDetails;
+export default CategoryDetailsCount;

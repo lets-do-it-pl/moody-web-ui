@@ -43,7 +43,7 @@ const MobilClientCount = (props,{ className, ...rest }) => {
               gutterBottom
               variant="h6"
             >
-              MOBIL CLIENT COUNT
+              TOTAL MOBIL CLIENT COUNT
             </Typography>
             <Typography
               color="textPrimary"
