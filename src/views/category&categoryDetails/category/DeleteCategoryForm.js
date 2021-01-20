@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const DeleteCategoryModal = ({...props}) => {
+const DeleteCategoryForm = ({...props}) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -42,15 +42,15 @@ const DeleteCategoryModal = ({...props}) => {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>{props.title}</DialogTitle>
+        <DialogTitle>Delete Category</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {props.message}
+            Are you sure you want to delete this Category?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button className={classes.submit} color="primary" 
-                  onClick = {() => categoryService.deleteCategory(props.id) }>
+                  onClick = {() => categoryService.deleteCategory(props.id)}>
             Confirm
           </Button>
           <Button onClick={handleClose} className = {classes.cancel} variant = "contained">
@@ -61,4 +61,4 @@ const DeleteCategoryModal = ({...props}) => {
     </div>
   );
 }
-export default DeleteCategoryModal;
+export default DeleteCategoryForm;

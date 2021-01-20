@@ -42,10 +42,10 @@ const DeleteCategoryDetailsForm = ({...props}) => {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>{props.title}</DialogTitle>
+        <DialogTitle>Delete Category Detail</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {props.message}
+            Are you sure you want to delete this Category Detail?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

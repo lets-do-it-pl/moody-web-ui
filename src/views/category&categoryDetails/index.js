@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   Card, 
   CardHeader, 
@@ -9,9 +9,7 @@ import {
 } from '@material-ui/core';
 import "../../style.css"
 import Page from 'src/components/Page';
-import AddIcon from '@material-ui/icons/Add';
 import CreateCategoryForm from './category/CreateCategoryForm';
-import CategoryModal from './common/CategoryModal';
 import CategoryTable from './category/CategoryTable';
 import CategoryDetailsTable from './categoryDetails/CategoryDetailsTable';
 import {categoryDetailsService} from '../../_services/categoryDetailsService';
@@ -35,13 +33,26 @@ const useStyles = makeStyles((theme) => ({
 const Category = () => {
   const classes = useStyles();
   const [id, setCategoryId] = React.useState();
+  const [name, setCategoryName] = React.useState();
   const [details, setDetails] = React.useState([]);
+  const mounted = useRef();
   
-  const getId = (categoryId) =>{
+  useEffect(() => {
+  if (!mounted.current) {
+    mounted.current = true;
+  } else {
+    categoryDetailsService.listCategoryDetails(id).then(result => 
+      setDetails(result.data)
+    );
+  }
+  });
+  
+  const getId = (categoryId, categoryName) =>{
     categoryDetailsService.listCategoryDetails(categoryId).then(result => 
           setDetails(result.data)
     );
     setCategoryId(categoryId);
+    setCategoryName(categoryName);
   }
 
   return (
@@ -59,12 +70,8 @@ const Category = () => {
                 title = "Category"
                 action={
                   <IconButton>
-                    <p className = "fontStyle">Create a new Category</p>
-                    <CategoryModal
-                      title = "Create"
-                      content = {<CreateCategoryForm/>}
-                      icon = {<AddIcon className = {classes.add}/>}
-                    />
+                     <p className = "fontStyle">Create a new Category</p>
+                    <CreateCategoryForm/>
                   </IconButton>
                 }/>
               <CardContent>
@@ -82,7 +89,8 @@ const Category = () => {
               />
               <CardContent>
                 <CategoryDetailsTable categoryDetails = {details} 
-                                      categoryId = {id}/>
+                                      categoryId = {id}
+                                      categoryName = {name}/>
               </CardContent>
             </Card>
           </Grid>

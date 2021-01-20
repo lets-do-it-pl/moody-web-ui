@@ -9,7 +9,7 @@ import {Button,
 import {Styles} from '../common/Styles';
 import {Formik, Form} from 'formik';
 import ImageUploader from "react-images-upload";
-import AddIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
 import {categoryDetailsService} from '../../../_services/categoryDetailsService';
 
 const useStyles = makeStyles(() => ({
@@ -66,6 +66,7 @@ function CreateCategoryDetailsForm(props) {
 
   const onSubmit = () => {
        const value = {
+            Id : props.categoryId, 
             Image : image
         }
     categoryDetailsService.createCategoryDetail(props.categoryId, value);
@@ -73,7 +74,7 @@ function CreateCategoryDetailsForm(props) {
 
   return (
     <div>
-      <AddIcon onClick={handleClickOpen} className = {classes.edit}/>
+      <AddIcon onClick={handleClickOpen} className = {classes.create}/>
       <Dialog open={open} fullWidth onClose={handleClose}  aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Craete Category Detail</DialogTitle>
         <DialogContent>

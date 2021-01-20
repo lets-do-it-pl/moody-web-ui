@@ -14,6 +14,8 @@ import {Table,
         Avatar} from '@material-ui/core';
 import ImageModal from '../common/ImageModal';
 import UpdateCategoryDetailsForm from './UpdateCategoryDetailsForm';
+import DeleteCategoryDetailsForm from './DeleteCategoryDetailsForm';
+import CreateCategoryDetailsForm from './CreateCategoryDetailsForm';
 
 class CategoryDetailsTable extends Component {
 
@@ -48,6 +50,8 @@ class CategoryDetailsTable extends Component {
       <DragDropContext
         onDragEnd={this.onDragEnd}
       >
+        <p>Category {this.props.categoryName} 
+        <CreateCategoryDetailsForm categoryId = {this.props.categoryId}/> </p>
       <Table size = "small">
             <TableHead>
               <TableRow>
@@ -91,7 +95,8 @@ class CategoryDetailsTable extends Component {
                                                              image = {entity.image}/>
                                 </IconButton>
                                 <IconButton>
-                                  
+                                  <DeleteCategoryDetailsForm categoryId = {this.props.categoryId}
+                                                             id = {entity.id}/>
                                 </IconButton>
                               </TableCell>
                             </TableRow>

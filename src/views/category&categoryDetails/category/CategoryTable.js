@@ -7,7 +7,6 @@ import {
   Draggable,
 } from "react-beautiful-dnd";
 import { withStyles } from '@material-ui/styles';
-import EditIcon from '@material-ui/icons/Edit';
 import DetailsIcon from '@material-ui/icons/Details';
 import {Table, 
         TableBody, 
@@ -17,12 +16,11 @@ import {Table,
         IconButton,
         Avatar} from '@material-ui/core';
 import ImageModal from '../common/ImageModal';
-import CategoryModal from '../common/CategoryModal';
 import UpdateCategoryForm from './UpdateCategoryForm';
-import DeleteCategoryModal from './DeleteModal';
+import DeleteCategoryForm from './DeleteCategoryForm';
 import {categoryService} from '../../../_services/categoryService';
 
-const styles = theme => ({
+const styles = () => ({
   update: {
     color: "orange"
   },
@@ -119,26 +117,18 @@ class CategoryTable extends Component {
                               </TableCell>
                               <TableCell>{entity.name}</TableCell>
                               <TableCell>
-                                <IconButton onClick = {() => this.props.getCategoryId(entity.id)}>
+                                <IconButton onClick = {() => this.props.getCategoryId(entity.id, entity.name)}>
                                   <DetailsIcon className = {classes.details}/>
                                 </IconButton>
                                 <IconButton>
-                                  <CategoryModal
-                                    title = "Update"
-                                    content = {<UpdateCategoryForm
-                                      id = {entity.id}
-                                      name = {entity.name}
-                                      image = {entity.image}
-                                    />}
-                                    icon = {<EditIcon className = {classes.update}/>}
+                                  <UpdateCategoryForm
+                                    id = {entity.id}
+                                    name = {entity.name}
+                                    image = {entity.image}
                                   />
                                 </IconButton>
                                 <IconButton>
-                                  <DeleteCategoryModal 
-                                  id = {entity.id}
-                                  title = "Delete Category"
-                                  message = "Are you sure you want to delete this Category?"
-                                  />
+                                  <DeleteCategoryForm id = {entity.id}/>
                                 </IconButton>
                               </TableCell>
                             </TableRow>
