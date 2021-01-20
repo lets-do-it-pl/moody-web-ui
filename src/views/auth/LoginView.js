@@ -156,6 +156,20 @@ class LoginView extends React.Component {
                       Sign up
                     </Link>
                   </Typography>
+                  <Typography
+                    color="textSecondary"
+                    variant="body1"
+                  >
+                    Don&apos;t remember your password?
+                    {' '}
+                    <Link
+                      component={RouterLink}
+                      to="/forget-password"
+                      variant="h6"
+                    >
+                      Forget Password
+                    </Link>
+                  </Typography>
                 </form>
               )}
             </Formik>

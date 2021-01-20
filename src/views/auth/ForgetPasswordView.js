@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const RegisterView = () => {
+const ForgetPasswordView = () => {
   const classes = useStyles();
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -35,7 +35,7 @@ const RegisterView = () => {
   return (
     <Page
       className={classes.root}
-      title="Register"
+      title="Forget Password"
     >
       <Box
         display="flex"
@@ -46,30 +46,19 @@ const RegisterView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: '',
-              firstName: '',
-              lastName: '',
-              password: ''
+              email: ''
             }}
             validationSchema={
               Yup.object().shape({
                 email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
-                password: Yup.string().max(255).required('password is required')
               })
             }
             onSubmit={async (value) => {
-              var result = await userService
-                .register(
-                  value.firstName,
-                  value.lastName,
-                  value.email,
-                  value.password);
+              var result = await userService.forgetPassword(value.email);
 
               if (result.status === StatusType.Success) {
                 setErrorMessage('');
-                setInfoMessage("A confirmation email has been sent to you. Please check your mail box!");
+                setInfoMessage("An email has been sent to you for reseting your password. Please check your mail box!");
 
                 return;
               }
@@ -92,40 +81,16 @@ const RegisterView = () => {
                     color="textPrimary"
                     variant="h2"
                   >
-                    Create new account
+                    Forget Password
                   </Typography>
                   <Typography
                     color="textSecondary"
                     gutterBottom
                     variant="body2"
                   >
-                    Use your email to create new account
+                    Use your email to reset your password
                   </Typography>
                 </Box>
-                <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
-                  fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="First name"
-                  margin="normal"
-                  name="firstName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.firstName}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.lastName && errors.lastName)}
-                  fullWidth
-                  helperText={touched.lastName && errors.lastName}
-                  label="Last name"
-                  margin="normal"
-                  name="lastName"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  value={values.lastName}
-                  variant="outlined"
-                />
                 <TextField
                   error={Boolean(touched.email && errors.email)}
                   fullWidth
@@ -137,19 +102,6 @@ const RegisterView = () => {
                   onChange={handleChange}
                   type="email"
                   value={values.email}
-                  variant="outlined"
-                />
-                <TextField
-                  error={Boolean(touched.password && errors.password)}
-                  fullWidth
-                  helperText={touched.password && errors.password}
-                  label="Password"
-                  margin="normal"
-                  name="password"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="password"
-                  value={values.password}
                   variant="outlined"
                 />
                 {Boolean(touched.policy && errors.policy) && (
@@ -178,7 +130,7 @@ const RegisterView = () => {
                     type="submit"
                     variant="contained"
                   >
-                    Sign up now
+                    Send Reset Password Email
                   </Button>
                 </Box>
                 <Typography
@@ -204,4 +156,4 @@ const RegisterView = () => {
   );
 };
 
-export default RegisterView;
+export default ForgetPasswordView;

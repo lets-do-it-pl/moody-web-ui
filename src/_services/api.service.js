@@ -11,14 +11,22 @@ export const apiService = {
 async function asyncCallApi(
     httpMethodType,
     queryString,
-    data
+    data,
+    token
 ) {
+
+    var headers = {};
+
+    if (token !== undefined) {
+        headers.Authorization = `Bearer ${token}`;
+    }
 
     try {
         const response = await axios({
             method: httpMethodType,
             url: `${apiUrl}${queryString}`,
-            data: data
+            data: data,
+            headers: headers
         });
 
         return {
@@ -32,15 +40,15 @@ async function asyncCallApi(
 
         if ([401, 403].indexOf(response.status) !== -1) {
             authenticationService.logout();
-            window.location.reload(true);
 
             return {
                 status: StatusType.Fail,
-                message: response.data ?? response.statusText
+                message: (response.data !== undefined && response.data !== "")
+                    ? response.data : response.statusText
             };
         }
 
-        if ([400, 500].indexOf(response.status) !== -1) {
+        if ([400, 499].indexOf(response.status) !== -1) {
             return {
                 status: StatusType.Fail,
                 message: response.data
