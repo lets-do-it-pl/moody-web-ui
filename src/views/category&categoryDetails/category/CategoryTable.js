@@ -16,11 +16,11 @@ import {Table,
         TableRow, 
         IconButton,
         Avatar} from '@material-ui/core';
-import ImageModal from './common/ImageModal';
-import CategoryModal from './common/CategoryModal';
+import ImageModal from '../common/ImageModal';
+import CategoryModal from '../common/CategoryModal';
 import UpdateCategoryForm from './UpdateCategoryForm';
-import DeleteCategoryModal from './common/DeleteModal';
-import {categoryService} from '../../_services/categoryService';
+import DeleteCategoryModal from './DeleteModal';
+import {categoryService} from '../../../_services/categoryService';
 
 const styles = theme => ({
   update: {
@@ -119,7 +119,7 @@ class CategoryTable extends Component {
                               </TableCell>
                               <TableCell>{entity.name}</TableCell>
                               <TableCell>
-                                <IconButton>
+                                <IconButton onClick = {() => this.props.getCategoryId(entity.id)}>
                                   <DetailsIcon className = {classes.details}/>
                                 </IconButton>
                                 <IconButton>

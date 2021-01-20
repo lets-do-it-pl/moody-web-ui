@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import * as Yup from 'yup';
-import {Styles} from './common/Styles';
+import {Styles} from '../common/Styles';
 import {Formik, Form, Field} from 'formik';
 import ImageUploader from "react-images-upload";
-import {categoryService} from '../../_services/categoryService';
+import {categoryService} from '../../../_services/categoryService';
 import {Button, makeStyles, FormLabel} from '@material-ui/core';
 
 const ValidationSchema = Yup.object().shape({
@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
 const CreateCategoryForm = ({...props}) =>  {
     const classes = useStyles();
     const [image, setImage] = useState();
-    const [categories, setCategories] = useState([]);
 
     const onDrop = async (file) => {
       const base64 = await convertBase64(file[0]);

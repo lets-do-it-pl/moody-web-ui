@@ -10,9 +10,11 @@ import {
 import "../../style.css"
 import Page from 'src/components/Page';
 import AddIcon from '@material-ui/icons/Add';
-import CreateCategoryForm from './CreateCategoryForm';
+import CreateCategoryForm from './category/CreateCategoryForm';
 import CategoryModal from './common/CategoryModal';
-import CategoryTable from './CategoryTable';
+import CategoryTable from './category/CategoryTable';
+import CategoryDetailsTable from './categoryDetails/CategoryDetailsTable';
+import {categoryDetailsService} from '../../_services/categoryDetailsService';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +34,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Category = () => {
   const classes = useStyles();
+  const [id, setCategoryId] = React.useState();
+  const [details, setDetails] = React.useState([]);
+  
+  const getId = (categoryId) =>{
+    categoryDetailsService.listCategoryDetails(categoryId).then(result => 
+          setDetails(result.data)
+    );
+    setCategoryId(categoryId);
+  }
 
   return (
     <Page
@@ -57,7 +68,7 @@ const Category = () => {
                   </IconButton>
                 }/>
               <CardContent>
-                <CategoryTable/>
+                <CategoryTable getCategoryId = {getId} />
               </CardContent>
             </Card>
           </Grid>
@@ -68,13 +79,10 @@ const Category = () => {
                   title : classes.title
                 }}
                 title = "Category Details"
-                action={
-                  <IconButton>
-                    <p className = "fontStyle">Create a new Category Detail</p>
-                    <AddIcon className = {classes.add}/>
-                  </IconButton>
-                }/>
+              />
               <CardContent>
+                <CategoryDetailsTable categoryDetails = {details} 
+                                      categoryId = {id}/>
               </CardContent>
             </Card>
           </Grid>

@@ -18,7 +18,7 @@ async function createCategory(data) {
 }
 
 async function updateCategory( id, data) {
-    return apiService.asyncCallApi(HttpMethodType.PUT, '/category/' + id, data);
+    return apiService.asyncCallApi(HttpMethodType.PUT, `/category/${id}`, data);
 }
 
 async function updateOrder(id, previousId, nextId) {
@@ -28,10 +28,10 @@ async function updateOrder(id, previousId, nextId) {
         NextId: nextId 
     }
 
-    return apiService.asyncCallApi(HttpMethodType.PUT, '/category/order/' + id, data);
+    return apiService.asyncCallApi(HttpMethodType.PUT, `/category/order/${id}`, data);
 
 }
 
 async function deleteCategory(id) {
-    return apiService.asyncCallApi(HttpMethodType.DELETE, '/category/' + id);
+    return apiService.asyncCallApi(HttpMethodType.DELETE, `/category/${id}`);
 }

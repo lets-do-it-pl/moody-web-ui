@@ -16,7 +16,7 @@ async function asyncCallApi(
     // burayi cagiran kisi true yaparsa asagidaki kod calisir.
 ) {
 
-    var headers = {};
+    //var headers = {};
 
 //     if(token !== undefined)
 // {

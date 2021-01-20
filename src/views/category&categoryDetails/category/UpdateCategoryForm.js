@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import * as Yup from 'yup';
-import {Styles} from './common/Styles';
+import {Styles} from '../common/Styles';
 import { Formik, Form, Field } from 'formik';
 import {Button, makeStyles, FormLabel} from '@material-ui/core';
 import ImageUploader from "react-images-upload";
-import {categoryService} from '../../_services/categoryService';
+import {categoryService} from '../../../_services/categoryService';
 
 const ValidationSchema = Yup.object().shape({
     name : Yup.string()
@@ -19,25 +19,25 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-  const convertBase64 = (image) => {
-    return new Promise((resolve, reject) => {
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(image);
-
-        fileReader.onload = () => {
-            resolve(fileReader.result);
-        };
-
-        fileReader.onerror = (error) => {
-            reject(error);
-        };
-    });
-}
-
 const UpdateCategoryForm = ({...props}) => {
     const classes = useStyles();
     const [image, setImage] = useState(props.image);
     const [name, setName] = useState(props.name);
+
+    const convertBase64 = (image) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(image);
+    
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+    
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    }
 
     const onDrop = async (file) => {
       const base64 = await convertBase64(file[0]);

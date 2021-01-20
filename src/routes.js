@@ -6,7 +6,7 @@ import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
 import RegisterView from 'src/views/auth/RegisterView';
 import SettingsView from 'src/views/settings/SettingsView';
-import CategoryView from 'src/views/category';
+import CategoryView from 'src/views/category&categoryDetails';
 
 const routes = (currentUser) => [
   {
