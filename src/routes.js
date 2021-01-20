@@ -32,6 +32,4 @@ const routes = (currentUser) => [
     ]
   }
 ]
-
-
 export default routes;

@@ -37,14 +37,10 @@ const MobilClientCount = (props,{ className, ...rest }) => {
           justify="space-between"
           spacing={3}
         >
-          <Grid item>
-            <Typography
-              color="textSecondary"
-              gutterBottom
-              variant="h6"
-            >
+          <Grid item
+              md={7}
+              xs={12}>
               TOTAL MOBIL CLIENT COUNT
-            </Typography>
             <Typography
               color="textPrimary"
               variant="h3"

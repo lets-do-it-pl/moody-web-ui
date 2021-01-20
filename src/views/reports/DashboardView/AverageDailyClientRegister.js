@@ -37,14 +37,10 @@ const AverageDailyClientRegister = (props,{ className, ...rest }) => {
           justify="space-between"
           spacing={3}
         >
-          <Grid item>
-            <Typography
-              color="textSecondary"
-              gutterBottom
-              variant="h6"
-            >
-           AVERAGE DAILY REGISTER COUNT
-            </Typography>
+          <Grid item
+              md={7}
+              xs={12}>      
+           AVERAGE DAILY REGISTER COUNT        
             <Typography
               color="textPrimary"
               variant="h3"
