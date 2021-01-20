@@ -10,6 +10,7 @@ import MobileClientCount from './MobilClientCount';
 import CategoryDetailsCount from './CategoryDetails';
 import AverageDailyClientRegister from './AverageDailyClientRegister';
 import { dashboardService } from 'src/_services';
+import { StatusType } from 'src/_types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,9 +25,17 @@ const Dashboard = () => {
   const classes = useStyles();
   const [widgets, setWidgets] = useState([]);
 
-  useEffect(() => {
-      dashboardService.getDashboardWidgets().then(result =>setWidgets(result.data));
+  useEffect(async () => {
+    var result = await dashboardService.getDashboardWidgets();
+    
+    if(result.status !== StatusType.Success)
+    {
+    console.log(result.data);
+    return;
+    }
+    setWidgets(result.data)
     })
+    
   return (
     <Page
       className={classes.root}
