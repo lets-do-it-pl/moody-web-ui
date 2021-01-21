@@ -66,8 +66,46 @@ class CategoryTable extends Component {
 
     if(!result.destination) return;
 
-    return categoryService.updateOrder();
-    
+    const updatedOrder = this.state.categories[result.destination.index];
+    const updatedOrderTop = this.state.categories[result.destination.index - 1];
+    const updatedOrderBottom = this.state.categories[result.destination.index + 1];
+
+      if(result.source.index > result.destination.index) {
+        if(result.destination.index === 1)
+        {
+          const values = {
+            PreviousId : null,
+            NextId : updatedOrder.id
+          }
+          categoryService.updateOrder(Number(result.draggableId), values);
+        }
+        else {
+          const values = {
+            PreviousId : updatedOrder.id,
+            NextId : updatedOrderTop.id
+          }
+          categoryService.updateOrder(Number(result.draggableId), values);
+        }
+      }
+  
+      if(result.source.index < result.destination.index) {
+        if(result.destination.index === this.props.entities.length)
+        {
+          const values = {
+            PreviousId : updatedOrder.id,
+            NextId : null
+          }
+          categoryService.updateOrder(Number(result.draggableId), values);
+        }
+        else {
+          const values = {
+            PreviousId : updatedOrder.id,
+            NextId : updatedOrderBottom.id
+          }
+          categoryService.updateOrder(Number(result.draggableId), values);
+        }
+      }
+      return;
   }
 
   render() {
