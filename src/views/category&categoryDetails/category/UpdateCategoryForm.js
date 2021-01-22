@@ -105,7 +105,7 @@ function UpdateCategoryForm(props) {
                                     withLabel={false}
                                     singleImage={true}
                                     withPreview={true}
-                                    imgExtension={[".jpg", ".gif", ".png"]}
+                                    imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
                                     maxFileSize={5242880}
                                 />
                         <Button type="submit" className={classes.submit} variant="contained">Submit</Button>

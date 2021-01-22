@@ -71,10 +71,9 @@ class CategoryTable extends Component {
     const updatedOrderBottom = this.state.categories[result.destination.index + 1];
 
       if(result.source.index > result.destination.index) {
-        if(result.destination.index === 1)
+        if(result.destination.index === 0)
         {
           const values = {
-            PreviousId : null,
             NextId : updatedOrder.id
           }
           categoryService.updateOrder(Number(result.draggableId), values);
@@ -89,11 +88,10 @@ class CategoryTable extends Component {
       }
   
       if(result.source.index < result.destination.index) {
-        if(result.destination.index === this.props.entities.length)
+        if(result.destination.index === this.state.categories.length - 1)
         {
           const values = {
-            PreviousId : updatedOrder.id,
-            NextId : null
+            PreviousId : updatedOrder.id
           }
           categoryService.updateOrder(Number(result.draggableId), values);
         }
@@ -145,7 +143,7 @@ class CategoryTable extends Component {
                                 provided.draggableProps.style
                               )}
                             >
-                              <TableCell>{index + 1}</TableCell>
+                              <TableCell>{index}</TableCell>
                               <TableCell>
                               <Avatar alt="" src={"data:image/png;base64," + 
                               entity.image} 

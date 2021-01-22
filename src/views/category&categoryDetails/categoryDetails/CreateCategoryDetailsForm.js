@@ -65,11 +65,10 @@ function CreateCategoryDetailsForm(props) {
   };
 
   const onSubmit = () => {
-       const value = {
-            Id : props.categoryId, 
-            Image : image
-        }
-    categoryDetailsService.createCategoryDetail(props.categoryId, value);
+    const value = { 
+        Image : image
+    }
+  categoryDetailsService.createCategoryDetail(props.categoryId, value);
   }
 
   return (
@@ -80,24 +79,23 @@ function CreateCategoryDetailsForm(props) {
         <DialogContent>
             <div>
             <Styles>
-            <Formik
-                >
-                    <Form>
-                        <FormLabel >Category Detail Image</FormLabel>
-                        <ImageUploader
-                                    {...props}
-                                    name = "image"
-                                    withIcon={false}
-                                    onChange={onDrop}
-                                    buttonText="Upload"
-                                    withLabel={false}
-                                    singleImage={true}
-                                    withPreview={true}
-                                    imgExtension={[".jpg", ".gif", ".png"]}
-                                    maxFileSize={5242880}
-                                />
-                        <Button onClick = {onSubmit} className={classes.submit} variant="contained">Submit</Button>
-                    </Form>
+            <Formik>
+              <Form>
+                <FormLabel >Category Detail Image</FormLabel>
+                <ImageUploader
+                            {...props}
+                            name = "image"
+                            withIcon={false}
+                            onChange={onDrop}
+                            buttonText="Upload"
+                            withLabel={false}
+                            singleImage={true}
+                            withPreview={true}
+                            imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
+                            maxFileSize={5242880}
+                        />
+                <Button onClick = {onSubmit} className={classes.submit} variant="contained">Submit</Button>
+              </Form>
             </Formik>
             </Styles>
             </div>

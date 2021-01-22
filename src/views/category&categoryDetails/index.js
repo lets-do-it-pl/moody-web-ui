@@ -12,6 +12,7 @@ import Page from 'src/components/Page';
 import CreateCategoryForm from './category/CreateCategoryForm';
 import CategoryTable from './category/CategoryTable';
 import CategoryDetailsTable from './categoryDetails/CategoryDetailsTable';
+import CreateCategoryDetailsForm from './categoryDetails/CreateCategoryDetailsForm';
 import {categoryDetailsService} from '../../_services/categoryDetailsService';
 
 
@@ -33,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const Category = () => {
   const classes = useStyles();
   const [id, setCategoryId] = React.useState();
-  const [name, setCategoryName] = React.useState();
+  const [name, setCategoryName] = React.useState("");
   const [details, setDetails] = React.useState([]);
   const mounted = useRef();
   
@@ -81,16 +82,20 @@ const Category = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Card>
-              <CardHeader 
+            <CardHeader 
                 classes = {{
                   title : classes.title
                 }}
-                title = "Category Details"
-              />
+                title = {`${name} Category Details`}
+                action={
+                  <IconButton>
+                     <p className = "fontStyle">Create a new Category Detail</p>
+                    <CreateCategoryDetailsForm categoryId = {id}/>
+                  </IconButton>
+                }/>
               <CardContent>
                 <CategoryDetailsTable categoryDetails = {details} 
-                                      categoryId = {id}
-                                      categoryName = {name}/>
+                                      categoryId = {id}/>
               </CardContent>
             </Card>
           </Grid>
