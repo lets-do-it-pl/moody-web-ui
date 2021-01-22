@@ -23,5 +23,5 @@ jobs:
             az deployment group create \
             --name StorageAccountDeployment \
             --resource-group Moody-Web-UI \
-            --template-file armtemplates/storageaccount.json \
+            --template-file armtemplate/storageaccount.json \
             --parameters storageAccountType=Standar GRS
