@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const MobilClientCount = (props,{ className, ...rest }) => {
+const MobilClientCount = (props, { className, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -38,9 +38,15 @@ const MobilClientCount = (props,{ className, ...rest }) => {
           spacing={3}
         >
           <Grid item
-              md={7}
-              xs={12}>
-              TOTAL MOBIL CLIENT COUNT
+            md={7}
+            xs={12}>
+            <Typography
+              color="textSecondary"
+              gutterBottom
+              variant="h6"
+            >
+              TOTAL MOBIL CLIENT
+            </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
