@@ -6,9 +6,5 @@ export const searchService = {
 };
 
 async function generalSearch(searchKey) {
-  return await apiService.asyncCallApi(
-    HttpMethodType.GET,
-    `/search?searchKey=${searchKey}`,
-    null
-  );
+  return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, `/search?searchKey=${searchKey}`);
 }
