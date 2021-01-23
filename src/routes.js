@@ -25,7 +25,7 @@ const routes = (currentUser) => [
   },
   {
     path: '/',
-    element: !currentUser ? <MainLayout /> : <Navigate to="/app/dashboard" />,
+   element: !currentUser ? <MainLayout /> : <Navigate to="/app/dashboard" />,
     children: [
       { path: 'login', element: <LoginView /> },
       { path: 'register', element: <RegisterView /> },
@@ -38,6 +38,4 @@ const routes = (currentUser) => [
     ]
   }
 ]
-
-
 export default routes;
