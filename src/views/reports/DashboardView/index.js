@@ -23,73 +23,62 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = () => {
   const classes = useStyles();
-  const [widgets, setWidgets] = useState([]);
+  const [averageRegisteredClientCount, setAverageRegisteredClientCount] = useState(0);
+  const [totalCategoryCount, setTotalCategoryCount] = useState(0);
+  const [totalCategoryDetailCount, setTotalCategoryDetailCount] = useState(0);
+  const [totalRegisteredClientCount, setTotalRegisteredClientCount] = useState(0);
 
-  useEffect(async () => {
-    var result = await dashboardService.getDashboardWidgets();
-    
-    if(result.status !== StatusType.Success)
-    {
-    console.log(result.data);
-    return;
+  useEffect(() => {
+    async function fetchData() {
+      var result = await dashboardService.getDashboardWidgets();
+
+      if (result.status !== StatusType.Success) {
+        console.log(result.data);
+        return;
+      }
+
+      result.data.forEach(element => {
+        switch (element.name) {
+          case "TotalCategoryCount":
+            setTotalCategoryCount(element.totalNumber);
+            break;
+          case "TotalCategoryDetailCount":
+            setTotalCategoryDetailCount(element.totalNumber);
+            break;
+          case "TotalRegisteredClientCount":
+            setTotalRegisteredClientCount(element.totalNumber);
+            break;
+          case "AverageRegisteredClientCount":
+            setAverageRegisteredClientCount(element.totalNumber);
+            break;
+          default:
+            console.log(`${element.name} can not be matched!`);
+        }
+      });
     }
-    setWidgets(result.data)
-    })
-    
+    fetchData();
+  }, []);
+
   return (
     <Page
       className={classes.root}
       title="Dashboard"
     >
       <Container maxWidth={false}>
-        
-        <Grid
-          container
-          spacing={3}
-        >
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <CategoryCount TotalNumber = {widgets[0].TotalNumber} />
+        <Grid container spacing={3}>
+          <Grid item lg={3} sm={6} xl={3} xs={12}>
+            <CategoryCount TotalNumber={totalCategoryCount} />
           </Grid>
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <CategoryDetailsCount TotalNumber = {widgets[1].TotalNumber}/>
+          <Grid item lg={3} sm={6} xl={3} xs={12}>
+            <CategoryDetailsCount TotalNumber={totalCategoryDetailCount} />
           </Grid>
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <MobileClientCount TotalNumber = {widgets[2].TotalNumber} />
+          <Grid item lg={3} sm={6} xl={3} xs={12}>
+            <MobileClientCount TotalNumber={totalRegisteredClientCount} />
           </Grid>
-          <Grid
-            item
-            lg={3}
-            sm={6}
-            xl={3}
-            xs={12}
-          >
-            <AverageDailyClientRegister TotalNumber = {widgets[3].TotalNumber} />
+          <Grid item lg={3} sm={6} xl={3} xs={12}>
+            <AverageDailyClientRegister TotalNumber={averageRegisteredClientCount} />
           </Grid>
-          <Grid
-            item
-            lg={8}
-            md={12}
-            xl={9}
-            xs={12}
-          >
+          <Grid item lg={8} md={12} xl={9} xs={12}>
           </Grid>
         </Grid>
       </Container>
