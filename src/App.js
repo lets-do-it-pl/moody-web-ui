@@ -10,7 +10,6 @@ import routes from 'src/routes';
 import { authenticationService } from 'src/_services';
 
 const App = () => {
-
   var routing = useRoutes(routes(authenticationService.currentUserValue));
 
   return (
