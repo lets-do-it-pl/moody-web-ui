@@ -6,5 +6,5 @@ export const dashboardService = {
 };
 
 async function getDashboardWidgets() {
-    return await apiService.asyncCallApi(HttpMethodType.GET, '/dashboard')
+    return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, '/dashboard')
 }

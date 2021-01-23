@@ -5,15 +5,27 @@ import { StatusType } from 'src/_types'
 const apiUrl = process.env.REACT_APP_API_URL;
 
 export const apiService = {
-    asyncCallApi
+    asyncCallApi,
+    asyncCallAuthorizedApi
 };
+
+async function asyncCallAuthorizedApi(
+    httpMethodType,
+    queryString,
+    data) {
+
+    var headers = {
+        Authorization: `Bearer ${authenticationService.currentUserValue.token}`
+    };
+
+    return await asyncExecuteApiCall(httpMethodType, queryString, headers, data);
+}
 
 async function asyncCallApi(
     httpMethodType,
     queryString,
     data,
-    token
-) {
+    token) {
 
     var headers = {};
 
@@ -21,6 +33,15 @@ async function asyncCallApi(
         headers.Authorization = `Bearer ${token}`;
     }
 
+    return await asyncExecuteApiCall(httpMethodType, queryString, headers, data);
+}
+
+async function asyncExecuteApiCall(
+    httpMethodType,
+    queryString,
+    headers,
+    data
+) {
     try {
         const response = await axios({
             method: httpMethodType,
