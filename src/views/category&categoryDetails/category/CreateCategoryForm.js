@@ -100,21 +100,25 @@ function CreateCategoryForm(props) {
 
                 {({
                 errors,
+                handleBlur,
                 handleChange,
                 handleSubmit,
                 touched,
+                values
                 }) => (
                 <form onSubmit={handleSubmit}>
-                    <FormLabel >Category Name</FormLabel>
+                    <FormLabel>Category Name</FormLabel>
                     <TextField
                       error={Boolean(touched.name && errors.name)}
                       margin="normal"
+                      onBlur={handleBlur}
                       onChange={handleChange}
                       type="name"
                       fullWidth
                       name="name"
                       required
-                      variant="contained"
+                      value={values.name}
+                      variant="outlined"
                     />
                     <FormLabel >Category Image</FormLabel>
                     <ImageUploader
