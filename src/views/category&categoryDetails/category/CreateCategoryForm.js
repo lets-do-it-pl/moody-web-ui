@@ -5,12 +5,14 @@ import {Button,
         DialogContent, 
         DialogTitle,
         makeStyles,
-        FormLabel} from '@material-ui/core';
+        FormLabel,
+        TextField} from '@material-ui/core';
 import * as Yup from 'yup';
 import {Styles} from '../common/Styles';
-import {Formik, Form, Field} from 'formik';
+import {Formik} from 'formik';
 import ImageUploader from "react-images-upload";
 import AddIcon from '@material-ui/icons/Add';
+import { StatusType } from 'src/_types';
 import {categoryService} from '../../../_services/categoryService';
 
 const useStyles = makeStyles((theme) => ({
@@ -74,28 +76,46 @@ function CreateCategoryForm(props) {
       <Dialog open={open} fullWidth onClose={handleClose}  aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create a new Category</DialogTitle>
         <DialogContent>
-            <div>
-            <Styles>
+          <Styles>
             <Formik
                 initialValues={{
                     name : '',
                 }}
                 validationSchema={ValidationSchema}
 
-                onSubmit = {(values) => {
+                onSubmit = {async (value) => {
+                  value = {
+                    Name : value.name,
+                    Image : image
+                  }
+                  var result = await categoryService.createCategory(value);
+                  setOpen(false);
 
-                        values = {
-                            ...values,
-                            Image : image
-                        }
-                        categoryService.createCategory(values);
+                  if (result.status === StatusType.Success) {
+                    return;
+                  }
+
+                  this.state.error = result.message;
                 }}>
 
-                {({ errors, touched}) => (
-                <Form>
+                {({
+                errors,
+                handleChange,
+                handleSubmit,
+                touched,
+                }) => (
+                <form onSubmit={handleSubmit}>
                     <FormLabel >Category Name</FormLabel>
-                    <Field name="name" value = {props.name}/>
-                    {touched.name && errors.name && <div>{errors.name}</div>}
+                    <TextField
+                      error={Boolean(touched.name && errors.name)}
+                      margin="normal"
+                      onChange={handleChange}
+                      type="name"
+                      fullWidth
+                      name="name"
+                      required
+                      variant="contained"
+                    />
                     <FormLabel >Category Image</FormLabel>
                     <ImageUploader
                                 {...props}
@@ -109,18 +129,18 @@ function CreateCategoryForm(props) {
                                 imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
                                 maxFileSize={5242880}
                             />
-                    <Button type="submit" className={classes.submit} variant="contained">Submit</Button>
-                </Form>
-                )}
-                </Formik>
-            </Styles>
-            </div>
+                    <DialogActions>
+                    <Button type = "submit" className = {classes.submit}>
+                        Ok
+                    </Button>
+                    <Button onClick={handleClose} className = {classes.cancel} variant = "contained">
+                      Cancel
+                    </Button>
+                    </DialogActions>
+                  </form>)}
+            </Formik>
+          </Styles>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} className = {classes.cancel} variant = "contained">
-            Cancel
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

@@ -69,6 +69,7 @@ function CreateCategoryDetailsForm(props) {
         Image : image
     }
   categoryDetailsService.createCategoryDetail(props.categoryId, value);
+  setOpen(false);
   }
 
   return (
@@ -81,7 +82,7 @@ function CreateCategoryDetailsForm(props) {
             <Styles>
             <Formik>
               <Form>
-                <FormLabel >Category Detail Image</FormLabel>
+                <FormLabel>Category Detail Image</FormLabel>
                 <ImageUploader
                             {...props}
                             name = "image"
@@ -94,13 +95,13 @@ function CreateCategoryDetailsForm(props) {
                             imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
                             maxFileSize={5242880}
                         />
-                <Button onClick = {onSubmit} className={classes.submit} variant="contained">Submit</Button>
               </Form>
             </Formik>
             </Styles>
             </div>
         </DialogContent>
         <DialogActions>
+          <Button onClick = {onSubmit} className={classes.submit} variant="contained">Ok</Button>
           <Button onClick={handleClose} className = {classes.cancel} variant = "contained">
             Cancel
           </Button>

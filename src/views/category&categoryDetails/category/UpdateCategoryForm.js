@@ -5,12 +5,14 @@ import {Button,
         DialogContent, 
         DialogTitle,
         makeStyles,
-        FormLabel} from '@material-ui/core';
+        FormLabel,
+        TextField} from '@material-ui/core';
 import * as Yup from 'yup';
 import {Styles} from '../common/Styles';
-import { Formik, Form, Field } from 'formik';
+import { Formik} from 'formik';
 import ImageUploader from "react-images-upload";
 import EditIcon from '@material-ui/icons/Edit';
+import { StatusType } from 'src/_types';
 import {categoryService} from '../../../_services/categoryService';
 
 const useStyles = makeStyles((theme) => ({
@@ -74,7 +76,6 @@ function UpdateCategoryForm(props) {
       <Dialog open={open} fullWidth onClose={handleClose}  aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Edit Category</DialogTitle>
         <DialogContent>
-        <div>
         <Styles>
             <Formik
                 initialValues={{
@@ -82,18 +83,33 @@ function UpdateCategoryForm(props) {
                 }}
                 validationSchema={ValidationSchema}
                 
-                onSubmit={values => {
+                onSubmit={async values => {
                     values = {
                         Name : name,
                         Image : image
                     }
-                    categoryService.updateCategory(props.id, values);
+                    var result = await categoryService.updateCategory(props.id, values);
+                    setOpen(false);
+
+                    if (result.status === StatusType.Success) {
+                      return;
+                    }
+
+                    this.state.error = result.message;
                 }}
                 >
-                {({ errors, touched}) => (
-                    <Form>
+                {({ errors, touched, handleSubmit}) => (
+                    <form onSubmit = {handleSubmit}>
                         <FormLabel >Category Name</FormLabel>
-                        <Field name="name" value = {name} onChange={(e) => setName(e.target.value)}/>
+                        <TextField 
+                          name="name"
+                          margin="normal"
+                          type="name"
+                          fullWidth
+                          required
+                          variant="outlined"
+                          value = {name} 
+                          onChange={(e) => setName(e.target.value)}/>
                         {touched.name && errors.name && <div>{errors.name}</div>}
                         <FormLabel >Category Image</FormLabel>
                         <ImageUploader
@@ -108,18 +124,17 @@ function UpdateCategoryForm(props) {
                                     imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
                                     maxFileSize={5242880}
                                 />
-                        <Button type="submit" className={classes.submit} variant="contained">Submit</Button>
-                    </Form>
+                         <DialogActions>
+                          <Button type="submit" className={classes.submit} variant="contained">Submit</Button>
+                          <Button onClick={handleClose} className = {classes.cancel} variant = "contained">
+                            Cancel
+                          </Button>
+                        </DialogActions>
+                    </form>
                 )}
             </Formik>
         </Styles>
-        </div>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} className = {classes.cancel} variant = "contained">
-            Cancel
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

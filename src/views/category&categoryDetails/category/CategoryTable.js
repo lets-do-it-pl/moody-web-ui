@@ -143,7 +143,7 @@ class CategoryTable extends Component {
                                 provided.draggableProps.style
                               )}
                             >
-                              <TableCell>{index}</TableCell>
+                              <TableCell>{index + 1}</TableCell>
                               <TableCell>
                               <Avatar alt="" src={"data:image/png;base64," + 
                               entity.image} 
@@ -156,12 +156,12 @@ class CategoryTable extends Component {
                                 <IconButton onClick = {() => this.props.getCategoryId(entity.id, entity.name)}>
                                   <DetailsIcon className = {classes.details}/>
                                 </IconButton>
-                                <IconButton>
+                                 <IconButton>
                                   <UpdateCategoryForm
                                     id = {entity.id}
                                     name = {entity.name}
                                     image = {entity.image}
-                                  />
+                                  /> 
                                 </IconButton>
                                 <IconButton>
                                   <DeleteCategoryForm id = {entity.id}/>

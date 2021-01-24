@@ -66,6 +66,7 @@ function UpdateCategoryDetailsForm(props) {
             Image : image
         }
     categoryDetailsService.updateCategoryDetail(props.categoryId, props.id, value);
+    setOpen(false);
   }
 
   return (
@@ -92,13 +93,13 @@ function UpdateCategoryDetailsForm(props) {
                                     imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
                                     maxFileSize={5242880}
                                 />
-                        <Button onClick = {onSubmit} className={classes.submit} variant="contained">Submit</Button>
                     </Form>
             </Formik>
             </Styles>
             </div>
         </DialogContent>
         <DialogActions>
+         <Button onClick = {onSubmit} className={classes.submit} variant="contained">Ok</Button>
           <Button onClick={handleClose} className = {classes.cancel} variant = "contained">
             Cancel
           </Button>
