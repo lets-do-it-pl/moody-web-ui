@@ -24,3 +24,10 @@ yarn-debug.log*
 yarn-error.log*
 .vscode/launch.json
 debug.log
+/.idea/codeStyles/codeStyleConfig.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/moody-web-ui.iml
+/.idea/codeStyles/Project.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml

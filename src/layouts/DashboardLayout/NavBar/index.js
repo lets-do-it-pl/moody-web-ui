@@ -19,10 +19,15 @@ import {
 } from 'react-feather';
 import NavItem from './NavItem';
 
+import { authenticationService } from 'src/_services';
+
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith'
+  avatar: authenticationService.currentUserValue.profileImage !== null &&
+    authenticationService.currentUserValue.profileImage !== undefined &&
+    authenticationService.currentUserValue.profileImage !== "" ?
+    authenticationService.currentUserValue.profileImage :
+    '/static/images/avatars/default.png',
+  name: authenticationService.currentUserValue.fullName
 };
 
 const items = [
@@ -99,12 +104,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
           variant="h5"
         >
           {user.name}
-        </Typography>
-        <Typography
-          color="textSecondary"
-          variant="body2"
-        >
-          {user.jobTitle}
         </Typography>
       </Box>
       <Divider />
