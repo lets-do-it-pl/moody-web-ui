@@ -2,36 +2,36 @@ import { HttpMethodType } from 'src/_types';
 import { apiService } from './api.service';
 
 export const categoryService = {
-    listCategories,
+    getCategories,
     createCategory,
     updateCategory,
     updateOrder,
     deleteCategory
 };
 
-async function listCategories() {
-    return await apiService.asyncCallApi(HttpMethodType.GET, '/category/list');
+async function getCategories() {
+    return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, '/category/list');
 }
 
 async function createCategory(data) {
-    return await apiService.asyncCallApi(HttpMethodType.POST, '/category', data);
+    return await apiService.asyncCallAuthorizedApi(HttpMethodType.POST, '/category', data);
 }
 
-async function updateCategory( id, data) {
-    return apiService.asyncCallApi(HttpMethodType.PUT, `/category/${id}`, data);
+async function updateCategory(id, data) {
+    return apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, `/category/${id}`, data);
 }
 
 async function updateOrder(id, previousId, nextId) {
-    
+
     var data = {
         PreviousId: previousId,
-        NextId: nextId 
+        NextId: nextId
     }
 
-    return apiService.asyncCallApi(HttpMethodType.PUT, `/category/order/${id}`, data);
+    return apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, `/category/order/${id}`, data);
 
 }
 
 async function deleteCategory(id) {
-    return apiService.asyncCallApi(HttpMethodType.DELETE, `/category/${id}`);
+    return apiService.asyncCallAuthorizedApi(HttpMethodType.DELETE, `/category/${id}`);
 }

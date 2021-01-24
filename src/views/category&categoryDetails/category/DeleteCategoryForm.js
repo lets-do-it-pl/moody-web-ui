@@ -1,29 +1,31 @@
 import React from 'react';
-import {makeStyles,
-        Button,
-        Dialog, 
-        DialogActions, 
-        DialogContent, 
-        DialogContentText, 
-        DialogTitle} from '@material-ui/core';
+import {
+  makeStyles,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {categoryService} from '../../../_services/categoryService';
+import { categoryService } from '../../../_services/categoryService';
 
 const useStyles = makeStyles((theme) => ({
   submit: {
     backgroundColor: "#5cb85c",
-    color : "white"
+    color: "white"
   },
   cancel: {
     backgroundColor: "#f44336",
-    color : "white"
+    color: "white"
   },
   delete: {
     color: "red"
   }
 }));
 
-const DeleteCategoryForm = ({...props}) => {
+const DeleteCategoryForm = ({ ...props }) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -37,7 +39,7 @@ const DeleteCategoryForm = ({...props}) => {
 
   return (
     <div>
-      <DeleteIcon onClick={handleClickOpen} className = {classes.delete}/>
+      <DeleteIcon onClick={handleClickOpen} className={classes.delete} />
       <Dialog
         open={open}
         onClose={handleClose}
@@ -49,11 +51,11 @@ const DeleteCategoryForm = ({...props}) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button className={classes.submit} color="primary" 
-                  onClick = {() => categoryService.deleteCategory(props.id)}>
+          <Button className={classes.submit} color="primary"
+            onClick={async () => await categoryService.deleteCategory(props.id)}>
             Confirm
           </Button>
-          <Button onClick={handleClose} className = {classes.cancel} variant = "contained">
+          <Button onClick={handleClose} className={classes.cancel} variant="contained">
             Cancel
           </Button>
         </DialogActions>

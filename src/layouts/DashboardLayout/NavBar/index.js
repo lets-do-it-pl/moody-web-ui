@@ -22,12 +22,17 @@ import NavItem from './NavItem';
 import { authenticationService } from 'src/_services';
 
 const user = {
-  avatar: authenticationService.currentUserValue.profileImage !== null &&
+  avatar: authenticationService.currentUserValue !== null &&
+    authenticationService.currentUserValue !== {} &&
+    authenticationService.currentUserValue.profileImage !== null &&
     authenticationService.currentUserValue.profileImage !== undefined &&
     authenticationService.currentUserValue.profileImage !== "" ?
     authenticationService.currentUserValue.profileImage :
     '/static/images/avatars/default.png',
-  name: authenticationService.currentUserValue.fullName
+  name: authenticationService.currentUserValue !== null &&
+    authenticationService.currentUserValue !== {} ?
+    authenticationService.currentUserValue.fullName :
+    ""
 };
 
 const items = [
