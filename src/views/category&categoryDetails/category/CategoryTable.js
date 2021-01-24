@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Ref } from "semantic-ui-react";
+import { Ref } from "semantic-ui-react";
 import PropTypes from 'prop-types';
 import {
   DragDropContext,
@@ -8,17 +8,20 @@ import {
 } from "react-beautiful-dnd";
 import { withStyles } from '@material-ui/styles';
 import DetailsIcon from '@material-ui/icons/Details';
-import {Table, 
-        TableBody, 
-        TableCell, 
-        TableHead, 
-        TableRow, 
-        IconButton,
-        Avatar} from '@material-ui/core';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  IconButton,
+  Avatar
+} from '@material-ui/core';
 import ImageModal from '../common/ImageModal';
 import UpdateCategoryForm from './UpdateCategoryForm';
 import DeleteCategoryForm from './DeleteCategoryForm';
-import {categoryService} from '../../../_services/categoryService';
+import { categoryService } from '../../../_services/categoryService';
+import { StatusType } from 'src/_types';
 
 const styles = () => ({
   update: {
@@ -31,24 +34,29 @@ const styles = () => ({
 
 class CategoryTable extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-    selectedImage : null,
-    categories: []
+      selectedImage: null,
+      categories: []
     }
   }
 
-  componentDidMount () {
-    categoryService.listCategories().then(result => this.setState({
-      categories: result.data
-    }));
+  async componentDidMount() {
+    await this.loadCategories();
   }
 
-  componentDidUpdate () {
-    categoryService.listCategories().then(result => this.setState({
+  loadCategories = async () => {
+    var result = await categoryService.getCategories();
+
+    if (result.status === StatusType.Fail) {
+      console.log(result.data);
+      return;
+    }
+
+    this.setState({
       categories: result.data
-    }));
+    });
   }
 
   closeImage = () => {
@@ -62,65 +70,48 @@ class CategoryTable extends Component {
     ...draggableStyle,
   })
 
-  onDragEnd = result => {
+  onDragEnd = async result => {
 
-    if(!result.destination) return;
+    if (!result.destination) {
+      return;
+    }
 
     const updatedOrder = this.state.categories[result.destination.index];
     const updatedOrderTop = this.state.categories[result.destination.index - 1];
     const updatedOrderBottom = this.state.categories[result.destination.index + 1];
 
-      if(result.source.index > result.destination.index) {
-        if(result.destination.index === 0)
-        {
-          const values = {
-            NextId : updatedOrder.id
-          }
-          categoryService.updateOrder(Number(result.draggableId), values);
-        }
-        else {
-          const values = {
-            PreviousId : updatedOrder.id,
-            NextId : updatedOrderTop.id
-          }
-          categoryService.updateOrder(Number(result.draggableId), values);
-        }
-      }
-  
-      if(result.source.index < result.destination.index) {
-        if(result.destination.index === this.state.categories.length - 1)
-        {
-          const values = {
-            PreviousId : updatedOrder.id
-          }
-          categoryService.updateOrder(Number(result.draggableId), values);
-        }
-        else {
-          const values = {
-            PreviousId : updatedOrder.id,
-            NextId : updatedOrderBottom.id
-          }
-          categoryService.updateOrder(Number(result.draggableId), values);
-        }
-      }
-      return;
+    if (result.source.index > result.destination.index) {
+      const values = result.destination.index === 0 ?
+        { NextId: updatedOrder.id } :
+        { PreviousId: updatedOrder.id, NextId: updatedOrderTop.id };
+
+      await categoryService.updateOrder(Number(result.draggableId), values);
+    }
+    else if (result.source.index < result.destination.index) {
+      const values = result.destination.index === this.state.categories.length - 1 ?
+        { PreviousId: updatedOrder.id } :
+        { PreviousId: updatedOrder.id, NextId: updatedOrderBottom.id };
+
+      await categoryService.updateOrder(Number(result.draggableId), values);
+    }
+    return;
   }
 
   render() {
     const { classes } = this.props;
-    const {selectedImage, categories} = this.state;
+    const { selectedImage, categories } = this.state;
     return (
       <div style={{ padding: "30px" }}>
-      <DragDropContext
-        onDragEnd={this.onDragEnd}
-      >
-      <Table size = "small">
+        <DragDropContext
+          onDragEnd={this.onDragEnd}
+        >
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell>#</TableCell>
                 <TableCell>Image</TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell align="center">Actions</TableCell>
               </TableRow>
             </TableHead>
             <Droppable droppableId="category">
@@ -135,7 +126,7 @@ class CategoryTable extends Component {
                       >
                         {(provided, snapshot) => (
                           <Ref innerRef={provided.innerRef}>
-                            <TableRow 
+                            <TableRow
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                               style={this.getItemStyle(
@@ -145,26 +136,26 @@ class CategoryTable extends Component {
                             >
                               <TableCell>{index + 1}</TableCell>
                               <TableCell>
-                              <Avatar alt="" src={"data:image/png;base64," + 
-                              entity.image} 
-                                  onClick = {(e) => this.setState({
-                                    selectedImage : e.target.src
+                                <Avatar alt="" src={"data:image/png;base64," +
+                                  entity.image}
+                                  onClick={(e) => this.setState({
+                                    selectedImage: e.target.src
                                   })} />
                               </TableCell>
                               <TableCell>{entity.name}</TableCell>
-                              <TableCell>
-                                <IconButton onClick = {() => this.props.getCategoryId(entity.id, entity.name)}>
-                                  <DetailsIcon className = {classes.details}/>
+                              <TableCell align="right">
+                                <IconButton size="small" onClick={() => this.props.getCategoryId(entity.id, entity.name)}>
+                                  <DetailsIcon className={classes.details} />
                                 </IconButton>
-                                 <IconButton>
+                                <IconButton size="small" >
                                   <UpdateCategoryForm
-                                    id = {entity.id}
-                                    name = {entity.name}
-                                    image = {entity.image}
-                                  /> 
+                                    id={entity.id}
+                                    name={entity.name}
+                                    image={entity.image}
+                                  />
                                 </IconButton>
-                                <IconButton>
-                                  <DeleteCategoryForm id = {entity.id}/>
+                                <IconButton size="small" >
+                                  <DeleteCategoryForm id={entity.id} />
                                 </IconButton>
                               </TableCell>
                             </TableRow>
@@ -179,7 +170,7 @@ class CategoryTable extends Component {
             </Droppable>
           </Table>
         </DragDropContext>
-        {selectedImage && <ImageModal selectedImage = {selectedImage} closeImage = {this.closeImage}/>}
+        {selectedImage && <ImageModal selectedImage={selectedImage} closeImage={this.closeImage} />}
       </div>
     );
   }

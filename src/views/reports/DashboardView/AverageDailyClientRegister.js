@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const AverageDailyClientRegister = (props,{ className, ...rest }) => {
+const AverageDailyClientRegister = (props, { className, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -38,9 +38,15 @@ const AverageDailyClientRegister = (props,{ className, ...rest }) => {
           spacing={3}
         >
           <Grid item
-              md={7}
-              xs={12}>      
-           AVERAGE DAILY REGISTER COUNT        
+            md={7}
+            xs={12}>
+            <Typography
+              color="textSecondary"
+              gutterBottom
+              variant="h6"
+            >
+              AVERAGE DAILY REGISTER
+            </Typography>
             <Typography
               color="textPrimary"
               variant="h3"

@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const CategoryDetailsCount = (props,{className, ...rest }) => {
+const CategoryDetailsCount = (props, { className, ...rest }) => {
   const classes = useStyles();
 
   return (
@@ -45,9 +45,14 @@ const CategoryDetailsCount = (props,{className, ...rest }) => {
           spacing={3}
         >
           <Grid item
-              md={7}
-              xs={12}>
-              CATEGORY DETAILS COUNT
+            md={7}
+            xs={12}><Typography
+              color="textSecondary"
+              gutterBottom
+              variant="h6"
+            >
+              CATEGORY DETAILS
+            </Typography>
             <Typography
               color="textPrimary"
               variant="h3"
