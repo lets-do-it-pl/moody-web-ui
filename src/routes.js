@@ -1,7 +1,5 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import DashboardLayout from 'src/layouts/DashboardLayout';
-import MainLayout from 'src/layouts/MainLayout';
 import AccountView from 'src/views/account/AccountView';
 import DashboardView from 'src/views/reports/DashboardView';
 import LoginView from 'src/views/auth/LoginView';
@@ -11,6 +9,7 @@ import ActivateUserView from 'src/views/auth/ActivateUserView';
 import ForgetPasswordView from 'src/views/auth/ForgetPasswordView';
 import ResetPasswordView from 'src/views/auth/ResetPasswordView';
 import SettingsView from 'src/views/settings/SettingsView';
+import CategoryView from 'src/views/category&categoryDetails';
 
 const routes = (currentUser) => [
   {
@@ -19,13 +18,14 @@ const routes = (currentUser) => [
     children: [
       { path: 'account', element: <AccountView /> },
       { path: 'dashboard', element: <DashboardView /> },
+      { path: 'category', element: <CategoryView/>},
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   },
   {
     path: '/',
-   element: !currentUser ? <MainLayout /> : <Navigate to="/app/dashboard" />,
+    element: !currentUser ? <MainLayout /> : <Navigate to="/app/dashboard" />,
     children: [
       { path: 'login', element: <LoginView /> },
       { path: 'register', element: <RegisterView /> },
