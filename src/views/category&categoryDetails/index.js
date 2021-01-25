@@ -49,14 +49,14 @@ const Category = () => {
     setDetails(result.data);
   }
 
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-
-    } else {
-      loadCategoryDetails();
-    }
-  }, [loadCategoryDetails]);
+  // useEffect(() => {
+  //   if (!mounted.current) {
+  //     mounted.current = true;
+  //
+  //   } else {
+  //     loadCategoryDetails();
+  //   }
+  // }, [loadCategoryDetails]);
 
   const getId = async (categoryId, categoryName) => {
     await loadCategoryDetails();
