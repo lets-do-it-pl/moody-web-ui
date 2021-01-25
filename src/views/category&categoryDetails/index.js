@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import {
   Card,
   CardHeader,
@@ -36,10 +36,9 @@ const Category = () => {
   const [id, setCategoryId] = React.useState();
   const [name, setCategoryName] = React.useState("");
   const [details, setDetails] = React.useState([]);
-  const mounted = useRef();
 
   const loadCategoryDetails = async () => {
-    var result = await categoryDetailsService.listCategoryDetails(id);
+    const result = await categoryDetailsService.listCategoryDetails(id);
 
     if (result.status === StatusType.Fail) {
       console.log(result.data);
