@@ -24,12 +24,11 @@ jobs:
       run: |
         npm install
         npm run build --if-present
-        npm run test --if-present
 
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'moody-ui'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_e7f06df05de1494ea3600f5ef2fceb45 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_5d46bf3eb5964b81afa77cebee50a263 }}
         package: .
