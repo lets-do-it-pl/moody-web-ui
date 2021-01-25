@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function CategoryCount(props,{className, ...rest}) {
+function CategoryCount(props, { className, ...rest }) {
   const classes = useStyles();
 
   return (
@@ -45,9 +45,15 @@ function CategoryCount(props,{className, ...rest}) {
           spacing={3}
         >
           <Grid item
-              md={7}
-              xs={12}>
-              CATEGORY COUNT
+            md={7}
+            xs={12}>
+            <Typography
+              color="textSecondary"
+              gutterBottom
+              variant="h6"
+            >
+              CATEGORY
+            </Typography>
             <Typography
               color="textPrimary"
               variant="h3"

@@ -15,18 +15,24 @@ import {
   BarChart as BarChartIcon,
   Settings as SettingsIcon,
   User as UserIcon,
+  Image as CategoryIcon,
 } from 'react-feather';
 import NavItem from './NavItem';
 
 import { authenticationService } from 'src/_services';
 
 const user = {
-  avatar: authenticationService.currentUserValue.profileImage !== null &&
+  avatar: authenticationService.currentUserValue !== null &&
+    authenticationService.currentUserValue !== {} &&
+    authenticationService.currentUserValue.profileImage !== null &&
     authenticationService.currentUserValue.profileImage !== undefined &&
     authenticationService.currentUserValue.profileImage !== "" ?
     authenticationService.currentUserValue.profileImage :
     '/static/images/avatars/default.png',
-  name: authenticationService.currentUserValue.fullName
+  name: authenticationService.currentUserValue !== null &&
+    authenticationService.currentUserValue !== {} ?
+    authenticationService.currentUserValue.fullName :
+    ""
 };
 
 const items = [
@@ -34,6 +40,11 @@ const items = [
     href: '/app/dashboard',
     icon: BarChartIcon,
     title: 'Dashboard'
+  },
+  {
+    href: '/app/category',
+    icon: CategoryIcon,
+    title: 'Category'
   },
   {
     href: '/app/account',
