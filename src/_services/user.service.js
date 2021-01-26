@@ -15,8 +15,7 @@ async function register(
     password
 ) {
     var data = {        
-        name,
-        surname,
+        fullName: $`${name} ${surname}`,
         email,
         password
     };
