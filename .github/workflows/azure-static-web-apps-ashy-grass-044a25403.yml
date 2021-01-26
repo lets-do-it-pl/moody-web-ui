@@ -30,6 +30,9 @@ jobs:
           app_location: "/" # App source code path
           api_location: "api" # Api source code path - optional
           output_location: "build" # Built app content directory - optional
+        env: # Add environment variables here
+          REACT_APP_RECAPTCHA_KEY: ${{ secrets.RECAPTCHA_KEY }}
+          REACT_APP_API_URL: ${{ secrets.API_URL }}
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
