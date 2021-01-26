@@ -14,12 +14,11 @@ async function register(
     email,
     password
 ) {
-    var data = {
-        username: email,
-        password: password,
+    var data = {        
         name,
         surname,
-        email
+        email,
+        password
     };
 
     return await apiService.asyncCallApi(HttpMethodType.POST, '/user', data)
