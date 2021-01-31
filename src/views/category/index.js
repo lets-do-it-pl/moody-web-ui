@@ -1,18 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
   CardHeader,
   CardContent,
-  IconButton,
   Grid,
   makeStyles,
   Container,
-  Button,
   Avatar,
   Divider
 } from '@material-ui/core';
 import "../../style.css"
-import AddIcon from '@material-ui/icons/Add';
 import AmpStoriesIcon from '@material-ui/icons/AmpStories';
 import CameraFrontIcon from '@material-ui/icons/CameraFront';
 import Page from 'src/components/Page';
@@ -32,17 +29,14 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontSize: "25px"
-  },
-  button: {
-    margin: theme.spacing(1),
   }
 }));
 
 const Category = () => {
   const classes = useStyles();
-  const [id, setCategoryId] = React.useState();
-  const [name, setCategoryName] = React.useState("");
-  const [details, setDetails] = React.useState([]);
+  const [id, setCategoryId] = useState();
+  const [name, setCategoryName] = useState("");
+  const [details, setDetails] = useState([]);
 
   const loadCategoryDetails = async () => {
     const result = await categoryDetailsService.listCategoryDetails(id);
@@ -81,14 +75,7 @@ const Category = () => {
                 }
                 title="Categories"
                 action={
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    className={classes.button}
-                    startIcon={< AddIcon />}
-                  >
-                    Add Category
-                    </Button>
+                  <CreateCategoryForm />
                 } />
               <Divider />
               <CardContent>
@@ -109,18 +96,7 @@ const Category = () => {
                 }
                 title={`${name} Category Details`}
                 action={
-                  // <IconButton>
-                  //   <p className="fontStyle">New Category Detail</p>
-                  //   <CreateCategoryDetailsForm categoryId={id} />
-                  // </IconButton>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    className={classes.button}
-                    startIcon={< AddIcon />}
-                  >
-                    Add Category Detail
-                   </Button>
+                  <CreateCategoryDetailsForm categoryId={id} />
                 } />
               <Divider />
               <CardContent>

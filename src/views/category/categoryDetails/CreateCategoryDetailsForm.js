@@ -76,7 +76,15 @@ function CreateCategoryDetailsForm(props) {
 
   return (
     <div>
-      <AddIcon onClick={handleClickOpen} className={classes.create} />
+      <Button
+        color="primary"
+        variant="contained"
+        className={classes.button}
+        onClick={handleClickOpen}
+        startIcon={< AddIcon />}
+      >
+        Add Category Detail
+      </Button>
       <Dialog open={open} fullWidth onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Craete Category Detail</DialogTitle>
         <DialogContent>

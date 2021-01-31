@@ -3,32 +3,33 @@ import {
   Button,
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogTitle,
   makeStyles,
   FormLabel,
-  TextField
+  TextField,
+  Card,
+  Box,
+  CardContent,
+  CardHeader,
+  Divider,
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Styles } from './common/Styles';
 import { Formik } from 'formik';
 import ImageUploader from "react-images-upload";
 import AddIcon from '@material-ui/icons/Add';
+import SaveIcon from '@material-ui/icons/Save';
+import CloseIcon from '@material-ui/icons/Close';
 import { StatusType } from 'src/_types';
 import { categoryService } from '../../_services/category.service';
+import { ImportantDevices } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
-  cancel: {
-    backgroundColor: "#f44336",
-    color: "white"
+  button: {
+    margin: theme.spacing(1),
   },
-  submit: {
-    backgroundColor: "#5cb85c",
-    color: "white"
-  },
-  create: {
-    color: "green"
-  },
+  form: {
+    width: '100%'
+  }
 }));
 
 const ValidationSchema = Yup.object().shape({
@@ -74,17 +75,28 @@ function CreateCategoryForm(props) {
 
   return (
     <div>
-      <AddIcon onClick={handleClickOpen} className={classes.create} />
+      <Button
+        color="primary"
+        variant="contained"
+        className={classes.button}
+        onClick={handleClickOpen}
+        startIcon={< AddIcon />}
+      >
+        Add Category
+      </Button>
       <Dialog open={open} fullWidth onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Create a new Category</DialogTitle>
-        <DialogContent>
+        <Card>
+          <CardHeader
+            subheader="You can add a new category by this modal"
+            title="New Category"
+          />
+          <Divider />
           <Styles>
             <Formik
               initialValues={{
                 name: '',
               }}
               validationSchema={ValidationSchema}
-
               onSubmit={async (value) => {
                 value = {
                   Name: value.name,
@@ -108,47 +120,73 @@ function CreateCategoryForm(props) {
                 touched,
                 values
               }) => (
-                <form onSubmit={handleSubmit}>
-                  <FormLabel>Category Name</FormLabel>
-                  <TextField
-                    error={Boolean(touched.name && errors.name)}
-                    margin="normal"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    type="name"
-                    fullWidth
-                    name="name"
-                    required
-                    value={values.name}
-                    variant="outlined"
-                  />
-                  <FormLabel >Category Image</FormLabel>
-                  <ImageUploader
-                    {...props}
-                    name="image"
-                    withIcon={false}
-                    onChange={onDrop}
-                    buttonText="Upload"
-                    withLabel={false}
-                    singleImage={true}
-                    withPreview={true}
-                    imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
-                    maxFileSize={5242880}
-                  />
+                <form onSubmit={handleSubmit} className={classes.form}>
+                  <CardContent className={classes.form}>
+                    <div>
+                      <FormLabel >Category Image</FormLabel>
+                      <ImageUploader
+                        {...props}
+                        name="image"
+                        withIcon={false}
+                        onChange={onDrop}
+                        buttonText="Upload"
+                        withLabel={false}
+                        singleImage={true}
+                        withPreview={true}
+                        imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
+                        maxFileSize={5242880}
+                      />
+                      <TextField
+                        error={Boolean(touched.name && errors.name)}
+                        helperText={touched.name && errors.name}
+                        label="Name"
+                        margin="normal"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        fullWidth
+                        name="name"
+                        required
+                        value={values.name}
+                        variant="outlined"
+                      />
+                    </div>
+                  </CardContent>
+                  <Divider />
                   <DialogActions>
-                    <Button type="submit" className={classes.submit}>
-                      Ok
+                    <Box
+                      display="flex"
+                      justifyContent="flex-end"
+                      p={1}
+                    >
+                      <Button
+                        type="submit"
+                        color="primary"
+                        variant="contained"
+                        size="small"
+                        className={classes.button}
+                        startIcon={<SaveIcon />}
+                      >
+                        Save
                     </Button>
-                    <Button onClick={handleClose} className={classes.cancel} variant="contained">
-                      Cancel
+                      <Button
+                        onClick={handleClose}
+                        color="secondary"
+                        size="small"
+                        variant="contained"
+                        className={classes.button}
+                        startIcon={<CloseIcon />}
+                      >
+                        Cancel
                     </Button>
+                    </Box>
                   </DialogActions>
                 </form>)}
             </Formik>
           </Styles>
-        </DialogContent>
+        </Card>
       </Dialog>
     </div>
   );
 }
+
 export default CreateCategoryForm;
