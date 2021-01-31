@@ -17,10 +17,10 @@ import {
   IconButton,
   Avatar
 } from '@material-ui/core';
-import ImageModal from '../common/ImageModal';
+import ImageModal from './common/ImageModal';
 import UpdateCategoryForm from './UpdateCategoryForm';
 import DeleteCategoryForm from './DeleteCategoryForm';
-import { categoryService } from '../../../_services/categoryService';
+import { categoryService } from '../../_services/category.service';
 import { StatusType } from 'src/_types';
 
 const styles = () => ({
@@ -29,6 +29,9 @@ const styles = () => ({
   },
   details: {
     color: "purple"
+  },
+  table: {
+    width: '100%',
   }
 });
 
@@ -101,17 +104,29 @@ class CategoryTable extends Component {
     const { classes } = this.props;
     const { selectedImage, categories } = this.state;
     return (
-      <div style={{ padding: "30px" }}>
+      <div>
         <DragDropContext
           onDragEnd={this.onDragEnd}
         >
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>#</TableCell>
-                <TableCell>Image</TableCell>
+                <TableCell
+                  align="center"
+                  width="30">
+                  #
+                </TableCell>
+                <TableCell
+                  align="center"
+                  width="100">
+                  Image
+                </TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell align="center">Actions</TableCell>
+                <TableCell
+                  align="center"
+                  width="130">
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <Droppable droppableId="category">
@@ -132,18 +147,27 @@ class CategoryTable extends Component {
                               style={this.getItemStyle(
                                 snapshot.isDragging,
                                 provided.draggableProps.style
-                              )}
-                            >
-                              <TableCell>{index + 1}</TableCell>
-                              <TableCell>
-                                <Avatar alt="" src={"data:image/png;base64," +
-                                  entity.image}
-                                  onClick={(e) => this.setState({
-                                    selectedImage: e.target.src
-                                  })} />
+                              )}>
+                              <TableCell
+                                align="center"
+                                width="30"
+                                variant="body">
+                                {index + 1}
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                width="100"
+                                variant="body">
+                                <Avatar
+                                  alt=""
+                                  src={"data:image/png;base64," + entity.image}
+                                  onClick={(e) => this.setState({ selectedImage: e.target.src })} />
                               </TableCell>
                               <TableCell>{entity.name}</TableCell>
-                              <TableCell align="right">
+                              <TableCell
+                                align="center"
+                                width="130"
+                                variant="body">
                                 <IconButton size="small" onClick={() => this.props.getCategoryId(entity.id, entity.name)}>
                                   <DetailsIcon className={classes.details} />
                                 </IconButton>
@@ -170,8 +194,8 @@ class CategoryTable extends Component {
             </Droppable>
           </Table>
         </DragDropContext>
-        {selectedImage && <ImageModal selectedImage={selectedImage} closeImage={this.closeImage} />}
-      </div>
+        { selectedImage && <ImageModal selectedImage={selectedImage} closeImage={this.closeImage} />}
+      </div >
     );
   }
 }
