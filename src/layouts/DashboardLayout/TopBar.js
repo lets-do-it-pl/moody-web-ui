@@ -57,7 +57,6 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
           <Logo />
         </RouterLink>
         <Box flexGrow={1} />
-        <Hidden mdDown>
           <Autocomplete
             id="search"
             style={{
@@ -99,13 +98,9 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
               />
             )}
           />
-        </Hidden>
-        <Hidden mdDown>
           <IconButton color="inherit" onClick={logout}>
             <InputIcon />
           </IconButton>
-        </Hidden>
-
         <Hidden lgUp>
           <IconButton color="inherit" onClick={onMobileNavOpen}>
             <MenuIcon />
