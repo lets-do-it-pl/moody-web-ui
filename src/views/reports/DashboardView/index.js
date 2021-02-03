@@ -28,36 +28,36 @@ const Dashboard = () => {
   const [totalCategoryDetailCount, setTotalCategoryDetailCount] = useState(0);
   const [totalRegisteredClientCount, setTotalRegisteredClientCount] = useState(0);
 
-  useEffect(() => {
-    async function fetchData() {
-      var result = await dashboardService.getDashboardWidgets();
-
-      if (result.status !== StatusType.Success) {
-        console.log(result.data);
-        return;
-      }
-
-      result.data.forEach(element => {
-        switch (element.name) {
-          case "TotalCategoryCount":
-            setTotalCategoryCount(element.totalNumber);
-            break;
-          case "TotalCategoryDetailCount":
-            setTotalCategoryDetailCount(element.totalNumber);
-            break;
-          case "TotalRegisteredClientCount":
-            setTotalRegisteredClientCount(element.totalNumber);
-            break;
-          case "AverageRegisteredClientCount":
-            setAverageRegisteredClientCount(element.totalNumber);
-            break;
-          default:
-            console.log(`${element.name} can not be matched!`);
-        }
-      });
-    }
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     var result = await dashboardService.getDashboardWidgets();
+  //
+  //     if (result.status !== StatusType.Success) {
+  //       console.log(result.data);
+  //       return;
+  //     }
+  //
+  //     result.data.forEach(element => {
+  //       switch (element.name) {
+  //         case "TotalCategoryCount":
+  //           setTotalCategoryCount(element.totalNumber);
+  //           break;
+  //         case "TotalCategoryDetailCount":
+  //           setTotalCategoryDetailCount(element.totalNumber);
+  //           break;
+  //         case "TotalRegisteredClientCount":
+  //           setTotalRegisteredClientCount(element.totalNumber);
+  //           break;
+  //         case "AverageRegisteredClientCount":
+  //           setAverageRegisteredClientCount(element.totalNumber);
+  //           break;
+  //         default:
+  //           console.log(`${element.name} can not be matched!`);
+  //       }
+  //     });
+  //   }
+  //   fetchData();
+  // }, []);
 
   return (
     <Page

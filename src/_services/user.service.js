@@ -5,7 +5,8 @@ export const userService = {
     register,
     activateUser,
     forgetPassword,
-    resetPassword
+    resetPassword,
+    getUsers
 };
 
 async function register(
@@ -14,13 +15,13 @@ async function register(
     email,
     password
 ) {
-    var data = {        
-        fullName: `${name} ${surname}`,
-        email,
-        password
-    };
+  const data = {
+    fullName: `${name} ${surname}`,
+    email,
+    password
+  };
 
-    return await apiService.asyncCallApi(HttpMethodType.POST, '/user', data)
+  return await apiService.asyncCallApi(HttpMethodType.POST, '/user', data)
 }
 
 async function activateUser(token) {
@@ -36,4 +37,9 @@ async function forgetPassword(email) {
 async function resetPassword(token, password) {
 
     return await apiService.asyncCallApi(HttpMethodType.POST, '/user/reset-password', { password }, token)
+}
+
+async function getUsers() {
+
+  return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, '/user', {})
 }
