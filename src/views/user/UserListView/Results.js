@@ -3,44 +3,44 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
-  Avatar,
-  Box,
   Card,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Typography,
-  makeStyles
+  makeStyles, Tooltip, Icon, IconButton, Box, Typography, FormHelperText
 } from '@material-ui/core';
-import getInitials from 'src/utils/getInitials';
-import AddUserDialog from './AddUserDialog';
-import EditUserDialog from './EditUserDialog';
-
-const useStyles = makeStyles((theme) => ({
-  root: {},
-  avatar: {
-    marginRight: theme.spacing(2)
-  },
-  tableRow:{
-  "&:hover": {
-    cursor: "pointer"
-  }
-}
-}));
+import InfoIcon from '@material-ui/icons/Info';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
 
 const dict = new Map();
 dict.set("S", "Standard");
 dict.set("A", "Admin");
 dict.set("C", "Client");
 
-const Results = ({ className, users, ...rest }) => {
-  const classes = useStyles();
+const Results = (props) => {
+  const {users,className, loadUserDetails, deleteUser, setUsers, setUserDetailsVisibility} = props
 
+  const [currentUser,setCurentUser] = useState();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
+  };
+
+  const deleteUserForReal = (e, user) => {
+    e.preventDefault();
+    deleteUser(user.id)
+    const newUsers = users;
+    setUsers(newUsers.filter(x=>x.id != user.id));
+    setOpen(false);
+    setUserDetailsVisibility(true);
   };
 
   const handleClose = () => {
@@ -49,76 +49,81 @@ const Results = ({ className, users, ...rest }) => {
 
   return (
     <Card
-      className={clsx(classes.root, className)}
-      {...rest}
+      className={clsx(className)}
     >
-      <EditUserDialog open={open} handleClickOpen={handleClickOpen} handleClose={handleClose}/>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle id="form-dialog-title">Add User</DialogTitle>
+        <DialogContent>
+          <Typography color={'error'}>
+            HELLO
+          </Typography>
+        </DialogContent>
+        <Box my={2}>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button color='primary' type="button" variant="contained" onClick={(e)=>{deleteUserForReal(e,currentUser)}}
+            >
+              Delete
+            </Button>
+          </DialogActions>
+        </Box>
+      </Dialog>
       <PerfectScrollbar>
-        <Box minWidth={1050}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>
-                  Name
-                </TableCell>
-                <TableCell>
-                  Email
+                <TableCell padding="default" >
+                  User
                 </TableCell>
                 <TableCell>
                   Role
                 </TableCell>
                 <TableCell>
-                  Active
-                </TableCell>
-                <TableCell>
-                  Can Login
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users.slice(0).map((user) => (
+                <>
+
                 <TableRow
-                  classes={{hover:classes.tableRow}}
-                  onClick={handleClickOpen}
                   hover
                   key={user.id}
+                //  selected={user.id == 2 ? true : false} For row selection.
                 >
+
                   <TableCell >
-                    <Box
-                      alignItems="center"
-                      display="flex"
-                    >
-                      <Avatar
-                        className={classes.avatar}
-                        src={user.avatarUrl}
-                      >
-                        {getInitials(user.fullName)}
-                      </Avatar>
-                      <Typography
-                        color="textPrimary"
-                        variant="body1"
-                      >
                         {user.fullName}
-                      </Typography>
-                    </Box>
                   </TableCell>
-                  <TableCell>
-                    {user.email}
+                  <TableCell >
+                        {dict.get(user.userType)}
                   </TableCell>
-                  <TableCell>
-                    {dict.get(user.userType)}
-                  </TableCell>
-                  <TableCell>
-                    {user.isActive.toString()}
-                  </TableCell>
-                  <TableCell>
-                    {user.canLogin.toString()}
+                  <TableCell align="right">
+                    <Tooltip title={user.description}>
+                      <IconButton aria-label="description" disableRipple disableFocusRipple>
+                      <InfoIcon/>
+                      </IconButton>
+                    </Tooltip>
+                    <IconButton aria-label="edit" onClick={(e)=>{
+                      e.preventDefault();
+                      loadUserDetails(user.id)}}>
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton aria-label="delete" onClick={()=>{
+                      setCurentUser(user);
+                      handleClickOpen();
+                    }}>
+                      <DeleteIcon color={'error'} />
+                    </IconButton>
+
                   </TableCell>
                 </TableRow>
+                </>
               ))}
             </TableBody>
           </Table>
-        </Box>
       </PerfectScrollbar>
     </Card>
   );

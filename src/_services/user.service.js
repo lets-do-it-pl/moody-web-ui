@@ -6,7 +6,10 @@ export const userService = {
     activateUser,
     forgetPassword,
     resetPassword,
-    getUsers
+    getUsers,
+    getUserDetails,
+    updateUserDetails,
+    deleteUser
 };
 
 async function register(
@@ -42,4 +45,19 @@ async function resetPassword(token, password) {
 async function getUsers() {
 
   return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, '/user', {})
+}
+
+async function getUserDetails(id) {
+
+  return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, `/user/${id}`, {})
+}
+
+async function updateUserDetails(id,fullName, email, userType, isActive, canLogin, password = null) {
+
+  return await apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, `/user/${id}`, {fullName,email,userType,isActive,canLogin, password})
+}
+
+async function deleteUser(id) {
+
+  return await apiService.asyncCallAuthorizedApi(HttpMethodType.DELETE, `/user/${id}`, {})
 }
