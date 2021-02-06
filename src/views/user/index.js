@@ -6,7 +6,7 @@ import {
   Typography
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import Results from './UserListView/Results';
+import Results from './Results';
 import { userService } from '../../_services';
 import { StatusType } from '../../_types';
 import UserDetails from './userDetails';

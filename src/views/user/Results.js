@@ -9,7 +9,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  makeStyles, Tooltip, Icon, IconButton, Box, Typography, FormHelperText
+  Tooltip, Icon, IconButton, Box, Typography
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -55,7 +55,7 @@ const Results = (props) => {
         <DialogTitle id="form-dialog-title">Add User</DialogTitle>
         <DialogContent>
           <Typography color={'error'}>
-            HELLO
+            Are you want to delete user?
           </Typography>
         </DialogContent>
         <Box my={2}>
