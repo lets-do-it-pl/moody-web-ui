@@ -3,13 +3,16 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
+  Box,
   Card,
+  IconButton,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Tooltip, Icon, IconButton, Box, Typography
+  Tooltip,
+  Typography
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -21,29 +24,32 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 
 const dict = new Map();
-dict.set("S", "Standard");
-dict.set("A", "Admin");
-dict.set("C", "Client");
+dict.set('S', 'Standard');
+dict.set('A', 'Admin');
+dict.set('C', 'Client');
 
-const Results = (props) => {
-  const {users,className, loadUserDetails, deleteUser, setUsers, setUserDetailsVisibility} = props
+const Results = (props) =>
+{
+  const { users, className, loadUserDetails, deleteUser, setUsers, setUserDetailsVisibility } = props;
 
-  const [currentUser,setCurentUser] = useState();
+  const [currentUser, setCurentUser] = useState();
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
+  const handleClickOpen = () =>
+  {
     setOpen(true);
   };
 
-  const deleteUserForReal = (e, user) => {
+  const deleteUserForReal = (e, user) =>
+  {
     e.preventDefault();
-    deleteUser(user.id)
-    const newUsers = users;
-    setUsers(newUsers.filter(x=>x.id != user.id));
+    deleteUser(user.id);
+    setUsers(users.filter(x => x.id !== user.id));
     setOpen(false);
     setUserDetailsVisibility(true);
   };
 
-  const handleClose = () => {
+  const handleClose = () =>
+  {
     setOpen(false);
   };
 
@@ -63,7 +69,10 @@ const Results = (props) => {
             <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button color='primary' type="button" variant="contained" onClick={(e)=>{deleteUserForReal(e,currentUser)}}
+            <Button color='primary' type="button" variant="contained" onClick={(e) =>
+            {
+              deleteUserForReal(e, currentUser);
+            }}
             >
               Delete
             </Button>
@@ -71,47 +80,50 @@ const Results = (props) => {
         </Box>
       </Dialog>
       <PerfectScrollbar>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell padding="default" >
-                  User
-                </TableCell>
-                <TableCell>
-                  Role
-                </TableCell>
-                <TableCell>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {users.slice(0).map((user) => (
-                <>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell padding="default">
+                User
+              </TableCell>
+              <TableCell>
+                Role
+              </TableCell>
+              <TableCell>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.slice(0).map((user) => (
+              <>
 
                 <TableRow
                   hover
                   key={user.id}
-                //  selected={user.id == 2 ? true : false} For row selection.
+                  //  selected={user.id == 2 ? true : false} For row selection.
                 >
 
-                  <TableCell >
-                        {user.fullName}
+                  <TableCell>
+                    {user.fullName}
                   </TableCell>
-                  <TableCell >
-                        {dict.get(user.userType)}
+                  <TableCell>
+                    {dict.get(user.userType)}
                   </TableCell>
                   <TableCell align="right">
                     <Tooltip title={user.description}>
                       <IconButton aria-label="description" disableRipple disableFocusRipple>
-                      <InfoIcon/>
+                        <InfoIcon />
                       </IconButton>
                     </Tooltip>
-                    <IconButton aria-label="edit" onClick={(e)=>{
+                    <IconButton aria-label="edit" onClick={(e) =>
+                    {
                       e.preventDefault();
-                      loadUserDetails(user.id)}}>
+                      loadUserDetails(user.id);
+                    }}>
                       <EditIcon />
                     </IconButton>
-                    <IconButton aria-label="delete" onClick={()=>{
+                    <IconButton aria-label="delete" onClick={() =>
+                    {
                       setCurentUser(user);
                       handleClickOpen();
                     }}>
@@ -120,10 +132,10 @@ const Results = (props) => {
 
                   </TableCell>
                 </TableRow>
-                </>
-              ))}
-            </TableBody>
-          </Table>
+              </>
+            ))}
+          </TableBody>
+        </Table>
       </PerfectScrollbar>
     </Card>
   );

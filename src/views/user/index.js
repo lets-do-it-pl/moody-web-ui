@@ -21,15 +21,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Users = () => {
-  const [loading,setLoading] = useState(true);
-  const [users,setUsers] = useState([]);
-  const [userDetails,setUserDetails] = useState({})
-  const [userDetailsVisibility,setUserDetailsVisibility] = useState(true);
+const Users = () =>
+{
+  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState([]);
+  const [userDetails, setUserDetails] = useState({});
+  const [userDetailsVisibility, setUserDetailsVisibility] = useState(true);
 
-  useEffect( () =>
+  useEffect(() =>
   {
-    async function loadUsers(){
+    async function loadUsers()
+    {
       const result = await userService.getUsers();
 
       if (result.status === StatusType.Fail)
@@ -37,11 +39,12 @@ const Users = () => {
         console.log(result.data);
         return;
       }
-      console.log(result.data)
-      setUsers(result.data)
+      console.log(result.data);
+      setUsers(result.data);
       setLoading(false);
     }
-    loadUsers()
+
+    loadUsers();
   }, []);
 
   const classes = useStyles();
@@ -50,25 +53,27 @@ const Users = () => {
   {
     setUserDetailsVisibility(true);
 
-   await userService.getUserDetails(id).then((result)=>{
-     if (result.status === StatusType.Fail)
-     {
-       console.log(result.data); // Change it with notification !
-       return;
-     }
+    await userService.getUserDetails(id).then((result) =>
+    {
+      if (result.status === StatusType.Fail)
+      {
+        console.log(result.data); // Change it with notification !
+        return;
+      }
       setUserDetails(result.data);
-     setUserDetailsVisibility(false);
+      setUserDetailsVisibility(false);
     });
   }
 
   async function deleteUser(id)
   {
-   await userService.deleteUser(id).then((result)=>{
-     if (result.status === StatusType.Fail)
-     {
-       console.log(result.data); // Change it with notification !
-       return;
-     }
+    await userService.deleteUser(id).then((result) =>
+    {
+      if (result.status === StatusType.Fail)
+      {
+        console.log(result.data); // Change it with notification !
+        return;
+      }
       console.log(result.data); // Change it with notification !
     });
   }
@@ -97,14 +102,15 @@ const Users = () => {
                 Loading...
               </Typography>
             ) : (
-              <Results users={users} setUserDetailsVisibility={setUserDetailsVisibility} setUsers={setUsers} loadUserDetails={loadUserDetails} deleteUser={deleteUser} />
+              <Results users={users} setUserDetailsVisibility={setUserDetailsVisibility} setUsers={setUsers}
+                       loadUserDetails={loadUserDetails} deleteUser={deleteUser} />
             )}
           </Grid>
           <Grid hidden={userDetailsVisibility}
-            item
-            lg={5}
-            md={6}
-            xs={12}
+                item
+                lg={5}
+                md={6}
+                xs={12}
           >
             {!userDetailsVisibility && (
               <UserDetails initialValues={userDetails} />
