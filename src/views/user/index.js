@@ -20,13 +20,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 const Users = () =>
 {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [userDetails, setUserDetails] = useState({});
-  const [userDetailsVisibility, setUserDetailsVisibility] = useState(true);
+  const [userDetailsHidden, setUserDetailsHidden] = useState(true);
 
   useEffect(() =>
   {
@@ -51,7 +50,7 @@ const Users = () =>
 
   async function loadUserDetails(id)
   {
-    setUserDetailsVisibility(true);
+    setUserDetailsHidden(true);
 
     await userService.getUserDetails(id).then((result) =>
     {
@@ -61,7 +60,7 @@ const Users = () =>
         return;
       }
       setUserDetails(result.data);
-      setUserDetailsVisibility(false);
+      setUserDetailsHidden(false);
     });
   }
 
@@ -102,17 +101,17 @@ const Users = () =>
                 Loading...
               </Typography>
             ) : (
-              <Results users={users} setUserDetailsVisibility={setUserDetailsVisibility} setUsers={setUsers}
+              <Results users={users} setUserDetailsVisibility={setUserDetailsHidden} setUsers={setUsers}
                        loadUserDetails={loadUserDetails} deleteUser={deleteUser} />
             )}
           </Grid>
-          <Grid hidden={userDetailsVisibility}
+          <Grid hidden={userDetailsHidden}
                 item
                 lg={5}
                 md={6}
                 xs={12}
           >
-            {!userDetailsVisibility && (
+            {!userDetailsHidden && (
               <UserDetails initialValues={userDetails} />
             )}
           </Grid>

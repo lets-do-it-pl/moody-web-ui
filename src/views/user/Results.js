@@ -32,14 +32,14 @@ const Results = (props) =>
 {
   const { users, className, loadUserDetails, deleteUser, setUsers, setUserDetailsVisibility } = props;
 
-  const [currentUser, setCurentUser] = useState();
+  const [currentUser, setCurrentUser] = useState();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () =>
   {
     setOpen(true);
   };
 
-  const deleteUserForReal = (e, user) =>
+  const handleDeleteUser = (e, user) =>
   {
     e.preventDefault();
     deleteUser(user.id);
@@ -61,7 +61,7 @@ const Results = (props) =>
         <DialogTitle id="form-dialog-title">Add User</DialogTitle>
         <DialogContent>
           <Typography color={'error'}>
-            Are you want to delete user?
+            You are about to delete this user? Proceed with caution.
           </Typography>
         </DialogContent>
         <Box my={2}>
@@ -71,7 +71,7 @@ const Results = (props) =>
             </Button>
             <Button color='primary' type="button" variant="contained" onClick={(e) =>
             {
-              deleteUserForReal(e, currentUser);
+              handleDeleteUser(e, currentUser);
             }}
             >
               Delete
@@ -95,14 +95,11 @@ const Results = (props) =>
           </TableHead>
           <TableBody>
             {users.slice(0).map((user) => (
-              <>
-
                 <TableRow
                   hover
                   key={user.id}
                   //  selected={user.id == 2 ? true : false} For row selection.
                 >
-
                   <TableCell>
                     {user.fullName}
                   </TableCell>
@@ -124,7 +121,7 @@ const Results = (props) =>
                     </IconButton>
                     <IconButton aria-label="delete" onClick={() =>
                     {
-                      setCurentUser(user);
+                      setCurrentUser(user);
                       handleClickOpen();
                     }}>
                       <DeleteIcon color={'error'} />
@@ -132,7 +129,6 @@ const Results = (props) =>
 
                   </TableCell>
                 </TableRow>
-              </>
             ))}
           </TableBody>
         </Table>
