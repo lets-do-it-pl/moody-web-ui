@@ -21,7 +21,6 @@ import SaveIcon from '@material-ui/icons/Save';
 import CloseIcon from '@material-ui/icons/Close';
 import { StatusType } from 'src/_types';
 import { categoryService } from '../../_services/category.service';
-import { ImportantDevices } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   button: {
