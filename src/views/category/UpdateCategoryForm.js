@@ -10,12 +10,12 @@ import {
   TextField
 } from '@material-ui/core';
 import * as Yup from 'yup';
-import { Styles } from '../common/Styles';
+import { Styles } from './common/Styles';
 import { Formik } from 'formik';
 import ImageUploader from "react-images-upload";
 import EditIcon from '@material-ui/icons/Edit';
 import { StatusType } from 'src/_types';
-import { categoryService } from '../../../_services/categoryService';
+import { categoryService } from '../../_services/category.service';
 
 const useStyles = makeStyles((theme) => ({
   cancel: {

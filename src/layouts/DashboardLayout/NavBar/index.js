@@ -15,8 +15,8 @@ import {
   BarChart as BarChartIcon,
   Settings as SettingsIcon,
   User as UserIcon,
-  Image as CategoryIcon,
 } from 'react-feather';
+import AmpStoriesIcon from '@material-ui/icons/AmpStories';
 import NavItem from './NavItem';
 
 import { authenticationService } from 'src/_services';
@@ -43,8 +43,8 @@ const items = [
   },
   {
     href: '/app/category',
-    icon: CategoryIcon,
-    title: 'Category'
+    icon: AmpStoriesIcon,
+    title: 'Categories'
   },
   {
     href: '/app/account',
