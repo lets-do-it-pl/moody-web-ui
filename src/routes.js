@@ -12,6 +12,7 @@ import SettingsView from 'src/views/settings/SettingsView';
 import CategoryView from 'src/views/category';
 import DashboardLayout from './layouts/DashboardLayout';
 import MainLayout from './layouts/MainLayout';
+import Users from './views/user';
 
 const routes = (currentUser) => [
   {
@@ -19,6 +20,7 @@ const routes = (currentUser) => [
     element: currentUser ? <DashboardLayout /> : <Navigate to="/login" />,
     children: [
       { path: 'account', element: <AccountView /> },
+      { path: 'users', element: <Users /> },
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'category', element: <CategoryView /> },
       { path: 'settings', element: <SettingsView /> },

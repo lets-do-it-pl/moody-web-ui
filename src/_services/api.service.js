@@ -27,9 +27,9 @@ async function asyncCallApi(
     data,
     token) {
 
-    var headers = {};
+  const headers = {};
 
-    if (token !== undefined) {
+  if (token !== undefined) {
         headers.Authorization = `Bearer ${token}`;
     }
 
@@ -57,9 +57,16 @@ async function asyncExecuteApiCall(
 
     } catch (error) {
 
-        var response = error.response;
+      if (!error.response) {
+        return {
+          status: StatusType.Fail,
+          message: 'Error: Network Error'
+        };
+      }
 
-        if ([401, 403].indexOf(response.status) !== -1) {
+      const response = error.response;
+
+      if ([401, 403].indexOf(response.status) !== -1) {
             authenticationService.logout();
 
             return {
