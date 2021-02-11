@@ -9,7 +9,7 @@ import {
   Divider,
   Grid,
   TextField,
-  Typography, FormHelperText, MenuItem
+  Typography, FormHelperText, MenuItem, FormControlLabel, Checkbox
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { userService } from '../../_services';
@@ -24,17 +24,6 @@ const userTypes = [
   {
     value: 'S',
     label: 'Standard'
-  }
-];
-
-const yesOrNo = [
-  {
-    value: true,
-    label: 'Yes'
-  },
-  {
-    value: false,
-    label: 'No'
   }
 ];
 
@@ -59,7 +48,7 @@ const UserDetails = (props) =>
         Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
           fullName: Yup.string().max(255).required('First name is required'),
-          userType: Yup.string().oneOf(['A', 'S', 'C']),
+          userType: Yup.string().oneOf(['A', 'S']),
           isActive: Yup.bool().required(),
           canLogin: Yup.bool().required()
         })
@@ -80,7 +69,7 @@ const UserDetails = (props) =>
           if (result.status === StatusType.Success)
           {
             setErrorMessage('');
-            setInfoMessage('User updated succesfully');
+            setInfoMessage('User updated successfully');
 
             return;
           }
@@ -157,48 +146,30 @@ const UserDetails = (props) =>
                     </MenuItem>
                   ))}
                 </TextField>
-                <TextField
-                  select
-                  error={Boolean(touched.isActive && errors.isActive)}
-                  fullWidth
-                  helperText={touched.isActive && errors.isActive}
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value={values.isActive}
+                      onChange={handleChange}
+                      checked={values.isActive}
+                      name="isActive"
+                      color="primary"
+                    />
+                  }
                   label="Is Active?"
-                  margin="normal"
-                  name="isActive"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="isActive"
-                  value={values.isActive}
-                  variant="outlined"
-                  size="small"
-                >
-                  {yesOrNo.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <TextField
-                  select
-                  error={Boolean(touched.canLogin && errors.canLogin)}
-                  fullWidth
-                  helperText={touched.canLogin && errors.canLogin}
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value={values.canLogin}
+                      onChange={handleChange}
+                      checked={values.canLogin}
+                      name="canLogin"
+                      color="primary"
+                    />
+                  }
                   label="Can Login?"
-                  margin="normal"
-                  name="canLogin"
-                  onBlur={handleBlur}
-                  onChange={handleChange}
-                  type="canLogin"
-                  value={values.canLogin}
-                  variant="outlined"
-                  size="small"
-                >
-                  {yesOrNo.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                />
                 <TextField
                   error={Boolean(touched.password && errors.password)}
                   fullWidth

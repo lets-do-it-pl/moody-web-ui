@@ -106,7 +106,7 @@ const UsersView = (props) =>
                     {dict.get(user.userType)}
                   </TableCell>
                   <TableCell align="right">
-                    <Tooltip title={user.description}>
+                    <Tooltip title={user.description === null ? "No description" : user.description}>
                       <IconButton aria-label="description" disableRipple disableFocusRipple>
                         <InfoIcon />
                       </IconButton>
@@ -137,7 +137,6 @@ const UsersView = (props) =>
 };
 
 UsersView.propTypes = {
-  className: PropTypes.string,
   users: PropTypes.array.isRequired
 };
 
