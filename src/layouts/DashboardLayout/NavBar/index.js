@@ -17,6 +17,7 @@ import {
   User as UserIcon
 } from 'react-feather';
 import AmpStoriesIcon from '@material-ui/icons/AmpStories';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import NavItem from './NavItem';
 
 import { authenticationService } from 'src/_services';
@@ -43,7 +44,7 @@ const items = [
   },
   {
     href: '/app/users',
-    icon: UserIcon,
+    icon: SupervisorAccountIcon,
     title: 'Users'
   },
   {
