@@ -24,10 +24,6 @@ const userTypes = [
   {
     value: 'S',
     label: 'Standard'
-  },
-  {
-    value: 'C',
-    label: 'Client'
   }
 ];
 

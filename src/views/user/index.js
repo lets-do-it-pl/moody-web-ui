@@ -6,10 +6,10 @@ import {
   Typography
 } from '@material-ui/core';
 import Page from 'src/components/Page';
-import Results from './Results';
+import UsersView from './UsersView';
 import { userService } from '../../_services';
 import { StatusType } from '../../_types';
-import UserDetails from './userDetails';
+import UserDetails from './UserDetails';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,8 +52,7 @@ const Users = () =>
   {
     setUserDetailsHidden(true);
 
-    await userService.getUserDetails(id).then((result) =>
-    {
+    const result = await userService.getUserDetails(id)
       if (result.status === StatusType.Fail)
       {
         console.log(result.data); // Change it with notification !
@@ -61,20 +60,17 @@ const Users = () =>
       }
       setUserDetails(result.data);
       setUserDetailsHidden(false);
-    });
   }
 
   async function deleteUser(id)
   {
-    await userService.deleteUser(id).then((result) =>
-    {
+   const result = await userService.deleteUser(id)
       if (result.status === StatusType.Fail)
       {
         console.log(result.data); // Change it with notification !
         return;
       }
       console.log(result.data); // Change it with notification !
-    });
   }
 
   return (
@@ -101,8 +97,8 @@ const Users = () =>
                 Loading...
               </Typography>
             ) : (
-              <Results users={users} setUserDetailsVisibility={setUserDetailsHidden} setUsers={setUsers}
-                       loadUserDetails={loadUserDetails} deleteUser={deleteUser} />
+              <UsersView users={users} setUserDetailsVisibility={setUserDetailsHidden} setUsers={setUsers}
+                         loadUserDetails={loadUserDetails} deleteUser={deleteUser} />
             )}
           </Grid>
           <Grid hidden={userDetailsHidden}

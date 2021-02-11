@@ -26,9 +26,8 @@ import Dialog from '@material-ui/core/Dialog';
 const dict = new Map();
 dict.set('S', 'Standard');
 dict.set('A', 'Admin');
-dict.set('C', 'Client');
 
-const Results = (props) =>
+const UsersView = (props) =>
 {
   const { users, className, loadUserDetails, deleteUser, setUsers, setUserDetailsVisibility } = props;
 
@@ -98,7 +97,7 @@ const Results = (props) =>
                 <TableRow
                   hover
                   key={user.id}
-                  //  selected={user.id == 2 ? true : false} For row selection.
+                  // selected={user.id == 2 ? true : false} For row selection.
                 >
                   <TableCell>
                     {user.fullName}
@@ -137,9 +136,9 @@ const Results = (props) =>
   );
 };
 
-Results.propTypes = {
+UsersView.propTypes = {
   className: PropTypes.string,
   users: PropTypes.array.isRequired
 };
 
-export default Results;
+export default UsersView;
