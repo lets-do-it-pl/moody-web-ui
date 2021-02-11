@@ -14,8 +14,7 @@ import {
 import {
   BarChart as BarChartIcon,
   Settings as SettingsIcon,
-  User as UserIcon,
-  Image as CategoryIcon
+  User as UserIcon
 } from 'react-feather';
 import AmpStoriesIcon from '@material-ui/icons/AmpStories';
 import NavItem from './NavItem';
