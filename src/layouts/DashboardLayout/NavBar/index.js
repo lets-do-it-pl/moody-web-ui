@@ -44,7 +44,7 @@ const items = [
   },
   {
     href: '/app/users',
-    icon: UsersIcon,
+    icon: UserIcon,
     title: 'Users'
   },
   {
