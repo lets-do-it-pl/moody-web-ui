@@ -9,7 +9,7 @@ import ActivateUserView from 'src/views/auth/ActivateUserView';
 import ForgetPasswordView from 'src/views/auth/ForgetPasswordView';
 import ResetPasswordView from 'src/views/auth/ResetPasswordView';
 import SettingsView from 'src/views/settings/SettingsView';
-import CategoryView from 'src/views/category&categoryDetails';
+import CategoryView from 'src/views/category';
 import DashboardLayout from './layouts/DashboardLayout';
 import MainLayout from './layouts/MainLayout';
 import Users from './views/user';

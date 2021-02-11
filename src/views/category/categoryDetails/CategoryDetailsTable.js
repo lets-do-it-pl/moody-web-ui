@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
-import {Ref } from "semantic-ui-react";
+import { Ref } from "semantic-ui-react";
 import {
   DragDropContext,
   Droppable,
   Draggable,
 } from "react-beautiful-dnd";
-import {Table, 
-        TableBody, 
-        TableCell, 
-        TableHead, 
-        TableRow, 
-        IconButton,
-        Avatar} from '@material-ui/core';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  IconButton,
+  Avatar
+} from '@material-ui/core';
 import ImageModal from '../common/ImageModal';
 import UpdateCategoryDetailsForm from './UpdateCategoryDetailsForm';
 import DeleteCategoryDetailsForm from './DeleteCategoryDetailsForm';
 
 class CategoryDetailsTable extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-    selectedImage : null
+      selectedImage: null
     }
   }
 
@@ -38,18 +40,18 @@ class CategoryDetailsTable extends Component {
 
   onDragEnd = result => {
 
-    if(!result.destination) return;
-    
+    if (!result.destination) return;
+
   }
 
   render() {
-    const {selectedImage} = this.state;
+    const { selectedImage } = this.state;
     return (
-      <div style={{ padding: "30px" }}>
-      <DragDropContext
-        onDragEnd={this.onDragEnd}
-      > 
-      <Table size = "small">
+      <div>
+        <DragDropContext
+          onDragEnd={this.onDragEnd}
+        >
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell>#</TableCell>
@@ -69,7 +71,7 @@ class CategoryDetailsTable extends Component {
                       >
                         {(provided, snapshot) => (
                           <Ref innerRef={provided.innerRef}>
-                            <TableRow 
+                            <TableRow
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                               style={this.getItemStyle(
@@ -79,21 +81,21 @@ class CategoryDetailsTable extends Component {
                             >
                               <TableCell>{index + 1}</TableCell>
                               <TableCell>
-                              <Avatar alt="" src={"data:image/png;base64," + 
-                              entity.image} 
-                                  onClick = {(e) => this.setState({
-                                    selectedImage : e.target.src
+                                <Avatar alt="" src={"data:image/png;base64," +
+                                  entity.image}
+                                  onClick={(e) => this.setState({
+                                    selectedImage: e.target.src
                                   })} />
                               </TableCell>
                               <TableCell>
                                 <IconButton>
-                                  <UpdateCategoryDetailsForm categoryId = {this.props.categoryId}
-                                                             id = {entity.id}
-                                                             image = {entity.image}/>
+                                  <UpdateCategoryDetailsForm categoryId={this.props.categoryId}
+                                    id={entity.id}
+                                    image={entity.image} />
                                 </IconButton>
                                 <IconButton>
-                                  <DeleteCategoryDetailsForm categoryId = {this.props.categoryId}
-                                                             id = {entity.id}/>
+                                  <DeleteCategoryDetailsForm categoryId={this.props.categoryId}
+                                    id={entity.id} />
                                 </IconButton>
                               </TableCell>
                             </TableRow>
@@ -108,7 +110,7 @@ class CategoryDetailsTable extends Component {
             </Droppable>
           </Table>
         </DragDropContext>
-        {selectedImage && <ImageModal selectedImage = {selectedImage} closeImage = {this.closeImage}/>}
+        {selectedImage && <ImageModal selectedImage={selectedImage} closeImage={this.closeImage} />}
       </div>
     );
   }

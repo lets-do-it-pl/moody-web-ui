@@ -9,7 +9,7 @@ import {
   DialogTitle
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { categoryService } from '../../../_services/categoryService';
+import { categoryService } from '../../_services/category.service';
 
 const useStyles = makeStyles((theme) => ({
   submit: {
