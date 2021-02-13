@@ -1,5 +1,3 @@
-import { useSnackbar } from 'notistack';
-
-export function Alert(variant, message) {
-    useSnackbar()(message, { variant });
+export function showAlert(props, message, variant) {
+    props.enqueueSnackbar(message, { variant: variant });
 }

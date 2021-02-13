@@ -100,8 +100,7 @@ const Category = () => {
                 } />
               <Divider />
               <CardContent>
-                <CategoryDetailsTable categoryDetails={details}
-                  categoryId={id} />
+                <CategoryDetailsTable categoryDetails={details} categoryId={id} />
               </CardContent>
             </Card>
           </Grid>

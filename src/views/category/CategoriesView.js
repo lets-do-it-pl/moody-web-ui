@@ -23,9 +23,9 @@ import { withSnackbar } from 'notistack';
 import { confirmAlert } from 'react-confirm-alert';
 import ImageModal from './common/ImageModal';
 import UpdateCategoryForm from './UpdateCategoryForm';
-import { Alert } from '../../_helpers/alert';
+import { showAlert } from '../../_helpers/alert';
 import { categoryService } from '../../_services/category.service';
-import { StatusType } from 'src/_types';
+import { StatusType, AlertType } from 'src/_types';
 
 const styles = () => ({
   update: {
@@ -60,7 +60,7 @@ class CategoriesView extends Component {
     var result = await categoryService.getCategories();
 
     if (result.status === StatusType.Fail) {
-      Alert("error", result.data);
+      showAlert(this.props, result.message, AlertType.Error);
       return;
     }
 
@@ -108,12 +108,12 @@ class CategoriesView extends Component {
     }
 
     if (orderResult.status === StatusType.Success) {
-      this.props.enqueueSnackbar("The order has been changed", { variant: "success" });
+      showAlert(this.props, "The order has been changed", AlertType.Success);
       await this.loadCategories();
       return;
     }
 
-    this.props.enqueueSnackbar(orderResult.message, { variant: "error" });
+    showAlert(this.props, orderResult.message, AlertType.Error);
 
     return;
   }
@@ -129,12 +129,12 @@ class CategoriesView extends Component {
             var result = await categoryService.deleteCategory(id);
 
             if (result.status === StatusType.Success) {
-              this.props.enqueueSnackbar("Category is deleted.", { variant: "success" });
+              showAlert(this.props, "Category is deleted.", AlertType.Success);
               await this.loadCategories();
               return;
             }
 
-            this.props.enqueueSnackbar(result.message, { variant: "error" });
+            showAlert(this.props, result.message, AlertType.Error);
           }
         },
         {
