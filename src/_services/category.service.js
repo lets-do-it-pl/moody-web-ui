@@ -21,12 +21,7 @@ async function updateCategory(id, data) {
     return apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, `/category/${id}`, data);
 }
 
-async function updateOrder(id, previousId, nextId) {
-
-    var data = {
-        PreviousId: previousId,
-        NextId: nextId
-    }
+async function updateOrder(id, data) {
 
     return apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, `/category/order/${id}`, data);
 

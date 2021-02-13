@@ -14,7 +14,7 @@ import AmpStoriesIcon from '@material-ui/icons/AmpStories';
 import CameraFrontIcon from '@material-ui/icons/CameraFront';
 import Page from 'src/components/Page';
 import CreateCategoryForm from './CreateCategoryForm';
-import CategoryTable from './CategoryTable';
+import CategoriesView from './CategoriesView';
 import CategoryDetailsTable from './categoryDetails/CategoryDetailsTable';
 import CreateCategoryDetailsForm from './categoryDetails/CreateCategoryDetailsForm';
 import { categoryDetailsService } from '../../_services/category.details.service';
@@ -79,7 +79,7 @@ const Category = () => {
                 } />
               <Divider />
               <CardContent>
-                <CategoryTable getCategoryId={getId} />
+                <CategoriesView getCategoryId={getId} />
               </CardContent>
             </Card>
           </Grid>

@@ -15,6 +15,7 @@ import {
 import * as Yup from 'yup';
 import { Styles } from './common/Styles';
 import { Formik } from 'formik';
+import { withSnackbar, useSnackbar } from 'notistack';
 import ImageUploader from "react-images-upload";
 import AddIcon from '@material-ui/icons/Add';
 import SaveIcon from '@material-ui/icons/Save';
@@ -57,6 +58,7 @@ function CreateCategoryForm(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [image, setImage] = useState();
+  const { enqueueSnackbar } = useSnackbar();
 
   const onDrop = async (file) => {
     const base64 = await convertBase64(file[0]);
@@ -105,10 +107,11 @@ function CreateCategoryForm(props) {
                 setOpen(false);
 
                 if (result.status === StatusType.Success) {
+                  enqueueSnackbar("Category is created.", { variant: "success" });
                   return;
                 }
 
-                this.state.error = result.message;
+                enqueueSnackbar(result.message, { variant: "error" });
               }}>
 
               {({
@@ -188,4 +191,4 @@ function CreateCategoryForm(props) {
   );
 }
 
-export default CreateCategoryForm;
+export default withSnackbar(CreateCategoryForm);
