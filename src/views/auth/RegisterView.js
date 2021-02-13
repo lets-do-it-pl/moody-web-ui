@@ -53,10 +53,10 @@ const RegisterView = () => {
             }}
             validationSchema={
               Yup.object().shape({
-                email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                firstName: Yup.string().max(255).required('First name is required'),
-                lastName: Yup.string().max(255).required('Last name is required'),
-                password: Yup.string().max(255).required('password is required')
+                email: Yup.string().email('Must be a valid email').min(3, 'Too Short!').max(255).required('Email is required'),
+                firstName: Yup.string().min(3, 'Too Short!').max(100, 'Too Long!').required('First name is required').matches(/^[A-Za-z]+$/, { message: "First name must only contain alphabets", excludeEmptyString: true }),
+                lastName: Yup.string().min(3, 'Too Short!').max(100, 'Too Long!').required('Last name is required').matches(/^[A-Za-z]+$/, { message: "Last name must only contain alphabets", excludeEmptyString: true }),
+                password: Yup.string().min(3, 'Too Short!').max(100, 'Too Long!').required('Password is required')
               })
             }
             onSubmit={async (value) => {
