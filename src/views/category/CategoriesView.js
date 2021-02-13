@@ -8,6 +8,7 @@ import {
 } from "react-beautiful-dnd";
 import { withStyles } from '@material-ui/styles';
 import DetailsIcon from '@material-ui/icons/Details';
+import DeleteIcon from '@material-ui/icons/Delete';
 import {
   Table,
   TableBody,
@@ -17,11 +18,14 @@ import {
   IconButton,
   Avatar
 } from '@material-ui/core';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { withSnackbar } from 'notistack';
+import { confirmAlert } from 'react-confirm-alert';
 import ImageModal from './common/ImageModal';
 import UpdateCategoryForm from './UpdateCategoryForm';
-import DeleteCategoryForm from './DeleteCategoryForm';
+import { showAlert } from '../../_helpers/alert';
 import { categoryService } from '../../_services/category.service';
-import { StatusType } from 'src/_types';
+import { StatusType, AlertType } from 'src/_types';
 
 const styles = () => ({
   update: {
@@ -32,10 +36,13 @@ const styles = () => ({
   },
   table: {
     width: '100%',
+  },
+  delete: {
+    color: "red"
   }
 });
 
-class CategoryTable extends Component {
+class CategoriesView extends Component {
 
   constructor(props) {
     super(props);
@@ -53,7 +60,7 @@ class CategoryTable extends Component {
     var result = await categoryService.getCategories();
 
     if (result.status === StatusType.Fail) {
-      console.log(result.data);
+      showAlert(this.props, result.message, AlertType.Error);
       return;
     }
 
@@ -83,21 +90,59 @@ class CategoryTable extends Component {
     const updatedOrderTop = this.state.categories[result.destination.index - 1];
     const updatedOrderBottom = this.state.categories[result.destination.index + 1];
 
+    var orderResult;
+
     if (result.source.index > result.destination.index) {
       const values = result.destination.index === 0 ?
         { NextId: updatedOrder.id } :
         { PreviousId: updatedOrder.id, NextId: updatedOrderTop.id };
 
-      await categoryService.updateOrder(Number(result.draggableId), values);
+      orderResult = await categoryService.updateOrder(Number(result.draggableId), values);
     }
     else if (result.source.index < result.destination.index) {
       const values = result.destination.index === this.state.categories.length - 1 ?
         { PreviousId: updatedOrder.id } :
         { PreviousId: updatedOrder.id, NextId: updatedOrderBottom.id };
 
-      await categoryService.updateOrder(Number(result.draggableId), values);
+      orderResult = await categoryService.updateOrder(Number(result.draggableId), values);
     }
+
+    if (orderResult.status === StatusType.Success) {
+      showAlert(this.props, "The order has been changed", AlertType.Success);
+      await this.loadCategories();
+      return;
+    }
+
+    showAlert(this.props, orderResult.message, AlertType.Error);
+
     return;
+  }
+
+  deleteCategory = async (id) => {
+    confirmAlert({
+      title: 'Confirm to Delete',
+      message: 'Are you sure to delete this category.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            var result = await categoryService.deleteCategory(id);
+
+            if (result.status === StatusType.Success) {
+              showAlert(this.props, "Category is deleted.", AlertType.Success);
+              await this.loadCategories();
+              return;
+            }
+
+            showAlert(this.props, result.message, AlertType.Error);
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => { }
+        }
+      ]
+    });
   }
 
   render() {
@@ -178,8 +223,8 @@ class CategoryTable extends Component {
                                     image={entity.image}
                                   />
                                 </IconButton>
-                                <IconButton size="small" >
-                                  <DeleteCategoryForm id={entity.id} />
+                                <IconButton size="small" onClick={() => this.deleteCategory(entity.id)}>
+                                  <DeleteIcon className={classes.delete} />
                                 </IconButton>
                               </TableCell>
                             </TableRow>
@@ -200,8 +245,8 @@ class CategoryTable extends Component {
   }
 }
 
-CategoryTable.propTypes = {
+CategoriesView.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CategoryTable);
+export default withSnackbar(withStyles(styles)(CategoriesView));
