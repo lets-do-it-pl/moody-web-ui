@@ -1,3 +1,4 @@
+import { authenticationService } from 'src/_services';
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
@@ -14,13 +15,19 @@ import {
   makeStyles
 } from '@material-ui/core';
 
+
 const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  city: 'Los Angeles',
-  country: 'USA',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith',
-  timezone: 'GTM-7'
+  avatar: authenticationService.currentUserValue !== null &&
+    authenticationService.currentUserValue !== {} &&
+    authenticationService.currentUserValue.profileImage !== null &&
+    authenticationService.currentUserValue.profileImage !== undefined &&
+    authenticationService.currentUserValue.profileImage !== "" ?
+    authenticationService.currentUserValue.profileImage :
+    '/static/images/avatars/default.png',
+  name: authenticationService.currentUserValue !== null &&
+    authenticationService.currentUserValue !== {} ?
+    authenticationService.currentUserValue.fullName :
+    ""
 };
 
 const useStyles = makeStyles(() => ({
@@ -56,19 +63,7 @@ const Profile = ({ className, ...rest }) => {
           >
             {user.name}
           </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body1"
-          >
-            {`${user.city} ${user.country}`}
-          </Typography>
-          <Typography
-            className={classes.dateText}
-            color="textSecondary"
-            variant="body1"
-          >
-            {`${moment().format('hh:mm A')} ${user.timezone}`}
-          </Typography>
+
         </Box>
       </CardContent>
       <Divider />
