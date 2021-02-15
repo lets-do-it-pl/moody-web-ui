@@ -14,11 +14,11 @@ async function asyncCallAuthorizedApi(
     queryString,
     data) {
 
-    var headers = {
-        Authorization: `Bearer ${authenticationService.currentUserValue.token}`
-    };
+  const headers = {
+    Authorization: `Bearer ${authenticationService.currentUserValue.token}`
+  };
 
-    return await asyncExecuteApiCall(httpMethodType, queryString, headers, data);
+  return await asyncExecuteApiCall(httpMethodType, queryString, headers, data);
 }
 
 async function asyncCallApi(

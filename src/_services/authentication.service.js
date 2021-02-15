@@ -15,11 +15,11 @@ export const authenticationService = {
 
 async function login(username, password) {
 
-    var data = { email: username, password };
+  const data = { email: username, password };
 
-    var response = await apiService.asyncCallApi(HttpMethodType.POST, '/user/authenticate', data);
+  const response = await apiService.asyncCallApi(HttpMethodType.POST, '/user/authenticate', data);
 
-    if (response.status === StatusType.Success) {
+  if (response.status === StatusType.Success) {
         if (!response.data || Object.keys(response.data).length === 0) {
             return {
                 status: StatusType.Fail,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Box,
   Container,
   Grid,
   makeStyles,
@@ -10,6 +11,7 @@ import UsersView from './UsersView';
 import { userService } from '../../_services';
 import { StatusType } from '../../_types';
 import UserDetails from './UserDetails';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,6 +81,18 @@ const Users = () =>
       title="Account"
     >
       <Container maxWidth="lg">
+        <Box
+          display="flex"
+          justifyContent="flex-start"
+          paddingBottom="10px"
+        >
+          <Button
+            color="primary"
+            variant="contained"
+          >
+            Add User
+          </Button>
+        </Box>
         <Grid
           container
           spacing={3}
