@@ -15,6 +15,8 @@ import Logo from 'src/components/Logo';
 import { authenticationService, searchService } from 'src/_services';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import AmpStoriesIcon from '@material-ui/icons/AmpStories';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -39,6 +41,8 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
     await sleep(1e3);
     const response = await searchService.generalSearch(searchKey);
 
+    console.log(response.data);
+
     setOptions(response.data);
     setLoading(false);
   }
@@ -57,7 +61,6 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
           <Logo />
         </RouterLink>
         <Box flexGrow={1} />
-        <Hidden mdDown>
           <Autocomplete
             id="search"
             style={{
@@ -81,6 +84,19 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
               setLoading(true);
               await populateOptions(value);
             }}
+            renderOption={(option, index) => {
+              return (
+                <>
+                  {
+                    {
+                      'Category': <AmpStoriesIcon />,
+                      'User': <SupervisorAccountIcon />
+                    }[option.type]
+                  }
+                  {` ${option.name}`}
+                </>
+              );
+            }}
             renderInput={(params) => (
               <TextField
                 style={{}}
@@ -99,13 +115,9 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
               />
             )}
           />
-        </Hidden>
-        <Hidden mdDown>
           <IconButton color="inherit" onClick={logout}>
             <InputIcon />
           </IconButton>
-        </Hidden>
-
         <Hidden lgUp>
           <IconButton color="inherit" onClick={onMobileNavOpen}>
             <MenuIcon />
