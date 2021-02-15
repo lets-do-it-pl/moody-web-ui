@@ -66,11 +66,13 @@ function CreateCategoryDetailsForm(props) {
     setImage(base[1]);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const value = {
       Image: image
     }
-    categoryDetailsService.createCategoryDetail(props.categoryId, value);
+    console.log(props);
+
+    await categoryDetailsService.createCategoryDetail(props.categoryId, value);
     setOpen(false);
   }
 
