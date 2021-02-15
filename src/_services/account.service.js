@@ -2,16 +2,16 @@ import { HttpMethodType } from 'src/_types';
 import { apiService } from './api.service';
 
 export const userService = {
-    getUserDetails,
-    updateUserDetails
+    getAccount,
+    updateAccountDetails
 };
-async function getUserDetails(id) {
+async function getAccount() {
 
-    return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, `/user/${id}`, {})
+    return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, `/account`, {})
   }
   
   
-async function updateUserDetails(id,fullName, email, userType ) {
+async function updateAccountDetails(fullName, email, image=null ) {
 
-    return await apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, `/user/${id}`, {fullName,email,userType})
+    return await apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, `/account`, {fullName,email,image})
   }
