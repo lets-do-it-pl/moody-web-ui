@@ -8,6 +8,7 @@ import {
   IconButton,
   Toolbar,
   TextField,
+  Typography,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import InputIcon from '@material-ui/icons/Input';
@@ -17,6 +18,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AmpStoriesIcon from '@material-ui/icons/AmpStories';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import SearchResultDialog from './SearchResultDialog';
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
@@ -26,6 +28,7 @@ function sleep(delay = 0) {
 
 const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   const navigate = useNavigate();
+  const [openDialog, setOpenDialog] = useState(false);
 
   const logout = () => {
     authenticationService.logout();
@@ -33,6 +36,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   };
 
   const [open, setOpen] = React.useState(false);
+  const [selectedOption, setSelectedOption] = useState({id:0,image:'',name:''});
   const [options, setOptions] = React.useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -63,7 +67,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
         <Box flexGrow={1} />
           <Autocomplete
             id="search"
-            style={{
+            style={{     
               width: 300,
               backgroundColor: 'white',
               borderRadius: 4,
@@ -80,6 +84,11 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
             getOptionLabel={(option) => option.name}
             options={options}
             loading={loading}
+            onChange={(e,value)=>{
+              if(value){
+                alert(value)
+              }
+            }}
             onInputChange={async (event, value) => {
               setLoading(true);
               await populateOptions(value);
@@ -115,6 +124,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
               />
             )}
           />
+        <SearchResultDialog openDialog={openDialog} setOpenDialog={setOpenDialog} id={selectedOption.id} name={selectedOption.name}/>
           <IconButton color="inherit" onClick={logout}>
             <InputIcon />
           </IconButton>
