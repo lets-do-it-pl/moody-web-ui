@@ -75,7 +75,6 @@ function SearchResultDialog(props) {
 
   return (
     <div>
-      <EditIcon onClick={handleClickOpen} className={classes.edit} />
       <Dialog open={open} fullWidth onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Edit Category</DialogTitle>
         <DialogContent>
