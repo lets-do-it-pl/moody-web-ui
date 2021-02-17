@@ -84,9 +84,9 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
             getOptionLabel={(option) => option.name}
             options={options}
             loading={loading}
-            onChange={(e,value)=>{
+            onChange={(event,value)=>{ 
               if(value){
-                alert(value)
+                alert(JSON.stringify(value))
               }
             }}
             onInputChange={async (event, value) => {
