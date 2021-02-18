@@ -156,20 +156,20 @@ function CreateCategoryForm(props) {
                         onChange={handleChange}
                         fullWidth
                         name="name"
-                        required
                         value={values.name}
                         variant="outlined"
                       />
                       <TextField
-                        error={Boolean(touched.name && errors.name)}
-                        helperText={touched.name && errors.name}
+                        error={Boolean(
+                          touched.description && errors.description
+                        )}
+                        helperText={touched.description && errors.description}
                         label="Description"
                         margin="normal"
                         onBlur={handleBlur}
                         onChange={handleChange}
                         fullWidth
                         name="description"
-                        required
                         value={values.description}
                         variant="outlined"
                       />
