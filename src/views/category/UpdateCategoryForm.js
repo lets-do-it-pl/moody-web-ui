@@ -12,26 +12,26 @@ import {
 import * as Yup from 'yup';
 import { Styles } from './common/Styles';
 import { Formik } from 'formik';
-import ImageUploader from "react-images-upload";
+import ImageUploader from 'react-images-upload';
 import EditIcon from '@material-ui/icons/Edit';
 import { StatusType } from 'src/_types';
 import { categoryService } from '../../_services/category.service';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   cancel: {
-    backgroundColor: "#f44336",
-    color: "white"
+    backgroundColor: '#f44336',
+    color: 'white'
   },
   submit: {
-    backgroundColor: "#5cb85c",
-    color: "white"
+    backgroundColor: '#5cb85c',
+    color: 'white'
   },
   edit: {
-    color: "orange"
+    color: 'orange'
   }
 }));
 
-const convertBase64 = (image) => {
+const convertBase64 = image => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(image);
@@ -40,11 +40,11 @@ const convertBase64 = (image) => {
       resolve(fileReader.result);
     };
 
-    fileReader.onerror = (error) => {
+    fileReader.onerror = error => {
       reject(error);
     };
   });
-}
+};
 
 const ValidationSchema = Yup.object().shape({
   name: Yup.string()
@@ -57,8 +57,9 @@ function UpdateCategoryForm(props) {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(props.image);
   const [name, setName] = useState(props.name);
+  const [description, setDescription] = useState(props.description);
 
-  const onDrop = async (file) => {
+  const onDrop = async file => {
     const base64 = await convertBase64(file[0]);
     const base = base64.split(/[,]+/);
     setImage(base[1]);
@@ -75,22 +76,31 @@ function UpdateCategoryForm(props) {
   return (
     <div>
       <EditIcon onClick={handleClickOpen} className={classes.edit} />
-      <Dialog open={open} fullWidth onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={open}
+        fullWidth
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title">Edit Category</DialogTitle>
         <DialogContent>
           <Styles>
             <Formik
               initialValues={{
                 name: '',
+                description: ''
               }}
               validationSchema={ValidationSchema}
-
               onSubmit={async values => {
                 values = {
-                  Name: name,
-                  Image: image
-                }
-                var result = await categoryService.updateCategory(props.id, values);
+                  Name: values.name,
+                  Image: image,
+                  Description: values.description
+                };
+                var result = await categoryService.updateCategory(
+                  props.id,
+                  values
+                );
                 setOpen(false);
 
                 if (result.status === StatusType.Success) {
@@ -102,7 +112,7 @@ function UpdateCategoryForm(props) {
             >
               {({ errors, touched, handleSubmit }) => (
                 <form onSubmit={handleSubmit}>
-                  <FormLabel >Category Name</FormLabel>
+                  <FormLabel>Category Name</FormLabel>
                   <TextField
                     name="name"
                     margin="normal"
@@ -111,9 +121,24 @@ function UpdateCategoryForm(props) {
                     required
                     variant="outlined"
                     value={name}
-                    onChange={(e) => setName(e.target.value)} />
+                    onChange={e => setName(e.target.value)}
+                  />
                   {touched.name && errors.name && <div>{errors.name}</div>}
-                  <FormLabel >Category Image</FormLabel>
+                  <FormLabel>Description</FormLabel>
+                  <TextField
+                    name="description"
+                    margin="normal"
+                    type="description"
+                    fullWidth
+                    required
+                    variant="outlined"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                  />
+                  {touched.description && errors.description && (
+                    <div>{errors.description}</div>
+                  )}
+                  <FormLabel>Category Image</FormLabel>
                   <ImageUploader
                     {...props}
                     name="image"
@@ -123,14 +148,24 @@ function UpdateCategoryForm(props) {
                     withLabel={false}
                     singleImage={true}
                     withPreview={true}
-                    imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
+                    imgExtension={['.jpg', '.gif', '.png', 'jpeg']}
                     maxFileSize={5242880}
                   />
                   <DialogActions>
-                    <Button type="submit" className={classes.submit} variant="contained">Submit</Button>
-                    <Button onClick={handleClose} className={classes.cancel} variant="contained">
+                    <Button
+                      type="submit"
+                      className={classes.submit}
+                      variant="contained"
+                    >
+                      Submit
+                    </Button>
+                    <Button
+                      onClick={handleClose}
+                      className={classes.cancel}
+                      variant="contained"
+                    >
                       Cancel
-                          </Button>
+                    </Button>
                   </DialogActions>
                 </form>
               )}

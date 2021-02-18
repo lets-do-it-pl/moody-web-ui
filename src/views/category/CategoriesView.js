@@ -176,11 +176,6 @@ class CategoriesView extends Component {
                 <Ref innerRef={provided.innerRef}>
                   <TableBody {...provided.droppableProps}>
                     {categories.map((entity, index) => {
-                      // Do stuff here
-
-                      // Mocking for now
-                      entity.description = 'Mock Description';
-
                       // Return the Component Hierchy Necessary
                       return (
                         <Draggable
@@ -228,17 +223,14 @@ class CategoriesView extends Component {
                                   width="170"
                                   variant="body"
                                 >
-                                  <Tooltip
-                                    title={
-                                      entity.description === null
-                                        ? 'No Description'
-                                        : entity.description
-                                    }
-                                  >
-                                    <IconButton aria-label="description">
-                                      <InfoIcon />
-                                    </IconButton>
-                                  </Tooltip>
+                                  {entity.description && (
+                                    <Tooltip title={entity.description}>
+                                      <IconButton aria-label="description">
+                                        <InfoIcon />
+                                      </IconButton>
+                                    </Tooltip>
+                                  )}
+
                                   <IconButton
                                     size="small"
                                     onClick={() =>
