@@ -8,7 +8,6 @@ import {
   IconButton,
   Toolbar,
   TextField,
-  Typography,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import InputIcon from '@material-ui/icons/Input';
@@ -36,7 +35,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   };
 
   const [open, setOpen] = React.useState(false);
-  const [selectedOption, setSelectedOption] = useState({id:0,image:'',name:''});
+  const [selectedOption,setSelectedOption] = useState({id:0,image:'',name:''});
   const [options, setOptions] = React.useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -86,7 +85,8 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
             loading={loading}
             onChange={(event,value)=>{ 
               if(value){
-                alert(JSON.stringify(value))
+                setSelectedOption({id:value.id,image:'',name:value.name})
+                setOpenDialog(true);
               }
             }}
             onInputChange={async (event, value) => {
@@ -124,7 +124,9 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
               />
             )}
           />
-        <SearchResultDialog openDialog={openDialog} setOpenDialog={setOpenDialog} id={selectedOption.id} name={selectedOption.name}/>
+          {selectedOption.name &&
+        <SearchResultDialog openDialog={openDialog} setOpenDialog={setOpenDialog} selectedOption={selectedOption}/>
+          }
           <IconButton color="inherit" onClick={logout}>
             <InputIcon />
           </IconButton>

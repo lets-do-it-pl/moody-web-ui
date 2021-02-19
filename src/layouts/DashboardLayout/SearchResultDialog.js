@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Dialog,
@@ -13,7 +13,6 @@ import * as Yup from 'yup';
 import { Styles } from '../../views/category/common/Styles';
 import { Formik } from 'formik';
 import ImageUploader from "react-images-upload";
-import EditIcon from '@material-ui/icons/Edit';
 import { StatusType } from 'src/_types';
 import { categoryService } from '../../_services/category.service';
 
@@ -54,8 +53,8 @@ const ValidationSchema = Yup.object().shape({
 
 function SearchResultDialog(props) {
   const classes = useStyles();
-  const [image, setImage] = useState(props.image);
-  const [name, setName] = useState(props.name);
+  const [image, setImage] = useState(props.selectedOption.image);
+  const [name,setName] = useState(props.selectedOption.name);
   const setOpen = props.setOpenDialog
   const open = props.openDialog
 
@@ -65,13 +64,14 @@ function SearchResultDialog(props) {
     setImage(base[1]);
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+  alert(JSON.stringify(props))
+  
+  }, [])
 
   return (
     <div>
@@ -81,7 +81,7 @@ function SearchResultDialog(props) {
           <Styles>
             <Formik
               initialValues={{
-                name: name,
+                name: ' adawd ',
               }}
               validationSchema={ValidationSchema}
 
@@ -90,7 +90,7 @@ function SearchResultDialog(props) {
                   Name: name,
                   Image: image
                 }
-                var result = await categoryService.updateCategory(props.id, values);
+                var result = await categoryService.updateCategory(props.selectedOption.id, values);
                 setOpen(false);
 
                 if (result.status === StatusType.Success) {
