@@ -1,7 +1,7 @@
 import { HttpMethodType } from 'src/_types';
 import { apiService } from './api.service';
 
-export const userService = {
+export const accountService = {
     getAccount,
     updateAccountDetails
 };
