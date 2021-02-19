@@ -31,11 +31,12 @@ const useStyles = makeStyles(() => ({
   root: {}
 }));
 
-const ProfileDetails = ({ className, ...rest }) => {
+const ProfileDetails = ({ className, ...rest },props) => {
   const classes = useStyles();
+  const {account} = props;
   const [values, setValues] = useState({
-    Name: user.name,
-    email: 'demo@devias.io',
+    Name: account.fullName,
+    email: account.email,
   });
 
   const handleChange = (event) => {

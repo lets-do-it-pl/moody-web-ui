@@ -1,5 +1,5 @@
 import { authenticationService } from 'src/_services';
-import React from 'react';
+import React, { useState}  from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import moment from 'moment';
@@ -16,19 +16,7 @@ import {
 } from '@material-ui/core';
 
 
-const user = {
-  avatar: authenticationService.currentUserValue !== null &&
-    authenticationService.currentUserValue !== {} &&
-    authenticationService.currentUserValue.profileImage !== null &&
-    authenticationService.currentUserValue.profileImage !== undefined &&
-    authenticationService.currentUserValue.profileImage !== "" ?
-    authenticationService.currentUserValue.profileImage :
-    '/static/images/avatars/default.png',
-  name: authenticationService.currentUserValue !== null &&
-    authenticationService.currentUserValue !== {} ?
-    authenticationService.currentUserValue.fullName :
-    ""
-};
+
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -38,9 +26,17 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const Profile = ({ className, ...rest }) => {
-  const classes = useStyles();
+const Profile = ({ className, ...rest },props) => {
+  const {account} = props;
+  
+  const userAccount = {
+    avatar: {account.currentImage},
+    name: {account.fullName}
+  };
 
+  const [currentImage, setCurrentImage] = useState();
+
+  const classes = useStyles();
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -54,14 +50,14 @@ const Profile = ({ className, ...rest }) => {
         >
           <Avatar
             className={classes.avatar}
-            src={user.avatar}
+            src={userAccount.avatar}
           />
           <Typography
             color="textPrimary"
             gutterBottom
             variant="h3"
           >
-            {user.name}
+            {userAccount.name}
           </Typography>
 
         </Box>
