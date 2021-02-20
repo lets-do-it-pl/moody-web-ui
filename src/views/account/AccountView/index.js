@@ -24,9 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const Account = () => {
   const [loading, setLoading] = useState(true);
   const [account, setAccount] = useState([]);
-  //const [ProfileDetails, setProfileDetails] = useState({});
-  //const [userDetailsHidden, setUserDetailsHidden] = useState(true);
-
+ 
   useEffect(() => {
     async function loadAccount() {
       const result = await accountService.getAccount();
@@ -41,7 +39,7 @@ const Account = () => {
     }
 
     loadAccount();
-  }, []); // As long as users array ıs empty, skıp thıs Useeffect!
+  }, []); 
 
   const classes = useStyles();
 
