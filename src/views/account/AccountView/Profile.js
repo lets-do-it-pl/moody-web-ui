@@ -15,26 +15,22 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-
-
-
 const useStyles = makeStyles(() => ({
   root: {},
-  avatar: {
+   avatar: {
     height: 100,
     width: 100
   }
 }));
 
-const Profile = ({ className, ...rest },props) => {
-  const {account} = props;
+const Profile = (props) => {
+  
+  const {account, className, ...rest } = props;
   
   const userAccount = {
-    avatar: {account.currentImage},
-    name: {account.fullName}
+    avatar: account.image,
+    name: account.fullName
   };
-
-  const [currentImage, setCurrentImage] = useState();
 
   const classes = useStyles();
   return (
@@ -50,7 +46,7 @@ const Profile = ({ className, ...rest },props) => {
         >
           <Avatar
             className={classes.avatar}
-            src={userAccount.avatar}
+            src={"data:image/png;base64," + userAccount.avatar}
           />
           <Typography
             color="textPrimary"

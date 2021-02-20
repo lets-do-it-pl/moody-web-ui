@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import {
   Container,
   Grid,
-  makeStyles
+  makeStyles,
+  Typography
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Profile from './Profile';
@@ -20,21 +21,17 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Account = () =>
-{
+const Account = () => {
   const [loading, setLoading] = useState(true);
   const [account, setAccount] = useState([]);
   //const [ProfileDetails, setProfileDetails] = useState({});
   //const [userDetailsHidden, setUserDetailsHidden] = useState(true);
 
-  useEffect(() =>
-  {
-    async function loadAccount()
-    {
+  useEffect(() => {
+    async function loadAccount() {
       const result = await accountService.getAccount();
 
-      if (result.status === StatusType.Fail)
-      {
+      if (result.status === StatusType.Fail) {
         console.log("Account has not fount");
         return;
       }
@@ -57,24 +54,35 @@ const Account = () =>
         <Grid
           container
           spacing={3}
-        >
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
+        >{loading ? (
+          <Typography
+            color="primary"
+            variant="h5"
           >
-            <Profile account= {account}/>
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            md={6}
-            xs={12}
-          >
-            <ProfileDetails account= {account} />
-          </Grid>
+            Loading...
+          </Typography>
+        ) : (
+            <>
+              <Grid
+                item
+                lg={4}
+                md={6}
+                xs={12}
+              >
+                <Profile account={account} />
+              </Grid>
+              <Grid
+                item
+                lg={8}
+                md={6}
+                xs={12}
+              >
+                <ProfileDetails account={account} />
+              </Grid>
+            </>
+          )}
         </Grid>
+
       </Container>
     </Page>
   );
