@@ -1,21 +1,36 @@
+import { accountService} from 'src/_services';
 import React, { useState } from 'react';
-import clsx from 'clsx';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
+import { StatusType,AlertType } from 'src/_types';
+import { withSnackbar } from 'notistack';
+import { showAlert } from '../../../_helpers/alert';
+import { withStyles } from '@material-ui/styles';
+import Page from 'src/components/Page';
 import PropTypes from 'prop-types';
+import { Formik } from 'formik';
 import {
   Box,
   Button,
   TextField,
   makeStyles,
   Container,
-  FormHelperText
+  Typography
 } from '@material-ui/core';
-import { accountService, authenticationService } from 'src/_services';
-import { Typography } from '@material-ui/core';
-import { StatusType } from 'src/_types';
-import Page from 'src/components/Page';
+import * as Yup from 'yup';
 
+  const styles = () => ({
+    update: {
+      color: 'orange'
+    },
+    details: {
+      color: 'purple'
+    },
+    table: {
+      width: '100%'
+    },
+    delete: {
+      color: 'red'
+    }
+  });
 
   const useStyles = makeStyles(() => ({
     root: {}
@@ -23,12 +38,7 @@ import Page from 'src/components/Page';
 
   const ProfileDetails = (props) => {
   const classes = useStyles();
-  const { account, className, ...rest } = props;
-
-  const [values, setValues] = useState({
-    Name: account.fullName,
-    email: account.email,
-  });
+  const { account} = props;
 
   const [errorMessage, setErrorMessage] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
@@ -60,14 +70,13 @@ import Page from 'src/components/Page';
             }
             onSubmit={async (value) => {
               var result = await accountService
-                .updateAccountDetails(
+                .updateAccount(
                   value.name,
                   value.email);
 
               if (result.status === StatusType.Success) {
                 setErrorMessage('');
-                setInfoMessage("Account updated successfully !");
-
+                showAlert('Updated successfully', AlertType.Success);
                 return;
               }
 
@@ -155,4 +164,4 @@ ProfileDetails.propTypes = {
   className: PropTypes.string
 };
 
-export default ProfileDetails;
+export default withSnackbar(withStyles(styles)(ProfileDetails));
