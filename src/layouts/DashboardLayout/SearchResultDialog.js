@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Dialog,
@@ -54,7 +54,7 @@ const ValidationSchema = Yup.object().shape({
 function SearchResultDialog(props) {
   const classes = useStyles();
   const [image, setImage] = useState(props.selectedOption.image);
-  const [name,setName] = useState(props.selectedOption.name);
+  const [name] = useState(props.selectedOption.name);
   const setOpen = props.setOpenDialog
   const open = props.openDialog
 
@@ -67,11 +67,6 @@ function SearchResultDialog(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  useEffect(() => {
-  alert(JSON.stringify(props))
-  
-  }, [])
 
   return (
     <div>

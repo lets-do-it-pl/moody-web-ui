@@ -50,6 +50,8 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
     setLoading(false);
   }
 
+
+
   React.useEffect(() => {
     if (!open) {
       setOptions([]);
