@@ -30,7 +30,7 @@ const Account = () => {
       const result = await accountService.getAccount();
 
       if (result.status === StatusType.Fail) {
-        console.log("Account has not fount");
+        showAlert('Updated successfully', AlertType.Success);
         return;
       }
       console.log(result.data);
