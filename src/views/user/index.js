@@ -104,7 +104,7 @@ const Users = () =>
         >
           <Grid
             item
-            lg={7}
+            lg={6}
             md={6}
             xs={12}
           >
@@ -122,7 +122,7 @@ const Users = () =>
           </Grid>
           <Grid hidden={userDetailsHidden}
                 item
-                lg={5}
+                lg={6}
                 md={6}
                 xs={12}
           >
