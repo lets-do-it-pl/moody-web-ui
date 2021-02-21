@@ -221,6 +221,7 @@ const UserDetails = (props) =>
               display="flex"
               justifyContent="flex-end"
               p={2}
+              paddingTop={'0'}
             >
               <Button
                 color="primary"
