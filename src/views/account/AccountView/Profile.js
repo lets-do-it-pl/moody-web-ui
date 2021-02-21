@@ -1,8 +1,7 @@
-import { authenticationService } from 'src/_services';
-import React, { useState}  from 'react';
+
+import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import moment from 'moment';
 import {
   Avatar,
   Box,

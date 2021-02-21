@@ -9,7 +9,7 @@ import Page from 'src/components/Page';
 import Profile from './Profile';
 import ProfileDetails from './ProfileDetails';
 import { accountService } from '../../../_services';
-import { StatusType } from '../../../_types';
+import { StatusType} from '../../../_types';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,16 +24,21 @@ const useStyles = makeStyles((theme) => ({
 const Account = () => {
   const [loading, setLoading] = useState(true);
   const [account, setAccount] = useState([]);
+
+  const [errorMessage, setErrorMessage] = useState('');
+  const [infoMessage, setInfoMessage] = useState('');
  
   useEffect(() => {
     async function loadAccount() {
       const result = await accountService.getAccount();
 
       if (result.status === StatusType.Fail) {
-        showAlert('Updated successfully', AlertType.Success);
+        setInfoMessage('');
+        setErrorMessage("Oops,something wrong happened,try again");
         return;
       }
-      console.log(result.data);
+
+      setInfoMessage(result.message);
       setAccount(result.data);
       setLoading(false);
     }

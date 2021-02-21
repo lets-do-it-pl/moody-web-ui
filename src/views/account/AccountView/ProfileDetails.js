@@ -1,8 +1,7 @@
 import { accountService} from 'src/_services';
 import React, { useState } from 'react';
-import { StatusType,AlertType } from 'src/_types';
+import { StatusType } from 'src/_types';
 import { withSnackbar } from 'notistack';
-import { showAlert } from '../../../_helpers/alert';
 import { withStyles } from '@material-ui/styles';
 import Page from 'src/components/Page';
 import PropTypes from 'prop-types';
@@ -75,12 +74,12 @@ import * as Yup from 'yup';
                   value.email);
 
               if (result.status === StatusType.Success) {
-                setErrorMessage('');
-                showAlert('Updated successfully', AlertType.Success);
+                
+                setInfoMessage('Updated successfully');
                 return;
               }
 
-              setErrorMessage(result.message);
+              setErrorMessage("Oops,something wrong happened,try again");
             }}
           >
             {({
