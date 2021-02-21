@@ -17,8 +17,12 @@ import { StatusType } from '../../_types';
 import { Formik } from 'formik';
 
 const useStyles = makeStyles({
-  root: {
-    paddingLeft: '15px'
+  checkbox: {
+    paddingLeft: '16px'
+  },
+  cardContent:{
+    paddingLeft:'22px',
+    paddingRight:'22px'
   }
 });
 
@@ -96,11 +100,13 @@ const UserDetails = (props) =>
         <form onSubmit={handleSubmit}>
           <Card>
             <CardHeader
-              subheader="The information can be edited"
-              title="User"
+              title="User Details"
+              titleTypographyProps={{variant:'h6' }}
             />
             <Divider />
-            <CardContent>
+            <CardContent
+              className={classes.cardContent}
+            >
               <Grid
                 container
                 spacing={3}
@@ -156,7 +162,7 @@ const UserDetails = (props) =>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      classes={{root:classes.root}}
+                      classes={{root:classes.checkbox}}
                       value={values.isActive}
                       onChange={handleChange}
                       checked={values.isActive}
@@ -209,10 +215,8 @@ const UserDetails = (props) =>
                 >
                   {infoMessage}
                 </Typography>
-
               </Grid>
             </CardContent>
-            <Divider />
             <Box
               display="flex"
               justifyContent="flex-end"
