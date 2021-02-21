@@ -12,6 +12,7 @@ import { userService } from '../../_services';
 import { StatusType } from '../../_types';
 import UserDetails from './UserDetails';
 import Button from '@material-ui/core/Button';
+import AddUserDialog from './AddUserDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,29 +25,38 @@ const useStyles = makeStyles((theme) => ({
 
 const Users = () =>
 {
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
   const [userDetails, setUserDetails] = useState({});
   const [userDetailsHidden, setUserDetailsHidden] = useState(true);
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() =>
   {
-    async function loadUsers()
-    {
-      const result = await userService.getUsers();
-
-      if (result.status === StatusType.Fail)
-      {
-        console.log(result.data);
-        return;
-      }
-      console.log(result.data);
-      setUsers(result.data);
-      setLoading(false);
-    }
-
     loadUsers();
   }, []);
+
+  async function loadUsers()
+  {
+    const result = await userService.getUsers();
+
+    if (result.status === StatusType.Fail)
+    {
+      console.log(result.data);
+      return;
+    }
+    console.log(result.data);
+    setUsers(result.data);
+    setLoading(false);
+  }
 
   const classes = useStyles();
 
@@ -86,12 +96,7 @@ const Users = () =>
           justifyContent="flex-start"
           paddingBottom="10px"
         >
-          <Button
-            color="primary"
-            variant="contained"
-          >
-            Add User
-          </Button>
+          <AddUserDialog loadUsers={loadUsers} handleClickOpen={handleClickOpen} handleClose={handleClose} open={open}/>
         </Box>
         <Grid
           container

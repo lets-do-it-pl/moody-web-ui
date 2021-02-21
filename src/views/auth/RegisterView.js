@@ -47,23 +47,20 @@ const RegisterView = () => {
           <Formik
             initialValues={{
               email: '',
-              firstName: '',
-              lastName: '',
+              fullName: '',
               password: ''
             }}
             validationSchema={
               Yup.object().shape({
                 email: Yup.string().email('Must be a valid email').min(3, 'Too Short!').max(255).required('Email is required'),
-                firstName: Yup.string().min(3, 'Too Short!').max(100, 'Too Long!').required('First name is required').matches(/^[A-Za-z]+$/, { message: "First name must only contain alphabets", excludeEmptyString: true }),
-                lastName: Yup.string().min(3, 'Too Short!').max(100, 'Too Long!').required('Last name is required').matches(/^[A-Za-z]+$/, { message: "Last name must only contain alphabets", excludeEmptyString: true }),
+                fullName: Yup.string().min(3, 'Too Short!').max(100, 'Too Long!').required('Full name is required').matches(/^[A-Za-z]+$/, { message: "Full name must only contain alphabets", excludeEmptyString: true }),
                 password: Yup.string().min(3, 'Too Short!').max(100, 'Too Long!').required('Password is required')
               })
             }
             onSubmit={async (value) => {
-              var result = await userService
+              const result = await userService
                 .register(
-                  value.firstName,
-                  value.lastName,
+                  value.fullName,
                   value.email,
                   value.password);
 
@@ -103,15 +100,15 @@ const RegisterView = () => {
                   </Typography>
                 </Box>
                 <TextField
-                  error={Boolean(touched.firstName && errors.firstName)}
+                  error={Boolean(touched.fullName && errors.fullName)}
                   fullWidth
-                  helperText={touched.firstName && errors.firstName}
-                  label="First name"
+                  helperText={touched.fullName && errors.fullName}
+                  label="Full name"
                   margin="normal"
-                  name="firstName"
+                  name="fullName"
                   onBlur={handleBlur}
                   onChange={handleChange}
-                  value={values.firstName}
+                  value={values.fullName}
                   variant="outlined"
                 />
                 <TextField

@@ -82,10 +82,13 @@ const UsersView = (props) =>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell padding="default">
+              <TableCell align="center">
+                Number
+              </TableCell>
+              <TableCell align="center">
                 User
               </TableCell>
-              <TableCell>
+              <TableCell align="center">
                 Role
               </TableCell>
               <TableCell>
@@ -93,16 +96,19 @@ const UsersView = (props) =>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.slice(0).map((user) => (
+            {users.slice(0).map((user,index) => (
                 <TableRow
                   hover
                   key={user.id}
                   // selected={user.id == 2 ? true : false} For row selection.
                 >
-                  <TableCell>
+                  <TableCell align="center">
+                    {index+1}
+                  </TableCell>
+                  <TableCell align="center">
                     {user.fullName}
                   </TableCell>
-                  <TableCell>
+                  <TableCell align="center">
                     {dict.get(user.userType)}
                   </TableCell>
                   <TableCell align="right">
@@ -123,7 +129,7 @@ const UsersView = (props) =>
                       setCurrentUser(user);
                       handleClickOpen();
                     }}>
-                      <DeleteIcon color={'error'} />
+                      <DeleteIcon color='error' />
                     </IconButton>
 
                   </TableCell>

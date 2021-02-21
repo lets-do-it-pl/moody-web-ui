@@ -9,12 +9,18 @@ import {
   Divider,
   Grid,
   TextField,
-  Typography, FormHelperText, MenuItem, FormControlLabel, Checkbox
+  Typography, FormHelperText, MenuItem, FormControlLabel, Checkbox, makeStyles
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { userService } from '../../_services';
 import { StatusType } from '../../_types';
 import { Formik } from 'formik';
+
+const useStyles = makeStyles({
+  root: {
+    paddingLeft: '15px'
+  }
+});
 
 const userTypes = [
   {
@@ -29,6 +35,7 @@ const userTypes = [
 
 const UserDetails = (props) =>
 {
+  const classes = useStyles();
   const [errorMessage, setErrorMessage] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
   const { id, email, fullName, userType, canLogin, isActive } = props.initialValues;
@@ -149,6 +156,7 @@ const UserDetails = (props) =>
                 <FormControlLabel
                   control={
                     <Checkbox
+                      classes={{root:classes.root}}
                       value={values.isActive}
                       onChange={handleChange}
                       checked={values.isActive}

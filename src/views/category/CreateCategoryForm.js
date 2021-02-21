@@ -103,7 +103,7 @@ function CreateCategoryForm(props) {
                   Name: value.name,
                   Image: image
                 }
-                var result = await categoryService.createCategory(value);
+                const result = await categoryService.createCategory(value);
                 setOpen(false);
 
                 if (result.status === StatusType.Success) {
