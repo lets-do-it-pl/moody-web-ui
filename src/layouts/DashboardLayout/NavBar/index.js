@@ -36,7 +36,30 @@ const user = {
     ""
 };
 
-const items = [
+const menuStandard = [
+  {
+    href: '/app/dashboard',
+    icon: BarChartIcon,
+    title: 'Dashboard'
+  },
+  {
+    href: '/app/category',
+    icon: AmpStoriesIcon,
+    title: 'Categories'
+  },
+  {
+    href: '/app/account',
+    icon: UserIcon,
+    title: 'Account'
+  },
+  {
+    href: '/app/settings',
+    icon: SettingsIcon,
+    title: 'Settings'
+  }
+];
+
+const menuAdmin = [
   {
     href: '/app/dashboard',
     icon: BarChartIcon,
@@ -120,7 +143,16 @@ const NavBar = ({ onMobileClose, openMobile }) => {
       <Divider />
       <Box p={2}>
         <List>
-          {items.map((item) => (
+          {authenticationService.currentUserRole === 'A' ?
+            menuAdmin.map((item) => (
+              <NavItem
+                href={item.href}
+                key={item.title}
+                title={item.title}
+                icon={item.icon}
+              />))
+            :
+            menuStandard.map((item) => (
             <NavItem
               href={item.href}
               key={item.title}

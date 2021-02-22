@@ -21,9 +21,10 @@ import { withSnackbar } from 'notistack';
 import { confirmAlert } from 'react-confirm-alert';
 import ImageModal from './common/ImageModal';
 import UpdateCategoryForm from './UpdateCategoryForm';
-import { showAlert } from '../../_helpers/alert';
+import { showAlert } from '../../_helpers';
 import { categoryService } from '../../_services/category.service';
 import { StatusType, AlertType } from 'src/_types';
+import { authenticationService } from '../../_services';
 
 const styles = () => ({
   update: {
@@ -64,6 +65,7 @@ class CategoriesView extends Component {
     this.setState({
       categories: result.data
     });
+    console.log(authenticationService.currentUserRole);
   };
 
   closeImage = () => {
@@ -119,8 +121,6 @@ class CategoriesView extends Component {
     }
 
     showAlert(this.props, orderResult.message, AlertType.Error);
-
-    return;
   };
 
   deleteCategory = async id => {
