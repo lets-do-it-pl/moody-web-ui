@@ -10,7 +10,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
+  TableRow, TableSortLabel,
   Tooltip,
   Typography
 } from '@material-ui/core';
@@ -29,10 +29,11 @@ dict.set('A', 'Admin');
 
 const UsersView = (props) =>
 {
-  const { users, className, loadUserDetails, deleteUser, setUsers, setUserDetailsVisibility } = props;
+  const { users, className, loadUserDetails, deleteUser, setUsers, setUserDetailsVisibility, sortUsers } = props;
 
   const [currentUser, setCurrentUser] = useState();
   const [open, setOpen] = React.useState(false);
+  const [direction, setDirection] = React.useState('desc');
   const handleClickOpen = () =>
   {
     setOpen(true);
@@ -50,6 +51,11 @@ const UsersView = (props) =>
   const handleClose = () =>
   {
     setOpen(false);
+  };
+
+  const handleDirection = () =>
+  {
+    setDirection((prev)=>{return  prev === 'desc' ? 'asc' : 'desc' })
   };
 
   return (
@@ -85,6 +91,16 @@ const UsersView = (props) =>
               <TableCell align="center">
                 Number
               </TableCell>
+              <TableCell
+              >
+                <TableSortLabel
+                  active={true}
+                  direction={direction}
+                  onClick={()=>{sortUsers();handleDirection();}}
+                >
+                </TableSortLabel>
+                SASDA
+              </TableCell>
               <TableCell align="center">
                 User
               </TableCell>
@@ -100,7 +116,6 @@ const UsersView = (props) =>
                 <TableRow
                   hover
                   key={user.id}
-                  // selected={user.id == 2 ? true : false} For row selection.
                 >
                   <TableCell align="center">
                     {index+1}

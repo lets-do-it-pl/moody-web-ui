@@ -67,6 +67,7 @@
     "yup": "^0.29.3"
   },
   "devDependencies": {
+    "@material-ui/data-grid": "^4.0.0-alpha.20",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",

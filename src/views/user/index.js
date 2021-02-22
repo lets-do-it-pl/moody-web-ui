@@ -11,7 +11,6 @@ import UsersView from './UsersView';
 import { userService } from '../../_services';
 import { StatusType } from '../../_types';
 import UserDetails from './UserDetails';
-import Button from '@material-ui/core/Button';
 import AddUserDialog from './AddUserDialog';
 
 const useStyles = makeStyles((theme) => ({
@@ -54,8 +53,16 @@ const Users = () =>
       return;
     }
     console.log(result.data);
+
     setUsers(result.data);
+
     setLoading(false);
+  }
+
+  async function sortUsers()
+  {
+      setUsers((prev)=>[...prev.reverse()]);
+      console.log(users)
   }
 
   const classes = useStyles();
@@ -117,7 +124,7 @@ const Users = () =>
               </Typography>
             ) : (
               <UsersView users={users} setUserDetailsVisibility={setUserDetailsHidden} setUsers={setUsers}
-                         loadUserDetails={loadUserDetails} deleteUser={deleteUser} />
+                         loadUserDetails={loadUserDetails} deleteUser={deleteUser} sortUsers={sortUsers} />
             )}
           </Grid>
           <Grid hidden={userDetailsHidden}
