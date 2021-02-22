@@ -6,7 +6,8 @@ export const categoryService = {
   createCategory,
   updateCategory,
   updateOrder,
-  deleteCategory
+  deleteCategory,
+  exportFile
 };
 
 async function getCategories() {
@@ -44,5 +45,12 @@ async function deleteCategory(id) {
   return apiService.asyncCallAuthorizedApi(
     HttpMethodType.DELETE,
     `/category/${id}`
+  );
+}
+
+async function exportFile(type) {
+  return await apiService.asyncCallAuthorizedApi(
+    HttpMethodType.GET,
+    `/category/export/${type}`
   );
 }
