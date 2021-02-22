@@ -26,9 +26,17 @@ const Users = () =>
 {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
+  const [usersFiltered, setUsersFiltered] = useState();
+  const [originalUsers, setOriginalUsers] = useState([]);
   const [userDetails, setUserDetails] = useState({});
   const [userDetailsHidden, setUserDetailsHidden] = useState(true);
+
+  const requestSearch = (searchedVal) => {
+    const filteredUsers = originalUsers.filter((user) => {
+      return user.fullName.toLowerCase().includes(searchedVal.toLowerCase());
+    });
+    setUsersFiltered(filteredUsers);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -54,15 +62,16 @@ const Users = () =>
     }
     console.log(result.data);
 
-    setUsers(result.data);
+    setOriginalUsers(result.data);
+    setUsersFiltered(result.data);
 
     setLoading(false);
   }
 
   async function sortUsers()
   {
-      setUsers((prev)=>[...prev.reverse()]);
-      console.log(users)
+      setUsersFiltered((prev)=>[...prev.reverse()]);
+      console.log(originalUsers)
   }
 
   const classes = useStyles();
@@ -123,8 +132,11 @@ const Users = () =>
                 Loading...
               </Typography>
             ) : (
-              <UsersView users={users} setUserDetailsVisibility={setUserDetailsHidden} setUsers={setUsers}
-                         loadUserDetails={loadUserDetails} deleteUser={deleteUser} sortUsers={sortUsers} />
+              <UsersView usersFiltered={usersFiltered} setUserDetailsVisibility={setUserDetailsHidden} setUsersFiltered={setUsersFiltered}
+                         loadUserDetails={loadUserDetails}
+                         deleteUser={deleteUser}
+                         sortUsers={sortUsers}
+                         requestSearch={requestSearch} />
             )}
           </Grid>
           <Grid hidden={userDetailsHidden}

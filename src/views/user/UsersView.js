@@ -22,6 +22,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import SearchBar from "material-ui-search-bar";
 
 const dict = new Map();
 dict.set('S', 'Standard');
@@ -29,11 +30,18 @@ dict.set('A', 'Admin');
 
 const UsersView = (props) =>
 {
-  const { users, className, loadUserDetails, deleteUser, setUsers, setUserDetailsVisibility, sortUsers } = props;
+  const { usersFiltered, className, loadUserDetails, deleteUser, setUsersFiltered, setUserDetailsVisibility, sortUsers, requestSearch } = props;
 
   const [currentUser, setCurrentUser] = useState();
   const [open, setOpen] = React.useState(false);
   const [direction, setDirection] = React.useState('desc');
+  const [searched, setSearched] = useState("");
+
+  const cancelSearch = () => {
+    setSearched("");
+    requestSearch(searched);
+  };
+
   const handleClickOpen = () =>
   {
     setOpen(true);
@@ -43,7 +51,7 @@ const UsersView = (props) =>
   {
     e.preventDefault();
     deleteUser(user.id);
-    setUsers(users.filter(x => x.id !== user.id));
+    setUsersFiltered(usersFiltered.filter(x => x.id !== user.id));
     setOpen(false);
     setUserDetailsVisibility(true);
   };
@@ -84,6 +92,11 @@ const UsersView = (props) =>
           </DialogActions>
         </Box>
       </Dialog>
+      <SearchBar
+        value={searched}
+        onChange={(searchVal) => requestSearch(searchVal)}
+        onCancelSearch={() => cancelSearch()}
+      />
       <PerfectScrollbar>
         <Table>
           <TableHead>
@@ -91,17 +104,13 @@ const UsersView = (props) =>
               <TableCell align="center">
                 Number
               </TableCell>
-              <TableCell
-              >
-                <TableSortLabel
+              <TableCell align="center">
+              <TableSortLabel
                   active={true}
                   direction={direction}
                   onClick={()=>{sortUsers();handleDirection();}}
                 >
                 </TableSortLabel>
-                SASDA
-              </TableCell>
-              <TableCell align="center">
                 User
               </TableCell>
               <TableCell align="center">
@@ -112,7 +121,7 @@ const UsersView = (props) =>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.slice(0).map((user,index) => (
+            {usersFiltered.slice(0).map((user, index) => (
                 <TableRow
                   hover
                   key={user.id}
@@ -158,7 +167,7 @@ const UsersView = (props) =>
 };
 
 UsersView.propTypes = {
-  users: PropTypes.array.isRequired
+  usersFiltered: PropTypes.array.isRequired
 };
 
 export default UsersView;
