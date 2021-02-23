@@ -7,7 +7,7 @@ import {
   makeStyles,
   Container,
   Avatar,
-  Divider
+  Divider,
 } from '@material-ui/core';
 import "../../style.css"
 import AmpStoriesIcon from '@material-ui/icons/AmpStories';
@@ -19,6 +19,7 @@ import CategoryDetailsTable from './categoryDetails/CategoryDetailsTable';
 import CreateCategoryDetailsForm from './categoryDetails/CreateCategoryDetailsForm';
 import { categoryDetailsService } from '../../_services/category.details.service';
 import { StatusType } from 'src/_types';
+import Export from './export/Export';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,6 +61,7 @@ const Category = () => {
       className={classes.root}
       title="Category"
     >
+      <Export/>
       <Container maxWidth={false}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6}>
