@@ -8,13 +8,13 @@ import App from './App';
 const reCaptchaKeyValue = process.env.REACT_APP_RECAPTCHA_KEY;
 
 ReactDOM.render((
-  <GoogleReCaptchaProvider
-    reCaptchaKey={reCaptchaKeyValue}
-    useRecaptchaNet="true"
-    scriptProps={{
-      async: true, // optional, default to false,      
-    }}
-  >
+   <GoogleReCaptchaProvider
+     reCaptchaKey={reCaptchaKeyValue}
+     useRecaptchaNet="true"
+     scriptProps={{
+       async: true, // optional, default to false,      
+     }}
+   >
     <BrowserRouter>
       <App />
     </BrowserRouter>

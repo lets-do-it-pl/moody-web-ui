@@ -37,3 +37,8 @@ async function resetPassword(token, password) {
 
     return await apiService.asyncCallApi(HttpMethodType.POST, '/user/reset-password', { password }, token)
 }
+
+async function resetOwnPassword(token, password, newPassword) {
+
+    return await apiService.asyncCallApi(HttpMethodType.POST, '/user/reset-own-password', { password, newPassword }, token)
+}
