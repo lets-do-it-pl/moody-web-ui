@@ -74,7 +74,7 @@ const Password = ({ className, ...rest }) => {
         onSubmit={async (value) => {
           var token = getToken();
 
-          var result = await userService.updatePassword(token, value.password);
+          var result = await userService.resetOwnPassword(token, value.password);
           
           if (result.status === StatusType.Success) {
             showAlert(this.props, 'Your new password has been set.', AlertType.Success);
