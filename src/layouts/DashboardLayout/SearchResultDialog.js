@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Button,
   Dialog,
@@ -53,15 +53,14 @@ const ValidationSchema = Yup.object().shape({
 
 function SearchResultDialog(props) {
   const classes = useStyles();
-  const [image, setImage] = useState(props.selectedOption.image);
-  const [name] = useState(props.selectedOption.name);
+  const {selectedOption, setSelectedOption} = props
   const setOpen = props.setOpenDialog
   const open = props.openDialog
 
   const onDrop = async (file) => {
     const base64 = await convertBase64(file[0]);
     const base = base64.split(/[,]+/);
-    setImage(base[1]);
+    setSelectedOption((prev)=>{return {...prev, image:base[1]}});
   };
 
   const handleClose = () => {
@@ -76,16 +75,17 @@ function SearchResultDialog(props) {
           <Styles>
             <Formik
               initialValues={{
-                name: ' adawd ',
+                name: selectedOption.name,
+                image: setSelectedOption.image
               }}
               validationSchema={ValidationSchema}
 
               onSubmit={async values => {
                 values = {
-                  Name: name,
-                  Image: image
+                  name: selectedOption.name,
+                  image: selectedOption.image
                 }
-                var result = await categoryService.updateCategory(props.selectedOption.id, values);
+                var result = await categoryService.updateCategory(selectedOption.id, values);
                 setOpen(false);
 
                 if (result.status === StatusType.Success) {
@@ -95,7 +95,7 @@ function SearchResultDialog(props) {
                 this.state.error = result.message;
               }}
             >
-              {({ errors, touched, handleSubmit }) => (
+              {({ errors, touched, handleSubmit,values }) => (
                 <form onSubmit={handleSubmit}>
                   <FormLabel >Category Name</FormLabel>
                   <TextField
@@ -105,7 +105,7 @@ function SearchResultDialog(props) {
                     fullWidth
                     required
                     variant="outlined"
-                    value={name}
+                    value={values.name}
                      />
                   {touched.name && errors.name && <div>{errors.name}</div>}
                   <FormLabel >Category Image</FormLabel>

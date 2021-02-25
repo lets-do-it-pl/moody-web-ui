@@ -50,6 +50,9 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
     setLoading(false);
   }
 
+  async function handleSearchChange(value){
+    setSelectedOption((prev)=>{return {id:value.id,image:'',name:value.name} })
+  }
 
 
   React.useEffect(() => {
@@ -85,12 +88,12 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
             getOptionLabel={(option) => option.name}
             options={options}
             loading={loading}
-            onChange={(event,value)=>{ 
-              if(value){
-                setSelectedOption({id:value.id,image:'',name:value.name})
+            onChange={ async (event,value)=>{ 
+              if(value)
+               await handleSearchChange(value);
                 setOpenDialog(true);
               }
-            }}
+            }
             onInputChange={async (event, value) => {
               setLoading(true);
               await populateOptions(value);
@@ -127,7 +130,7 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
             )}
           />
           {selectedOption.name &&
-        <SearchResultDialog openDialog={openDialog} setOpenDialog={setOpenDialog} selectedOption={selectedOption}/>
+        <SearchResultDialog openDialog={openDialog} setOpenDialog={setOpenDialog} selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
           }
           <IconButton color="inherit" onClick={logout}>
             <InputIcon />
