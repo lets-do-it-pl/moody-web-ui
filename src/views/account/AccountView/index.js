@@ -2,7 +2,7 @@ import { accountService } from '../../../_services';
 import React, { useEffect, useState } from 'react';
 import ProfileDetails from './ProfileDetails';
 import { StatusType } from '../../../_types';
-import { useSnackbar } from 'notistack';
+import { useSnackbar,withSnackbar } from 'notistack';
 import Page from 'src/components/Page';
 import Profile from './Profile';
 import {
@@ -41,7 +41,7 @@ const Account = () => {
     }
 
     loadAccount();
-  }, []);
+  }, [enqueueSnackbar]);
 
   const classes = useStyles();
 
@@ -88,4 +88,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default withSnackbar(Account);

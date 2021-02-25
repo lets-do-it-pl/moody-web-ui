@@ -1,6 +1,6 @@
 import { accountService} from 'src/_services';
 import { StatusType } from 'src/_types';
-import {useSnackbar} from 'notistack';
+import {useSnackbar, withSnackbar} from 'notistack';
 import Page from 'src/components/Page';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
@@ -130,5 +130,5 @@ ProfileDetails.propTypes = {
   className: PropTypes.string
 };
 
-export default ProfileDetails;
+export default withSnackbar(ProfileDetails);
  
