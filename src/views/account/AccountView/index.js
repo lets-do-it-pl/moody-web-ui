@@ -25,20 +25,17 @@ const Account = () => {
   const [loading, setLoading] = useState(true);
   const [account, setAccount] = useState([]);
 
-  const [errorMessage, setErrorMessage] = useState('');
-  const [infoMessage, setInfoMessage] = useState('');
+
  
   useEffect(() => {
     async function loadAccount() {
       const result = await accountService.getAccount();
 
       if (result.status === StatusType.Fail) {
-        setInfoMessage('');
-        setErrorMessage("Oops,something wrong happened,try again");
+       
         return;
       }
 
-      setInfoMessage(result.message);
       setAccount(result.data);
       setLoading(false);
     }
