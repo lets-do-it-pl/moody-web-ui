@@ -1,16 +1,16 @@
+import { accountService } from '../../../_services';
 import React, { useEffect, useState } from 'react';
+import ProfileDetails from './ProfileDetails';
+import { StatusType } from '../../../_types';
+import { useSnackbar } from 'notistack';
+import Page from 'src/components/Page';
+import Profile from './Profile';
 import {
   Container,
   Grid,
   makeStyles,
   Typography
 } from '@material-ui/core';
-import Page from 'src/components/Page';
-import Profile from './Profile';
-import ProfileDetails from './ProfileDetails';
-import { accountService } from '../../../_services';
-import { StatusType} from '../../../_types';
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,15 +24,15 @@ const useStyles = makeStyles((theme) => ({
 const Account = () => {
   const [loading, setLoading] = useState(true);
   const [account, setAccount] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
 
- 
   useEffect(() => {
     async function loadAccount() {
       const result = await accountService.getAccount();
 
       if (result.status === StatusType.Fail) {
-       
+        enqueueSnackbar("An error happened", { variant: "warning" });
         return;
       }
 
@@ -41,7 +41,7 @@ const Account = () => {
     }
 
     loadAccount();
-  }, []); 
+  }, []);
 
   const classes = useStyles();
 

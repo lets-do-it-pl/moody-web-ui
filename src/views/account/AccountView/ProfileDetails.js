@@ -1,11 +1,10 @@
 import { accountService} from 'src/_services';
-import React, { useState } from 'react';
 import { StatusType } from 'src/_types';
-import { withSnackbar } from 'notistack';
-import { withStyles } from '@material-ui/styles';
+import {useSnackbar} from 'notistack';
 import Page from 'src/components/Page';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
+import React from 'react';
 import {
   Box,
   Button,
@@ -16,31 +15,14 @@ import {
 } from '@material-ui/core';
 import * as Yup from 'yup';
 
-  const styles = () => ({
-    update: {
-      color: 'orange'
-    },
-    details: {
-      color: 'purple'
-    },
-    table: {
-      width: '100%'
-    },
-    delete: {
-      color: 'red'
-    }
-  });
-
-  const useStyles = makeStyles(() => ({
+   const useStyles = makeStyles(() => ({
     root: {}
   }));
 
   const ProfileDetails = (props) => {
   const classes = useStyles();
   const { account} = props;
-
-  const [errorMessage, setErrorMessage] = useState('');
-  const [infoMessage, setInfoMessage] = useState('');
+  const { enqueueSnackbar } = useSnackbar();
 
   return (
     <Page
@@ -58,7 +40,6 @@ import * as Yup from 'yup';
             initialValues={{
               name: account.fullName,
               email: account.email
-
             }}
 
             validationSchema={
@@ -74,12 +55,11 @@ import * as Yup from 'yup';
                   value.email);
 
               if (result.status === StatusType.Success) {
-                
-                setInfoMessage('Updated successfully');
+
+               enqueueSnackbar("Updated Successfully", { variant: "success" });
                 return;
               }
-
-              setErrorMessage("Oops,something wrong happened,try again");
+              enqueueSnackbar("Unable to Update!", { variant: "error" });
             }}
           >
             {({
@@ -125,18 +105,6 @@ import * as Yup from 'yup';
                   value={values.email}
                   variant="outlined"
                 />
-                <Typography
-                  color="error"
-                  variant="h5"
-                >
-                  {errorMessage}
-                </Typography>
-                <Typography
-                  color="primary"
-                  variant="h5"
-                >
-                  {infoMessage}
-                </Typography>
                 <Box my={2}>
                   <Button
                     color="primary"
@@ -155,7 +123,6 @@ import * as Yup from 'yup';
         </Container>
       </Box>
     </Page>
-    
   );
 };
 
@@ -163,4 +130,5 @@ ProfileDetails.propTypes = {
   className: PropTypes.string
 };
 
-export default withSnackbar(withStyles(styles)(ProfileDetails));
+export default ProfileDetails;
+ 
