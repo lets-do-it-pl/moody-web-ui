@@ -44,6 +44,7 @@ const UserDetails = (props) =>
         canLogin: canLogin,
         isActive: isActive
       }}
+
       validationSchema={
         Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -53,6 +54,7 @@ const UserDetails = (props) =>
           canLogin: Yup.bool().required()
         })
       }
+      
       onSubmit={
         async (value) =>
         {
