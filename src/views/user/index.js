@@ -26,16 +26,16 @@ const Users = () =>
 {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [usersFiltered, setUsersFiltered] = useState();
+  const [filteredUsers, setFilteredUsers] = useState();
   const [originalUsers, setOriginalUsers] = useState([]);
   const [userDetails, setUserDetails] = useState({});
   const [userDetailsHidden, setUserDetailsHidden] = useState(true);
 
-  const requestSearch = (searchedVal) => {
-    const filteredUsers = originalUsers.filter((user) => {
-      return user.fullName.toLowerCase().includes(searchedVal.toLowerCase());
+  const requestSearch = (searchedValue) => {
+    const modifiedUsers = originalUsers.filter((user) => {
+      return user.fullName.toLowerCase().includes(searchedValue.toLowerCase());
     });
-    setUsersFiltered(filteredUsers);
+    setFilteredUsers(modifiedUsers);
   };
 
   const handleClickOpen = () => {
@@ -63,14 +63,14 @@ const Users = () =>
     console.log(result.data);
 
     setOriginalUsers(result.data);
-    setUsersFiltered(result.data);
+    setFilteredUsers(result.data);
 
     setLoading(false);
   }
 
   async function sortUsers()
   {
-      setUsersFiltered((prev)=>[...prev.reverse()]);
+      setFilteredUsers((prev)=>[...prev.reverse()]);
       console.log(originalUsers)
   }
 
@@ -132,7 +132,9 @@ const Users = () =>
                 Loading...
               </Typography>
             ) : (
-              <UsersView usersFiltered={usersFiltered} setUserDetailsVisibility={setUserDetailsHidden} setUsersFiltered={setUsersFiltered}
+              <UsersView filteredUsers={filteredUsers}
+                         setUserDetailsVisibility={setUserDetailsHidden}
+                         setFilteredUsers={setFilteredUsers}
                          loadUserDetails={loadUserDetails}
                          deleteUser={deleteUser}
                          sortUsers={sortUsers}

@@ -30,7 +30,7 @@ dict.set('A', 'Admin');
 
 const UsersView = (props) =>
 {
-  const { usersFiltered, className, loadUserDetails, deleteUser, setUsersFiltered, setUserDetailsVisibility, sortUsers, requestSearch } = props;
+  const { filteredUsers, className, loadUserDetails, deleteUser, setFilteredUsers, setUserDetailsVisibility, sortUsers, requestSearch } = props;
 
   const [currentUser, setCurrentUser] = useState();
   const [open, setOpen] = React.useState(false);
@@ -51,7 +51,7 @@ const UsersView = (props) =>
   {
     e.preventDefault();
     deleteUser(user.id);
-    setUsersFiltered(usersFiltered.filter(x => x.id !== user.id));
+    setFilteredUsers(filteredUsers.filter(x => x.id !== user.id));
     setOpen(false);
     setUserDetailsVisibility(true);
   };
@@ -121,7 +121,7 @@ const UsersView = (props) =>
             </TableRow>
           </TableHead>
           <TableBody>
-            {usersFiltered.slice(0).map((user, index) => (
+            {filteredUsers.slice(0).map((user, index) => (
                 <TableRow
                   hover
                   key={user.id}
@@ -167,7 +167,7 @@ const UsersView = (props) =>
 };
 
 UsersView.propTypes = {
-  usersFiltered: PropTypes.array.isRequired
+  filteredUsers: PropTypes.array.isRequired
 };
 
 export default UsersView;
