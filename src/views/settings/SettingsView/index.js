@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Password from './Password';
+import DisableCache from '../DisableCache';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,6 +28,9 @@ const SettingsView = () => {
       <Container maxWidth="lg">
         <Box mt={3}>
           <Password />
+        </Box>
+        <Box mt={3}>
+          <DisableCache/>
         </Box>
       </Container>
     </Page>
