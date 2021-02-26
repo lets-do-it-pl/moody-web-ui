@@ -102,7 +102,7 @@ const UsersView = (props) =>
           <TableHead>
             <TableRow>
               <TableCell align="center">
-                Number
+                #
               </TableCell>
               <TableCell align="center">
               <TableSortLabel
