@@ -9,9 +9,10 @@ import ActivateUserView from 'src/views/auth/ActivateUserView';
 import ForgetPasswordView from 'src/views/auth/ForgetPasswordView';
 import ResetPasswordView from 'src/views/auth/ResetPasswordView';
 import SettingsView from 'src/views/settings/SettingsView';
-import CategoryView from 'src/views/category&categoryDetails';
+import CategoryView from 'src/views/category';
 import DashboardLayout from './layouts/DashboardLayout';
 import MainLayout from './layouts/MainLayout';
+import Users from './views/user';
 
 const routes = [
   {
@@ -19,6 +20,7 @@ const routes = [
     element: currentUser ? <DashboardLayout /> : <Navigate to="/login" />,
     children: [
       { path: 'account', element: <AccountView /> },
+      { path: 'users', element: <Users /> },
       { path: 'dashboard', element: <DashboardView /> },
       { path: 'category', element: <CategoryView /> },
       { path: 'settings', element: <SettingsView /> },
@@ -31,12 +33,12 @@ const routes = [
     children: [
         { path: 'login', element: <LoginView /> },
         { path: 'register', element: <RegisterView /> },
-         { path: 'activate-user', element: <ActivateUserView /> },
-         { path: 'forget-password', element: <ForgetPasswordView /> },
-         { path: 'reset-password', element: <ResetPasswordView /> },
-         { path: '404', element: <NotFoundView /> },
-         { path: '/', element: <Navigate to="/app/dashboard" /> },
-         { path: '*', element: <Navigate to="/404" /> }
+        { path: 'activate-user', element: <ActivateUserView /> },
+        { path: 'forget-password', element: <ForgetPasswordView /> },
+        { path: 'reset-password', element: <ResetPasswordView /> },
+        { path: '404', element: <NotFoundView /> },
+        { path: '/', element: <Navigate to="/app/dashboard" /> },
+        { path: '*', element: <Navigate to="/404" /> }
     ]
   }
 ]

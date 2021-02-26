@@ -5,7 +5,11 @@ export const userService = {
     register,
     activateUser,
     forgetPassword,
-    resetPassword
+    resetPassword,
+    getUsers,
+    getUserDetails,
+    updateUserDetails,
+    deleteUser
 };
 
 async function register(
@@ -14,13 +18,13 @@ async function register(
     email,
     password
 ) {
-    var data = {        
-        fullName: `${name} ${surname}`,
-        email,
-        password
-    };
+  const data = {
+    fullName: `${name} ${surname}`,
+    email,
+    password
+  };
 
-    return await apiService.asyncCallApi(HttpMethodType.POST, '/user', data)
+  return await apiService.asyncCallApi(HttpMethodType.POST, '/user', data)
 }
 
 async function activateUser(token) {
@@ -40,5 +44,24 @@ async function resetPassword(token, password) {
 
 async function resetOwnPassword(token, password, newPassword) {
 
-    return await apiService.asyncCallApi(HttpMethodType.POST, '/user/reset-own-password', { password, newPassword }, token)
+    return await apiService.asyncCallAuthorizedApi(HttpMethodType.POST, '/user/reset-own-password', { password, newPassword }, token)
+}
+async function getUsers() {
+
+  return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, '/user', {})
+}
+
+async function getUserDetails(id) {
+
+  return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, `/user/${id}`, {})
+}
+
+async function updateUserDetails(id,fullName, email, userType, isActive, canLogin, password = null) {
+
+  return await apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, `/user/${id}`, {fullName,email,userType,isActive,canLogin, password})
+}
+
+async function deleteUser(id) {
+
+  return await apiService.asyncCallAuthorizedApi(HttpMethodType.DELETE, `/user/${id}`, {})
 }

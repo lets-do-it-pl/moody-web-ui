@@ -29,21 +29,6 @@ const useStyles = makeStyles(({
 const Password = ({ className, ...rest }) => {
   const classes = useStyles();
 
-  const getToken = () => {
-    var queryString = window.location.search;
-
-    if (queryString === undefined || queryString === "") {
-        return undefined;
-    }
-
-    var qsItems = queryString.split("=");
-    if (qsItems === undefined || qsItems.length !== 2) {
-        return undefined;
-    }
-
-    return qsItems[1];
-  }
-
   const [values, setValues] = useState({
     password: '',
     newPassword: '',

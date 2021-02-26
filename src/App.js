@@ -10,8 +10,7 @@ import routes from 'src/routes';
 import { authenticationService } from 'src/_services';
 
 const App = () => {
-    const routing = useRoutes(routes);
-  var routing = useRoutes(routes(authenticationService.currentUserValue));
+  const routing = useRoutes(routes(authenticationService.currentUserValue));
 
   return (
     <ThemeProvider theme={theme}>
