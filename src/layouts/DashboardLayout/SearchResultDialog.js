@@ -13,8 +13,9 @@ import * as Yup from 'yup';
 import { Styles } from '../../views/category/common/Styles';
 import { Formik } from 'formik';
 import ImageUploader from "react-images-upload";
-import { StatusType } from 'src/_types';
+import { AlertType, StatusType } from 'src/_types';
 import { categoryService } from '../../_services/category.service';
+import { showAlert } from 'src/_helpers';
 
 const useStyles = makeStyles((theme) => ({
   cancel: {
@@ -89,10 +90,12 @@ function SearchResultDialog(props) {
                 setOpen(false);
 
                 if (result.status === StatusType.Success) {
+                  showAlert(this.props, "The order has been changed", AlertType.Success);
+                  await this.loadCategories();
                   return;
                 }
-
-                this.state.error = result.message;
+    
+                showAlert(this.props, result.message, AlertType.Error);
               }}
             >
               {({ errors, touched, handleSubmit,values }) => (
