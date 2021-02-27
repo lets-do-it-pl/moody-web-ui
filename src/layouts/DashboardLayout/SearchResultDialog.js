@@ -15,8 +15,25 @@ import { Formik } from 'formik';
 import ImageUploader from "react-images-upload";
 import { AlertType, StatusType } from 'src/_types';
 import { categoryService } from '../../_services/category.service';
+import { withSnackbar } from 'notistack';
+import { withStyles } from '@material-ui/styles';
 import { showAlert } from 'src/_helpers';
+import { confirmAlert } from 'react-confirm-alert';
 
+const styles = () => ({
+  update: {
+    color: "orange"
+  },
+  details: {
+    color: "purple"
+  },
+  table: {
+    width: '100%',
+  },
+  delete: {
+    color: "red"
+  }
+});
 const useStyles = makeStyles((theme) => ({
   cancel: {
     backgroundColor: "#f44336",
@@ -89,13 +106,28 @@ function SearchResultDialog(props) {
                 var result = await categoryService.updateCategory(selectedOption.id, values);
                 setOpen(false);
 
-                if (result.status === StatusType.Success) {
-                  showAlert(this.props, "The order has been changed", AlertType.Success);
-                  await this.loadCategories();
-                  return;
-                }
-    
-                showAlert(this.props, result.message, AlertType.Error);
+                confirmAlert({
+                  title: 'Confirm to Update',
+                  message: 'Are you sure to update this category.',
+                  buttons: [
+                    {
+                      label: 'Yes',
+                      onClick: async () => {
+                          if (result.status === StatusType.Success) {
+                          showAlert(props, "Category is updated.", AlertType.Success);
+                          return;
+                        }
+            
+                        showAlert(props, result.message, AlertType.Error);
+                      }
+                    },
+                    {
+                      label: 'No',
+                      onClick: () => { }
+                    }
+                  ]
+                });
+                return;
               }}
             >
               {({ errors, touched, handleSubmit,values }) => (
@@ -140,4 +172,4 @@ function SearchResultDialog(props) {
   );
 }
 
-export default SearchResultDialog;
+export default withSnackbar(withStyles(styles)(SearchResultDialog));
