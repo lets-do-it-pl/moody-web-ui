@@ -14,7 +14,7 @@ import DashboardLayout from './layouts/DashboardLayout';
 import MainLayout from './layouts/MainLayout';
 import Users from './views/user';
 
-const routes = [
+const routes = (currentUser) => [
   {
     path: 'app',
     element: currentUser ? <DashboardLayout /> : <Navigate to="/login" />,
@@ -26,19 +26,19 @@ const routes = [
       { path: 'settings', element: <SettingsView /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
-  }
+  },
   {
     path: '/',
     element: !currentUser ? <MainLayout /> : <Navigate to="/app/dashboard" />,
     children: [
-        { path: 'login', element: <LoginView /> },
-        { path: 'register', element: <RegisterView /> },
-        { path: 'activate-user', element: <ActivateUserView /> },
-        { path: 'forget-password', element: <ForgetPasswordView /> },
-        { path: 'reset-password', element: <ResetPasswordView /> },
-        { path: '404', element: <NotFoundView /> },
-        { path: '/', element: <Navigate to="/app/dashboard" /> },
-        { path: '*', element: <Navigate to="/404" /> }
+      { path: 'login', element: <LoginView /> },
+      { path: 'register', element: <RegisterView /> },
+      { path: 'activate-user', element: <ActivateUserView /> },
+      { path: 'forget-password', element: <ForgetPasswordView /> },
+      { path: 'reset-password', element: <ResetPasswordView /> },
+      { path: '404', element: <NotFoundView /> },
+      { path: '/', element: <Navigate to="/app/dashboard" /> },
+      { path: '*', element: <Navigate to="/404" /> }
     ]
   }
 ]

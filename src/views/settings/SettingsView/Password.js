@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { userService } from 'src/_services';
 import { StatusType } from 'src/_types';
@@ -28,6 +27,9 @@ const useStyles = makeStyles(({
 
 const Password = ({ className, ...rest }) => {
   const classes = useStyles();
+
+  const [errorMessage, setErrorMessage] = useState('');
+    const [infoMessage, setInfoMessage] = useState('');
 
   const [values, setValues] = useState({
     password: '',
@@ -57,9 +59,9 @@ const Password = ({ className, ...rest }) => {
           })
       }
         onSubmit={async (value) => {
-          var token = getToken();
+          
 
-          var result = await userService.resetOwnPassword(token, value.password);
+          var result = await userService.resetOwnPassword(value.password);
           
           if (result.status === StatusType.Success) {
             showAlert(this.props, 'Your new password has been set.', AlertType.Success);
