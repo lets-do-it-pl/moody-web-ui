@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
@@ -20,26 +20,12 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-
 const useStyles = makeStyles(({
   root: {}
 }));
 
 const Password = ({ className, ...rest }) => {
   const classes = useStyles();
-
-  const [values, setValues] = useState({
-    password: '',
-    newPassword: '',
-    confirm: ''
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
 
   return (
     <Formik
