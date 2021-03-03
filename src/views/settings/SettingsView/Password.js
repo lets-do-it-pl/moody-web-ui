@@ -28,9 +28,6 @@ const useStyles = makeStyles(({
 const Password = ({ className, ...rest }) => {
   const classes = useStyles();
 
-  const [errorMessage, setErrorMessage] = useState('');
-    const [infoMessage, setInfoMessage] = useState('');
-
   const [values, setValues] = useState({
     password: '',
     newPassword: '',
@@ -141,19 +138,16 @@ const Password = ({ className, ...rest }) => {
                 color="error"
                 variant="h5"
               >
-                {errorMessage}
               </Typography>
               <Typography
                 color="primary"
                 variant="h5"
               >
-                {infoMessage}
               </Typography>
               <Typography
                 color="primary"
                 variant="h5"
               >
-                {infoMessage}
               </Typography>
             </CardContent>
             <Divider />
