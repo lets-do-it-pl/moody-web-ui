@@ -36,31 +36,36 @@ const user = {
     ""
 };
 
-const items = [
+const menuItems = [
   {
     href: '/app/dashboard',
     icon: BarChartIcon,
-    title: 'Dashboard'
+    title: 'Dashboard',
+    role: 'Standard'
   },
   {
     href: '/app/users',
     icon: SupervisorAccountIcon,
-    title: 'Users'
+    title: 'Users',
+    role: 'Admin'
   },
   {
     href: '/app/category',
     icon: AmpStoriesIcon,
-    title: 'Categories'
+    title: 'Categories',
+    role: 'Standard'
   },
   {
     href: '/app/account',
     icon: UserIcon,
-    title: 'Account'
+    title: 'Account',
+    role: 'Standard'
   },
   {
     href: '/app/settings',
     icon: SettingsIcon,
-    title: 'Settings'
+    title: 'Settings',
+    role: 'Standard'
   }
 ];
 
@@ -120,7 +125,16 @@ const NavBar = ({ onMobileClose, openMobile }) => {
       <Divider />
       <Box p={2}>
         <List>
-          {items.map((item) => (
+          {authenticationService.currentUserRole === 'A' ?
+            menuItems.map((item) => (
+              <NavItem
+                href={item.href}
+                key={item.title}
+                title={item.title}
+                icon={item.icon}
+              />))
+            :
+            menuItems.filter(i=>i.role==='Standard').map((item) => (
             <NavItem
               href={item.href}
               key={item.title}

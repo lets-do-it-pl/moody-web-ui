@@ -36,7 +36,9 @@
     "formik": "^2.1.5",
     "history": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.19",
+    "material-ui-search-bar": "^1.0.0",
     "moment": "^2.27.0",
     "notistack": "^1.0.3",
     "nprogress": "^0.2.0",
@@ -67,6 +69,7 @@
     "yup": "^0.29.3"
   },
   "devDependencies": {
+    "@material-ui/data-grid": "^4.0.0-alpha.20",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-prettier": "^6.11.0",

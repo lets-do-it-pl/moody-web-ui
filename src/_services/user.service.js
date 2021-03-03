@@ -13,13 +13,12 @@ export const userService = {
 };
 
 async function register(
-    name,
-    surname,
+    fullName,
     email,
     password
 ) {
   const data = {
-    fullName: `${name} ${surname}`,
+    fullName,
     email,
     password
   };

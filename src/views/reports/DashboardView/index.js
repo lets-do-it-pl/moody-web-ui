@@ -30,7 +30,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     async function fetchData() {
-      var result = await dashboardService.getDashboardWidgets();
+      const result = await dashboardService.getDashboardWidgets();
 
       if (result.status !== StatusType.Success) {
         console.log(result.data);
