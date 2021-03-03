@@ -9,7 +9,8 @@ export const userService = {
     getUsers,
     getUserDetails,
     updateUserDetails,
-    deleteUser
+    deleteUser,
+    resetOwnPassword
 };
 
 async function register(
@@ -41,6 +42,10 @@ async function resetPassword(token, password) {
     return await apiService.asyncCallApi(HttpMethodType.POST, '/user/reset-password', { password }, token)
 }
 
+async function resetOwnPassword(password, newPassword) {
+
+    return await apiService.asyncCallAuthorizedApi(HttpMethodType.POST, '/user/reset-own-password', { password, newPassword })
+}
 async function getUsers() {
 
   return await apiService.asyncCallAuthorizedApi(HttpMethodType.GET, '/user', {})
