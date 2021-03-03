@@ -8,7 +8,7 @@ export const categoryService = {
   updateOrder,
   deleteCategory,
   exportFile,
-  disableCache
+  removeCacheKey
 };
 
 async function getCategories() {
@@ -56,7 +56,7 @@ async function exportFile(type) {
   );
 }
 
-async function disableCache() {
+async function removeCacheKey() {
   return await apiService.asyncCallAuthorizedApi(
     HttpMethodType.GET,
     `/category/remove/cache`

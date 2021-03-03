@@ -13,29 +13,29 @@ import { confirmAlert } from 'react-confirm-alert';
 import { categoryService } from '../../_services/category.service';
 
 const useStyles = makeStyles((theme) => ({
-  disableButton : {
+  removeButton : {
     backgroundColor: "#f44336",
     color: "white"
   }
 }));
 
 
-function DisableCache() {
+function RemoveCache() {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
 
   const removeCache = async () => {
     confirmAlert({
-      title: 'Confirm disabling',
-      message: 'Are you sure you want to disable the cache?',
+      title: 'Confirm removing',
+      message: 'Are you sure you want to remove the cache key?',
       buttons: [
         {
           label: 'Yes',
           onClick: async () => {
-            var result = await categoryService.disableCache();
+            var result = await categoryService.removeCacheKey();
 
             if (result.status === StatusType.Success) {
-                enqueueSnackbar('Cache has been successfully disabled', {
+                enqueueSnackbar('Cache Key has been successfully removed', {
                 variant: 'success'
                 });
             return;
@@ -53,19 +53,19 @@ function DisableCache() {
   return (
     <Card>
     <CardHeader
-      title="Disable Cache"
+      title="Remove Cache Key"
     />
     <Divider />
     <CardContent>
     <Button
           variant = "contained"
-          className = {classes.disableButton}
+          className = {classes.removeButton}
           onClick = {removeCache}
         >
-          Disable Cache
+          Remove Cache Key
         </Button>
     </CardContent>
   </Card>
   )
 }
-export default withSnackbar(DisableCache);
+export default withSnackbar(RemoveCache);
