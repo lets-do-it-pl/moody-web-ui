@@ -1,192 +1,128 @@
-import React, { useState } from 'react';
-import clsx from 'clsx';
+import { accountService} from 'src/_services';
+import { StatusType } from 'src/_types';
+import {useSnackbar, withSnackbar} from 'notistack';
+import Page from 'src/components/Page';
 import PropTypes from 'prop-types';
+import { Formik } from 'formik';
+import React from 'react';
 import {
   Box,
   Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider,
-  Grid,
   TextField,
-  makeStyles
+  makeStyles,
+  Container,
+  Typography
 } from '@material-ui/core';
+import * as Yup from 'yup';
 
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
+   const useStyles = makeStyles(() => ({
+    root: {}
+  }));
 
-const useStyles = makeStyles(() => ({
-  root: {}
-}));
-
-const ProfileDetails = ({ className, ...rest }) => {
+  const ProfileDetails = (props) => {
   const classes = useStyles();
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
+  const { account} = props;
+  const { enqueueSnackbar } = useSnackbar();
 
   return (
-    <form
-      autoComplete="off"
-      noValidate
-      className={clsx(classes.root, className)}
-      {...rest}
+    <Page
+      className={classes.root}
+      title="Register"
     >
-      <Card>
-        <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
-        />
-        <Divider />
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
+      <Box
+        display="flex"
+        flexDirection="column"
+        height="100%"
+        justifyContent="center"
+      >
+        <Container maxWidth="sm">
+          <Formik
+            initialValues={{
+              name: account.fullName,
+              email: account.email
+            }}
+
+            validationSchema={
+              Yup.object().shape({
+                name: Yup.string().min(3, 'Too Short!').max(100, 'Too Long!').required('Full Name is required'),
+                email: Yup.string().email('Must be a valid email').min(3, 'Too Short!').max(255).required('Email is required'),
+              })
+            }
+            onSubmit={async (value) => {
+              var result = await accountService
+                .updateAccount(
+                  value.name,
+                  value.email);
+
+              if (result.status === StatusType.Success) {
+
+               enqueueSnackbar("Updated Successfully", { variant: "success" });
+                return;
+              }
+              enqueueSnackbar("Unable to Update!", { variant: "error" });
+            }}
           >
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                name="firstName"
-                onChange={handleChange}
-                required
-                value={values.firstName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Last name"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Email Address"
-                name="email"
-                onChange={handleChange}
-                required
-                value={values.email}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Phone Number"
-                name="phone"
-                onChange={handleChange}
-                type="number"
-                value={values.phone}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
+            {({
+              errors,
+              handleBlur,
+              handleChange,
+              handleSubmit,
+              isSubmitting,
+              touched,
+              values
+            }) => (
+              <form onSubmit={handleSubmit}>
+                <Box mb={3}>
+                  <Typography
+                    color="textPrimary"
+                    variant="h2"
                   >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid>
-          </Grid>
-        </CardContent>
-        <Divider />
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          p={2}
-        >
-          <Button
-            color="primary"
-            variant="contained"
-          >
-            Save details
-          </Button>
-        </Box>
-      </Card>
-    </form>
+                    Profile
+                </Typography>
+                </Box>
+                <TextField
+                  error={Boolean(touched.name && errors.name)}
+                  fullWidth
+                  helperText={touched.name && errors.name}
+                  label="Full Name"
+                  margin="normal"
+                  name="name"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.name}
+                  variant="outlined"
+                />
+                <TextField
+                  error={Boolean(touched.email && errors.email)}
+                  fullWidth
+                  helperText={touched.email && errors.email}
+                  label="Email Address"
+                  margin="normal"
+                  name="email"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  type="email"
+                  value={values.email}
+                  variant="outlined"
+                />
+                <Box my={2}>
+                  <Button
+                    color="primary"
+                    disabled={isSubmitting}
+                    fullWidth
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                  >
+                    Save details
+                </Button>
+                </Box>
+              </form>
+            )}
+          </Formik>
+        </Container>
+      </Box>
+    </Page>
   );
 };
 
@@ -194,4 +130,5 @@ ProfileDetails.propTypes = {
   className: PropTypes.string
 };
 
-export default ProfileDetails;
+export default withSnackbar(ProfileDetails);
+ 

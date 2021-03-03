@@ -1,12 +1,16 @@
-import React from 'react';
+import { accountService } from '../../../_services';
+import React, { useEffect, useState } from 'react';
+import ProfileDetails from './ProfileDetails';
+import { StatusType } from '../../../_types';
+import { useSnackbar,withSnackbar } from 'notistack';
+import Page from 'src/components/Page';
+import Profile from './Profile';
 import {
   Container,
   Grid,
-  makeStyles
+  makeStyles,
+  Typography
 } from '@material-ui/core';
-import Page from 'src/components/Page';
-import Profile from './Profile';
-import ProfileDetails from './ProfileDetails';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,6 +22,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Account = () => {
+  const [loading, setLoading] = useState(true);
+  const [account, setAccount] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
+
+
+  useEffect(() => {
+    async function loadAccount() {
+      const result = await accountService.getAccount();
+
+      if (result.status === StatusType.Fail) {
+        enqueueSnackbar("An error happened", { variant: "warning" });
+        return;
+      }
+
+      setAccount(result.data);
+      setLoading(false);
+    }
+
+    loadAccount();
+  }, [enqueueSnackbar]);
+
   const classes = useStyles();
 
   return (
@@ -29,27 +54,38 @@ const Account = () => {
         <Grid
           container
           spacing={3}
-        >
-          <Grid
-            item
-            lg={4}
-            md={6}
-            xs={12}
+        >{loading ? (
+          <Typography
+            color="primary"
+            variant="h5"
           >
-            <Profile />
-          </Grid>
-          <Grid
-            item
-            lg={8}
-            md={6}
-            xs={12}
-          >
-            <ProfileDetails />
-          </Grid>
+            Loading...
+          </Typography>
+        ) : (
+            <>
+              <Grid
+                item
+                lg={4}
+                md={6}
+                xs={12}
+              >
+                <Profile account={account} />
+              </Grid>
+              <Grid
+                item
+                lg={8}
+                md={6}
+                xs={12}
+              >
+                <ProfileDetails account={account} />
+              </Grid>
+            </>
+          )}
         </Grid>
+
       </Container>
     </Page>
   );
 };
 
-export default Account;
+export default withSnackbar(Account);
