@@ -166,6 +166,7 @@ class CategoriesView extends Component {
                   Image
                 </TableCell>
                 <TableCell>Name</TableCell>
+                <TableCell>Description</TableCell>
                 <TableCell align="center" width="130">
                   Actions
                 </TableCell>
@@ -218,19 +219,20 @@ class CategoriesView extends Component {
                                   />
                                 </TableCell>
                                 <TableCell>{entity.name}</TableCell>
-                                <TableCell
-                                  align="center"
-                                  width="170"
-                                  variant="body"
-                                >
-                                  {entity.description && (
+                                <TableCell>
+                                    {entity.description && (
                                     <Tooltip title={entity.description}>
                                       <IconButton aria-label="description">
                                         <InfoIcon />
                                       </IconButton>
                                     </Tooltip>
                                   )}
-
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  width="170"
+                                  variant="body"
+                                > 
                                   <IconButton
                                     size="small"
                                     onClick={() =>
