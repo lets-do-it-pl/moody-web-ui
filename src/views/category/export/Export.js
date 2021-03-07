@@ -4,8 +4,6 @@
     makeStyles,
     Button
   } from '@material-ui/core';
-  import { StatusType } from 'src/_types';
-  import { withSnackbar, useSnackbar } from 'notistack';
   import { categoryService } from '../../../_services/category.service';
 
   const useStyles = makeStyles((theme) => ({
@@ -19,18 +17,18 @@
 
  function Export() {
     const classes = useStyles();
-    const { enqueueSnackbar } = useSnackbar();
 
-    const exportFile = async (type, e) => {
-        var result = await categoryService.exportFile(type);
-
-        if (result.status === StatusType.Success) {
-            enqueueSnackbar('File has been successfully downloaded.', {
-            variant: 'success'
-            });
-            return;
-        }
-      };
+    const exportFile = async (type, extension, e) => {
+        await categoryService.exportFile(type)
+              .then((response) => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `Categories${new Date().toLocaleString()}.${extension}`);
+                document.body.appendChild(link);
+                link.click();
+              });
+       };
 
     return (
         <Box
@@ -41,17 +39,17 @@
       >
         <Button
           className = {classes.exportButton}
-          onClick = {exportFile.bind(this, "pdf")}
+          onClick = {exportFile.bind(this, "pdf", 'pdf')}
         >
           Export Pdf
         </Button>
         <Button
           className = {classes.exportButton}
-          onClick = {exportFile.bind(this, "excel")}
+          onClick = {exportFile.bind(this, "excel", 'xlsx')}
         >
           Export Excel
         </Button>
       </Box>
     )
 }
-export default withSnackbar(Export);
+export default Export;

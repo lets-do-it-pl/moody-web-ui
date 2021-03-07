@@ -51,6 +51,8 @@ async function deleteCategory(id) {
 async function exportFile(type) {
   return await apiService.asyncCallAuthorizedApi(
     HttpMethodType.GET,
-    `/category/export/${type}`
+    `/category/export/${type}`,
+    null,
+    'blob'
   );
 }

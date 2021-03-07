@@ -12,13 +12,14 @@ export const apiService = {
 async function asyncCallAuthorizedApi(
     httpMethodType,
     queryString,
-    data) {
+    data,
+    responseType) {
 
     var headers = {
         Authorization: `Bearer ${authenticationService.currentUserValue.token}`
     };
 
-    return await asyncExecuteApiCall(httpMethodType, queryString, headers, data);
+    return await asyncExecuteApiCall(httpMethodType, queryString, headers, data, responseType);
 }
 
 async function asyncCallApi(
@@ -40,14 +41,16 @@ async function asyncExecuteApiCall(
     httpMethodType,
     queryString,
     headers,
-    data
+    data,
+    responseType
 ) {
     try {
         const response = await axios({
             method: httpMethodType,
             url: `${apiUrl}${queryString}`,
             data: data,
-            headers: headers
+            headers: headers,
+            responseType: responseType
         });
 
         return {
