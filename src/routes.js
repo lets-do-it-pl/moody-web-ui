@@ -14,32 +14,44 @@ import DashboardLayout from './layouts/DashboardLayout';
 import MainLayout from './layouts/MainLayout';
 import Users from './views/user';
 
-const routes = (currentUser) => [
+const standardUserPaths = [
+  { path: 'account', element: <AccountView /> },
+  { path: 'dashboard', element: <DashboardView /> },
+  { path: 'category', element: <CategoryView /> },
+  { path: 'settings', element: <SettingsView /> },
+  { path: '*', element: <Navigate to="/404" /> }
+]
+
+const adminPaths = [
+  { path: 'account', element: <AccountView /> },
+  { path: 'users', element: <Users /> },
+  { path: 'dashboard', element: <DashboardView /> },
+  { path: 'category', element: <CategoryView /> },
+  { path: 'settings', element: <SettingsView /> },
+  { path: '*', element: <Navigate to="/404" /> }
+]
+
+const loggedOutPaths = [
+  { path: 'login', element: <LoginView /> },
+  { path: 'register', element: <RegisterView /> },
+  { path: 'activate-user', element: <ActivateUserView /> },
+  { path: 'forget-password', element: <ForgetPasswordView /> },
+  { path: 'reset-password', element: <ResetPasswordView /> },
+  { path: '404', element: <NotFoundView /> },
+  { path: '/', element: <Navigate to="/app/dashboard" /> },
+  { path: '*', element: <Navigate to="/404" /> }
+]
+
+const routes = (currentUser, role) => [
   {
     path: 'app',
     element: currentUser ? <DashboardLayout /> : <Navigate to="/login" />,
-    children: [
-      { path: 'account', element: <AccountView /> },
-      { path: 'users', element: <Users /> },
-      { path: 'dashboard', element: <DashboardView /> },
-      { path: 'category', element: <CategoryView /> },
-      { path: 'settings', element: <SettingsView /> },
-      { path: '*', element: <Navigate to="/404" /> }
-    ]
+    children: role && role === 'A' ? adminPaths : standardUserPaths
   },
   {
     path: '/',
     element: !currentUser ? <MainLayout /> : <Navigate to="/app/dashboard" />,
-    children: [
-      { path: 'login', element: <LoginView /> },
-      { path: 'register', element: <RegisterView /> },
-      { path: 'activate-user', element: <ActivateUserView /> },
-      { path: 'forget-password', element: <ForgetPasswordView /> },
-      { path: 'reset-password', element: <ResetPasswordView /> },
-      { path: '404', element: <NotFoundView /> },
-      { path: '/', element: <Navigate to="/app/dashboard" /> },
-      { path: '*', element: <Navigate to="/404" /> }
-    ]
+    children: loggedOutPaths
   }
 ]
 export default routes;

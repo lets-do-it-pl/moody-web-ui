@@ -1,7 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import clsx from 'clsx';
-import moment from 'moment';
 import {
   Avatar,
   Box,
@@ -14,26 +13,24 @@ import {
   makeStyles
 } from '@material-ui/core';
 
-const user = {
-  avatar: '/static/images/avatars/avatar_6.png',
-  city: 'Los Angeles',
-  country: 'USA',
-  jobTitle: 'Senior Developer',
-  name: 'Katarina Smith',
-  timezone: 'GTM-7'
-};
-
 const useStyles = makeStyles(() => ({
   root: {},
-  avatar: {
+   avatar: {
     height: 100,
     width: 100
   }
 }));
 
-const Profile = ({ className, ...rest }) => {
-  const classes = useStyles();
+const Profile = (props) => {
+  
+  const {account, className, ...rest } = props;
+  
+  const userAccount = {
+    avatar: account.image,
+    name: account.fullName
+  };
 
+  const classes = useStyles();
   return (
     <Card
       className={clsx(classes.root, className)}
@@ -47,28 +44,16 @@ const Profile = ({ className, ...rest }) => {
         >
           <Avatar
             className={classes.avatar}
-            src={user.avatar}
+            src={"data:image/png;base64," + userAccount.avatar}
           />
           <Typography
             color="textPrimary"
             gutterBottom
             variant="h3"
           >
-            {user.name}
+            {userAccount.name}
           </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body1"
-          >
-            {`${user.city} ${user.country}`}
-          </Typography>
-          <Typography
-            className={classes.dateText}
-            color="textSecondary"
-            variant="body1"
-          >
-            {`${moment().format('hh:mm A')} ${user.timezone}`}
-          </Typography>
+
         </Box>
       </CardContent>
       <Divider />

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
+  Box,
   Container,
   Grid,
   makeStyles,
@@ -10,6 +11,7 @@ import UsersView from './UsersView';
 import { userService } from '../../_services';
 import { StatusType } from '../../_types';
 import UserDetails from './UserDetails';
+import AddUserDialog from './AddUserDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,29 +24,55 @@ const useStyles = makeStyles((theme) => ({
 
 const Users = () =>
 {
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState();
+  const [originalUsers, setOriginalUsers] = useState([]);
   const [userDetails, setUserDetails] = useState({});
   const [userDetailsHidden, setUserDetailsHidden] = useState(true);
 
+  const requestSearch = (searchedValue) => {
+    const modifiedUsers = originalUsers.filter((user) => {
+      return user.fullName.toLowerCase().includes(searchedValue.toLowerCase());
+    });
+    setFilteredUsers(modifiedUsers);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() =>
   {
-    async function loadUsers()
-    {
-      const result = await userService.getUsers();
-
-      if (result.status === StatusType.Fail)
-      {
-        console.log(result.data);
-        return;
-      }
-      console.log(result.data);
-      setUsers(result.data);
-      setLoading(false);
-    }
-
     loadUsers();
   }, []);
+
+  async function loadUsers()
+  {
+    const result = await userService.getUsers();
+
+    if (result.status === StatusType.Fail)
+    {
+      console.log(result.data);
+      return;
+    }
+    console.log(result.data);
+
+    setOriginalUsers(result.data);
+    setFilteredUsers(result.data);
+
+    setLoading(false);
+  }
+
+  async function sortUsers()
+  {
+      setFilteredUsers((prev)=>[...prev.reverse()]);
+      console.log(originalUsers)
+  }
 
   const classes = useStyles();
 
@@ -79,13 +107,20 @@ const Users = () =>
       title="Account"
     >
       <Container maxWidth="lg">
+        <Box
+          display="flex"
+          justifyContent="flex-start"
+          paddingBottom="10px"
+        >
+          <AddUserDialog loadUsers={loadUsers} handleClickOpen={handleClickOpen} handleClose={handleClose} open={open}/>
+        </Box>
         <Grid
           container
           spacing={3}
         >
           <Grid
             item
-            lg={7}
+            lg={6}
             md={6}
             xs={12}
           >
@@ -97,13 +132,18 @@ const Users = () =>
                 Loading...
               </Typography>
             ) : (
-              <UsersView users={users} setUserDetailsVisibility={setUserDetailsHidden} setUsers={setUsers}
-                         loadUserDetails={loadUserDetails} deleteUser={deleteUser} />
+              <UsersView filteredUsers={filteredUsers}
+                         setUserDetailsVisibility={setUserDetailsHidden}
+                         setFilteredUsers={setFilteredUsers}
+                         loadUserDetails={loadUserDetails}
+                         deleteUser={deleteUser}
+                         sortUsers={sortUsers}
+                         requestSearch={requestSearch} />
             )}
           </Grid>
           <Grid hidden={userDetailsHidden}
                 item
-                lg={5}
+                lg={6}
                 md={6}
                 xs={12}
           >

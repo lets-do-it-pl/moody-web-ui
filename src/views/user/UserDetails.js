@@ -9,12 +9,22 @@ import {
   Divider,
   Grid,
   TextField,
-  Typography, FormHelperText, MenuItem, FormControlLabel, Checkbox
+  Typography, FormHelperText, MenuItem, FormControlLabel, Checkbox, makeStyles
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { userService } from '../../_services';
 import { StatusType } from '../../_types';
 import { Formik } from 'formik';
+
+const useStyles = makeStyles({
+  checkbox: {
+    paddingLeft: '16px'
+  },
+  cardContent:{
+    paddingLeft:'22px',
+    paddingRight:'22px'
+  }
+});
 
 const userTypes = [
   {
@@ -29,6 +39,7 @@ const userTypes = [
 
 const UserDetails = (props) =>
 {
+  const classes = useStyles();
   const [errorMessage, setErrorMessage] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
   const { id, email, fullName, userType, canLogin, isActive } = props.initialValues;
@@ -44,6 +55,7 @@ const UserDetails = (props) =>
         canLogin: canLogin,
         isActive: isActive
       }}
+
       validationSchema={
         Yup.object().shape({
           email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
@@ -53,6 +65,7 @@ const UserDetails = (props) =>
           canLogin: Yup.bool().required()
         })
       }
+      
       onSubmit={
         async (value) =>
         {
@@ -89,11 +102,13 @@ const UserDetails = (props) =>
         <form onSubmit={handleSubmit}>
           <Card>
             <CardHeader
-              subheader="The information can be edited"
-              title="User"
+              title="User Details"
+              titleTypographyProps={{variant:'h6' }}
             />
             <Divider />
-            <CardContent>
+            <CardContent
+              className={classes.cardContent}
+            >
               <Grid
                 container
                 spacing={3}
@@ -149,6 +164,7 @@ const UserDetails = (props) =>
                 <FormControlLabel
                   control={
                     <Checkbox
+                      classes={{root:classes.checkbox}}
                       value={values.isActive}
                       onChange={handleChange}
                       checked={values.isActive}
@@ -201,14 +217,13 @@ const UserDetails = (props) =>
                 >
                   {infoMessage}
                 </Typography>
-
               </Grid>
             </CardContent>
-            <Divider />
             <Box
               display="flex"
               justifyContent="flex-end"
               p={2}
+              paddingTop={'0'}
             >
               <Button
                 color="primary"

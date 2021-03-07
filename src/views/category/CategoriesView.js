@@ -21,9 +21,10 @@ import { withSnackbar } from 'notistack';
 import { confirmAlert } from 'react-confirm-alert';
 import ImageModal from './common/ImageModal';
 import UpdateCategoryForm from './UpdateCategoryForm';
-import { showAlert } from '../../_helpers/alert';
+import { showAlert } from '../../_helpers';
 import { categoryService } from '../../_services/category.service';
 import { StatusType, AlertType } from 'src/_types';
+import { authenticationService } from '../../_services';
 
 const styles = () => ({
   update: {
@@ -64,6 +65,7 @@ class CategoriesView extends Component {
     this.setState({
       categories: result.data
     });
+    console.log(authenticationService.currentUserRole);
   };
 
   closeImage = () => {
@@ -119,8 +121,6 @@ class CategoriesView extends Component {
     }
 
     showAlert(this.props, orderResult.message, AlertType.Error);
-
-    return;
   };
 
   deleteCategory = async id => {
@@ -166,6 +166,7 @@ class CategoriesView extends Component {
                   Image
                 </TableCell>
                 <TableCell>Name</TableCell>
+                <TableCell>Description</TableCell>
                 <TableCell align="center" width="130">
                   Actions
                 </TableCell>
@@ -218,19 +219,20 @@ class CategoriesView extends Component {
                                   />
                                 </TableCell>
                                 <TableCell>{entity.name}</TableCell>
-                                <TableCell
-                                  align="center"
-                                  width="170"
-                                  variant="body"
-                                >
-                                  {entity.description && (
+                                <TableCell>
+                                    {entity.description && (
                                     <Tooltip title={entity.description}>
                                       <IconButton aria-label="description">
                                         <InfoIcon />
                                       </IconButton>
                                     </Tooltip>
                                   )}
-
+                                </TableCell>
+                                <TableCell
+                                  align="center"
+                                  width="170"
+                                  variant="body"
+                                > 
                                   <IconButton
                                     size="small"
                                     onClick={() =>
