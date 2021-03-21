@@ -41,7 +41,7 @@ class CategoryDetailsView extends Component {
       selectedImage: null
     };
   }
-  
+
   closeImage = () => {
     this.setState({
       selectedImage: null
@@ -58,9 +58,9 @@ class CategoryDetailsView extends Component {
       return;
     }
 
-    const updatedOrder = this.state.categories[result.destination.index];
-    const updatedOrderTop = this.state.categories[result.destination.index - 1];
-    const updatedOrderBottom = this.state.categories[
+    const updatedOrder = this.props.categoryDetails[result.destination.index];
+    const updatedOrderTop = this.props.categoryDetails[result.destination.index - 1];
+    const updatedOrderBottom = this.props.categoryDetails[
       result.destination.index + 1
     ];
 
@@ -78,7 +78,7 @@ class CategoryDetailsView extends Component {
       );
     } else if (result.source.index < result.destination.index) {
       const values =
-        result.destination.index === this.state.categories.length - 1
+        result.destination.index === this.props.categoryDetails.length - 1
           ? { PreviousId: updatedOrder.id }
           : { PreviousId: updatedOrder.id, NextId: updatedOrderBottom.id };
 

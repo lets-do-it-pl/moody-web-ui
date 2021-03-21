@@ -28,7 +28,7 @@ async function updateOrder(id, previousId, nextId) {
         NextId: nextId
     }
 
-    return apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, '/category/order/' + id, data);
+    return apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, '/category/detail/order/' + id, data);
 
 }
 
