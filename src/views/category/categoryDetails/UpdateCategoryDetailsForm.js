@@ -8,8 +8,9 @@ import {
   FormLabel,
   makeStyles
 } from '@material-ui/core';
+import { StatusType } from 'src/_types';
 import { Styles } from '../common/Styles';
-import { Formik, Form } from 'formik';
+import { withSnackbar, useSnackbar } from 'notistack';
 import ImageUploader from "react-images-upload";
 import EditIcon from '@material-ui/icons/Edit';
 import { categoryDetailsService } from '../../../_services/category.details.service';
@@ -28,11 +29,26 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
+const convertBase64 = (image) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(image);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+}
 
 function UpdateCategoryDetailsForm(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(props.image);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -42,73 +58,81 @@ function UpdateCategoryDetailsForm(props) {
     setOpen(false);
   };
 
-  const convertBase64 = (image) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(image);
-
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
-  }
-
   const onDrop = async (file) => {
     const base64 = await convertBase64(file[0]);
     const base = base64.split(/[,]+/);
     setImage(base[1]);
   };
 
-  const onSubmit = () => {
+  const handleSubmit = async () => {
     const value = {
       Image: image
     }
-    categoryDetailsService.updateCategoryDetail(props.categoryId, props.id, value);
+
+    var result = await categoryDetailsService.updateCategoryDetail(
+      props.categoryId,
+      props.id, value
+    );
     setOpen(false);
+
+    if (result.status === StatusType.Success) {
+      enqueueSnackbar('Category detail has been successfully updated.', {
+        variant: 'success'
+      });
+      return;
+    }
+
+    enqueueSnackbar(result.message, { variant: 'error' });
   }
 
   return (
     <div>
       <EditIcon onClick={handleClickOpen} className={classes.edit} />
-      <Dialog open={open} fullWidth onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog 
+        open={open} 
+        fullWidth 
+        onClose={handleClose} 
+        aria-labelledby="form-dialog-title"
+      >
         <DialogTitle id="form-dialog-title">Edit Category Detail</DialogTitle>
         <DialogContent>
-          <div>
-            <Styles>
-              <Formik
-              >
-                <Form>
-                  <FormLabel >Category Detail Image</FormLabel>
-                  <ImageUploader
-                    {...props}
-                    name="image"
-                    withIcon={false}
-                    onChange={onDrop}
-                    buttonText="Upload"
-                    withLabel={false}
-                    singleImage={true}
-                    withPreview={true}
-                    imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
-                    maxFileSize={5242880}
-                  />
-                </Form>
-              </Formik>
-            </Styles>
-          </div>
+          <Styles>
+              <form onSubmit = {handleSubmit}>
+                <FormLabel >Category Detail Image</FormLabel>
+                <ImageUploader
+                  {...props}
+                  name="image"
+                  withIcon={false}
+                  onChange={onDrop}
+                  buttonText="Upload"
+                  withLabel={false}
+                  singleImage={true}
+                  withPreview={true}
+                  imgExtension={[".jpg", ".gif", ".png", "jpeg"]}
+                  maxFileSize={5242880}
+                />
+                <DialogActions>
+                  <Button
+                    type="submit"
+                    className={classes.submit}
+                    variant="contained"
+                  >
+                    Submit
+                  </Button>
+                  <Button
+                    onClick={handleClose}
+                    className={classes.cancel}
+                    variant="contained"
+                  >
+                    Cancel
+                  </Button>
+                </DialogActions>
+              </form>
+          </Styles>
         </DialogContent>
-        <DialogActions>
-          <Button onClick={onSubmit} className={classes.submit} variant="contained">Ok</Button>
-          <Button onClick={handleClose} className={classes.cancel} variant="contained">
-            Cancel
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );
 }
 
-export default UpdateCategoryDetailsForm;
+export default withSnackbar(UpdateCategoryDetailsForm);

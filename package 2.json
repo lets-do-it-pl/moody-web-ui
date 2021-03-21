@@ -1,0 +1,78 @@
+{
+  "name": "moody-management-app",
+  "author": "Moody Web Team",
+  "licence": "MIT",
+  "version": "1.0.0",
+  "private": false,
+  "scripts": {
+    "start": "set \"REACT_APP_NOT_SECRET_CODE=development\" && react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@material-ui/styles": "^4.10.0",
+    "axios": "^0.21.0",
+    "chart.js": "^2.9.3",
+    "clsx": "^1.1.1",
+    "formik": "^2.1.5",
+    "history": "^5.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.19",
+    "moment": "^2.27.0",
+    "nprogress": "^0.2.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-async": "^10.0.1",
+    "react-beautiful-dnd": "^13.0.0",
+    "react-chartjs-2": "^2.10.0",
+    "react-dom": "^16.13.1",
+    "react-feather": "^2.0.8",
+    "react-google-recaptcha-v3": "^1.7.1",
+    "react-helmet": "^6.1.0",
+    "react-images-upload": "^1.2.8",
+    "react-notifications": "^1.7.2",
+    "react-perfect-scrollbar": "^1.5.8",
+    "react-redux": "^7.2.2",
+    "react-router": "^6.0.0-beta.0",
+    "react-router-dom": "^6.0.0-beta.0",
+    "react-scripts": "^3.4.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "react-search-field": "^1.2.0",
+    "rxjs": "^6.6.3",
+    "semantic-ui-react": "^2.0.2",
+    "styled-components": "^5.2.1",
+    "uuid": "^8.3.0",
+    "yup": "^0.29.3"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "prettier": "^1.19.1"
+  }
+}
