@@ -58,7 +58,7 @@ const convertBase64 = image => {
 function CreateCategoryForm(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [image, setImage] = useState();
+  const [image, setImage] = useState('');
   const { enqueueSnackbar } = useSnackbar();
 
   const onDrop = async file => {
@@ -101,27 +101,36 @@ function CreateCategoryForm(props) {
           <Styles>
             <Formik
               initialValues={{
-                name: '',
-                description: ''
+                name: ''
               }}
               validationSchema={ValidationSchema}
               onSubmit={async value => {
-                value = {
-                  Name: value.name,
-                  Image: image,
-                  Description: value.descripton
-                };
-                var result = await categoryService.createCategory(value);
-                setOpen(false);
-
-                if (result.status === StatusType.Success) {
-                  enqueueSnackbar('Category is created.', {
-                    variant: 'success'
+                if(image === '')
+                {
+                  enqueueSnackbar('Empty Image', {
+                    variant: 'error'
                   });
-                  return;
                 }
-
-                enqueueSnackbar(result.message, { variant: 'error' });
+                else
+                {
+                  value = {
+                    Name: value.name,
+                    Image: image,
+                    Description: value.descripton
+                  };
+                  var result = await categoryService.createCategory(value);
+                  setOpen(false);
+                  setImage('');
+  
+                  if (result.status === StatusType.Success) {
+                    enqueueSnackbar('Category is created.', {
+                      variant: 'success'
+                    });
+                    return;
+                  }
+  
+                  enqueueSnackbar(result.message, { variant: 'error' });
+                }
               }}
             >
               {({
@@ -148,10 +157,10 @@ function CreateCategoryForm(props) {
                         imgExtension={['.jpg', '.gif', '.png', 'jpeg']}
                         maxFileSize={5242880}
                       />
+                      <FormLabel>Name</FormLabel>
                       <TextField
                         error={Boolean(touched.name && errors.name)}
                         helperText={touched.name && errors.name}
-                        label="Name"
                         margin="normal"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -160,12 +169,9 @@ function CreateCategoryForm(props) {
                         value={values.name}
                         variant="outlined"
                       />
+                      <FormLabel>Description</FormLabel>
                       <TextField
-                        error={Boolean(
-                          touched.description && errors.description
-                        )}
                         helperText={touched.description && errors.description}
-                        label="Description"
                         margin="normal"
                         onBlur={handleBlur}
                         onChange={handleChange}

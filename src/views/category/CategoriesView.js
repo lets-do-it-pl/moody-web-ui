@@ -54,6 +54,10 @@ class CategoriesView extends Component {
     await this.loadCategories();
   }
 
+  async componentDidUpdate(){
+    await this.loadCategories();
+  }
+
   loadCategories = async () => {
     var result = await categoryService.getCategories();
 
@@ -135,7 +139,6 @@ class CategoriesView extends Component {
 
             if (result.status === StatusType.Success) {
               showAlert(this.props, 'Category is deleted.', AlertType.Success);
-              await this.loadCategories();
               return;
             }
 
@@ -249,6 +252,7 @@ class CategoriesView extends Component {
                                       id={entity.id}
                                       name={entity.name}
                                       image={entity.image}
+                                      description={entity.description}
                                     />
                                   </IconButton>
                                   <IconButton

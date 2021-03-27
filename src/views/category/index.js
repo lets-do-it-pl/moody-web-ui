@@ -9,17 +9,17 @@ import {
   Avatar,
   Divider,
 } from '@material-ui/core';
-import "../../style.css"
+import "../../style.css";
+import Export from './export/Export';
+import Page from 'src/components/Page';
+import { StatusType } from 'src/_types';
+import CategoriesView from './CategoriesView';
+import CreateCategoryForm from './CreateCategoryForm';
 import AmpStoriesIcon from '@material-ui/icons/AmpStories';
 import CameraFrontIcon from '@material-ui/icons/CameraFront';
-import Page from 'src/components/Page';
-import CreateCategoryForm from './CreateCategoryForm';
-import CategoriesView from './CategoriesView';
-import CategoryDetailsTable from './categoryDetails/CategoryDetailsTable';
+import CategoryDetailsView from './categoryDetails/CategoryDetailsView';
 import CreateCategoryDetailsForm from './categoryDetails/CreateCategoryDetailsForm';
 import { categoryDetailsService } from '../../_services/category.details.service';
-import { StatusType } from 'src/_types';
-import Export from './export/Export';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,12 +35,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Category = () => {
   const classes = useStyles();
+  const [isVisible, setVisibility] = useState(false);
   const [id, setCategoryId] = useState();
   const [name, setCategoryName] = useState("");
   const [details, setDetails] = useState([]);
 
-  const loadCategoryDetails = async () => {
-    const result = await categoryDetailsService.listCategoryDetails(id);
+  const loadCategoryDetails = async (categoryId) => {
+    const result = await categoryDetailsService.listCategoryDetails(categoryId);
 
     if (result.status === StatusType.Fail) {
       console.log(result.data);
@@ -51,9 +52,10 @@ const Category = () => {
   }
 
   const getId = async (categoryId, categoryName) => {
-    await loadCategoryDetails();
+    await loadCategoryDetails(categoryId);
     setCategoryId(categoryId);
     setCategoryName(categoryName);
+    setVisibility(true);
   }
 
   return (
@@ -97,12 +99,12 @@ const Category = () => {
                   </Avatar>
                 }
                 title={`${name} Category Details`}
-                action={
-                  <CreateCategoryDetailsForm categoryId={id} />
+                action={ isVisible ? 
+                  <CreateCategoryDetailsForm categoryId={id} /> : null
                 } />
               <Divider />
               <CardContent>
-                <CategoryDetailsTable categoryDetails={details} categoryId={id} />
+                <CategoryDetailsView categoryDetails={details} categoryId={id}/>
               </CardContent>
             </Card>
           </Grid>

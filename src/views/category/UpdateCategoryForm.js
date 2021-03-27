@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   Dialog,
@@ -12,6 +12,7 @@ import {
 import * as Yup from 'yup';
 import { Styles } from './common/Styles';
 import { Formik } from 'formik';
+import { withSnackbar, useSnackbar } from 'notistack';
 import ImageUploader from 'react-images-upload';
 import EditIcon from '@material-ui/icons/Edit';
 import { StatusType } from 'src/_types';
@@ -57,7 +58,15 @@ function UpdateCategoryForm(props) {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(props.image);
   const [name, setName] = useState(props.name);
+  const { enqueueSnackbar } = useSnackbar();
   const [description, setDescription] = useState(props.description);
+
+  useEffect(() => {
+    if(description === null)
+    {
+      setDescription(' ');
+    }
+  }, [description]);
 
   const onDrop = async file => {
     const base64 = await convertBase64(file[0]);
@@ -93,9 +102,9 @@ function UpdateCategoryForm(props) {
               validationSchema={ValidationSchema}
               onSubmit={async values => {
                 values = {
-                  Name: values.name,
+                  Name: name,
                   Image: image,
-                  Description: values.description
+                  Description: description
                 };
                 var result = await categoryService.updateCategory(
                   props.id,
@@ -104,10 +113,13 @@ function UpdateCategoryForm(props) {
                 setOpen(false);
 
                 if (result.status === StatusType.Success) {
+                  enqueueSnackbar('Category has been successfully updated.', {
+                    variant: 'success'
+                  });
                   return;
                 }
-
-                this.state.error = result.message;
+            
+                enqueueSnackbar(result.message, { variant: 'error' });
               }}
             >
               {({ errors, touched, handleSubmit }) => (
@@ -133,11 +145,14 @@ function UpdateCategoryForm(props) {
                     required
                     variant="outlined"
                     value={description}
-                    onChange={e => setDescription(e.target.value)}
+                    onChange=
+                      {e => 
+                        {if(e.target.value === '') 
+                          setDescription(' ');
+                        else 
+                          setDescription(e.target.value);
+                      }}
                   />
-                  {touched.description && errors.description && (
-                    <div>{errors.description}</div>
-                  )}
                   <FormLabel>Category Image</FormLabel>
                   <ImageUploader
                     {...props}
@@ -177,4 +192,4 @@ function UpdateCategoryForm(props) {
   );
 }
 
-export default UpdateCategoryForm;
+export default withSnackbar(UpdateCategoryForm);
