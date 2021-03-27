@@ -50,14 +50,11 @@ function Profile (props) {
   const [email, setEmail] = useState(props.account.email);
   const [image, setImage] = useState(props.account.image);
   const { enqueueSnackbar } = useSnackbar();
-  //console.log(props.account.email,image);
 
   const fileUploadHandler = async (file) =>{
     const base64 = await convertBase64(file[0]);
     const base = base64.split(/[,]+/);
     setImage(base[1]);
-    uploadImage();
-    
   }
   const uploadImage = async() => {
     var result = await accountService
@@ -99,10 +96,6 @@ function Profile (props) {
           </Typography>
 
         </Box>
-      </CardContent>
-      <Divider />
-      <CardActions>
-        
         <ImageUploader
             {...props}
             id="image-upload"
@@ -116,6 +109,19 @@ function Profile (props) {
             imgExtension={['.jpg', '.jpeg', '.png', '.gif']}
             maxFileSize={5242880}
         ></ImageUploader>
+      </CardContent>
+      <Divider />
+      <CardActions>
+        <Button
+              color="primary"
+              onClick={uploadImage}
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+            >
+              Save
+          </Button>
       </CardActions>  
     </Card>
   );
