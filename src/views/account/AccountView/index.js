@@ -44,7 +44,7 @@ const Account = () => {
   }, [enqueueSnackbar]);
 
   const classes = useStyles();
-  
+  console.log(account);
   return (
     <Page
       className={classes.root}
