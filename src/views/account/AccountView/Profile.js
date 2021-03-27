@@ -1,5 +1,9 @@
+import { accountService} from 'src/_services';
+import ImageUploader from 'react-images-upload'
+import {useSnackbar, withSnackbar} from 'notistack';
+import { StatusType } from 'src/_types';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import React from 'react';
 import clsx from 'clsx';
 import {
   Avatar,
@@ -16,25 +20,62 @@ import {
 const useStyles = makeStyles(() => ({
   root: {},
    avatar: {
-    height: 100,
-    width: 100
+    height: 200,
+    width: 200
+  },
+  ImageUploader :{
+    marginTop : 2,
+    marginBottom :2
   }
 }));
 
-const Profile = (props) => {
-  
-  const {account, className, ...rest } = props;
-  
-  const userAccount = {
-    avatar: account.image,
-    name: account.fullName
-  };
+const convertBase64 = (image) => {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(image);
 
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+}
+
+function Profile (props) {
   const classes = useStyles();
+  const [name] = useState(props.account.fullName);
+  const [email] = useState(props.account.email);
+  const [image, setImage] = useState(props.account.image);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const fileUploadHandler = async (file) =>{
+    const base64 = await convertBase64(file[0]);
+    const base = base64.split(/[,]+/);
+    setImage(base[1]);
+  }
+  const uploadImage = async() => {
+    var result = await accountService
+    .updateAccount(
+      name,
+      email,
+      image
+      );
+
+  if (result.status === StatusType.Success) {
+
+   enqueueSnackbar("Updated Successfully", { variant: "success" });
+    return;
+  }
+  enqueueSnackbar("Unable to Update!", { variant: "error" });
+}
+
   return (
+    
     <Card
-      className={clsx(classes.root, className)}
-      {...rest}
+      className={clsx(classes.root, name)}
     >
       <CardContent>
         <Box
@@ -44,28 +85,44 @@ const Profile = (props) => {
         >
           <Avatar
             className={classes.avatar}
-            src={"data:image/png;base64," + userAccount.avatar}
+            src={"data:image/png;base64," + image}
           />
           <Typography
             color="textPrimary"
             gutterBottom
             variant="h3"
           >
-            {userAccount.name}
+            {name}
           </Typography>
 
         </Box>
+        <ImageUploader
+            {...props}
+            id="image-upload"
+            name="image"
+            withLabel={false}
+            withIcon ={false}
+            singleImage={true}
+            withPreview={false}
+            buttonText= 'Upload Image'
+            onChange= {fileUploadHandler}
+            imgExtension={['.jpg', '.jpeg', '.png', '.gif']}
+            maxFileSize={5242880}
+        ></ImageUploader>
       </CardContent>
       <Divider />
       <CardActions>
         <Button
-          color="primary"
-          fullWidth
-          variant="text"
-        >
-          Upload picture
-        </Button>
-      </CardActions>
+              color="primary"
+              onClick={uploadImage}
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+            >
+              Save
+          </Button>
+      </CardActions>  
     </Card>
   );
 };
@@ -74,4 +131,4 @@ Profile.propTypes = {
   className: PropTypes.string
 };
 
-export default Profile;
+export default withSnackbar(Profile);

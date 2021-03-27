@@ -11,7 +11,7 @@ async function getAccount() {
   }
   
   
-async function updateAccount(fullName, email, image=null ) {
+async function updateAccount(fullName, email, image = null ) {
 
     return await apiService.asyncCallAuthorizedApi(HttpMethodType.PUT, `/account`, {fullName,email,image})
   }

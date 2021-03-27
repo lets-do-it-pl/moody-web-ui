@@ -44,7 +44,7 @@ const Account = () => {
   }, [enqueueSnackbar]);
 
   const classes = useStyles();
-
+  console.log(account);
   return (
     <Page
       className={classes.root}
@@ -69,7 +69,9 @@ const Account = () => {
                 md={6}
                 xs={12}
               >
-                <Profile account={account} />
+                <Profile
+                 account={account} 
+                 />
               </Grid>
               <Grid
                 item
@@ -77,7 +79,9 @@ const Account = () => {
                 md={6}
                 xs={12}
               >
-                <ProfileDetails account={account} />
+                <ProfileDetails
+                 account={account} 
+                 />
               </Grid>
             </>
           )}
