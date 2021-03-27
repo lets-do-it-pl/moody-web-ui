@@ -46,8 +46,8 @@ const convertBase64 = (image) => {
 
 function Profile (props) {
   const classes = useStyles();
-  const [name, setUserName] = useState(props.account.fullName);
-  const [email, setEmail] = useState(props.account.email);
+  const [name] = useState(props.account.fullName);
+  const [email] = useState(props.account.email);
   const [image, setImage] = useState(props.account.image);
   const { enqueueSnackbar } = useSnackbar();
 
